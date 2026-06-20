@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Legacy of Love — Father's Day Memoir</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1a1b1f",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#f1f0f6",
+                    "on-primary-fixed-variant": "#5d4201",
+                    "on-secondary-fixed-variant": "#474746",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#efedf3",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#faf8fe",
+                    "surface-container-highest": "#e3e2e7",
+                    "primary-fixed": "#ffdea5",
+                    "secondary-container": "#e2dfde",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#a4a5a5",
+                    "outline-variant": "#d1c5b4",
+                    "on-primary-container": "#4e3700",
+                    "tertiary-fixed": "#e2e2e2",
+                    "background": "#faf8fe",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "secondary-fixed": "#e5e2e1",
+                    "surface-container-low": "#f4f3f8",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-tertiary-container": "#393b3b",
+                    "off-white": "#FBFBFD",
+                    "glass-stroke": "rgba(255, 255, 255, 0.4)",
+                    "tertiary": "#5d5f5f",
+                    "outline": "#7f7667",
+                    "on-primary-fixed": "#261900",
+                    "primary-fixed-dim": "#e9c176",
+                    "surface-dim": "#dbd9df",
+                    "surface": "#faf8fe",
+                    "burnished-gold": "#C5A059",
+                    "secondary": "#5f5e5e",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#e9c176",
+                    "primary": "#775a19",
+                    "soft-gray": "#F5F5F7",
+                    "inverse-surface": "#2f3034",
+                    "primary-container": "#c5a059",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "surface-container-high": "#e9e7ed",
+                    "deep-charcoal": "#1A1A1A",
+                    "on-secondary-container": "#636262",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#1a1b1f",
+                    "surface-tint": "#775a19",
+                    "surface-variant": "#e3e2e7",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "on-surface-variant": "#4e4639"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "64px",
+                    "margin-desktop": "80px",
+                    "stack-md": "32px",
+                    "stack-sm": "16px",
+                    "margin-mobile": "24px",
+                    "gutter": "32px"
+            },
+            "fontFamily": {
+                    "quote-text": ["Playfair Display"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Playfair Display"],
+                    "body-md": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Playfair Display"],
+                    "display-lg-mobile": ["Playfair Display"]
+            },
+            "fontSize": {
+                    "quote-text": ["24px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 30px 60px -12px rgba(197, 160, 89, 0.08);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        .timeline-line {
+            background: linear-gradient(to bottom, transparent, #C5A059 10%, #C5A059 90%, transparent);
+        }
+    </style>
+</head>
+<body class="bg-off-white text-on-surface font-body-md overflow-x-hidden">
+<!-- Fixed Header -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-glass-stroke shadow-sm flex justify-between items-center px-6 md:px-20 py-4">
+<div class="font-display-lg text-headline-md tracking-tighter text-on-surface">Legacy</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-burnished-gold border-b border-burnished-gold uppercase" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-burnished-gold transition-colors duration-300 uppercase" href="#journey">Chronology</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-burnished-gold transition-colors duration-300 uppercase" href="#">Media</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-burnished-gold transition-colors duration-300 uppercase" href="#">Settings</a>
+</div>
+<button class="material-symbols-outlined text-primary scale-95 transition-transform duration-200">menu</button>
+</nav>
+<!-- Side Navigation (Mobile/Tablet UI logic) -->
+<aside class="hidden md:hidden fixed left-0 top-0 h-full w-72 z-[60] bg-surface/90 backdrop-blur-2xl border-r border-glass-stroke shadow-2xl flex flex-col p-4">
+<div class="mb-12">
+<h2 class="font-display-lg text-headline-md text-on-surface">Legacy of Love</h2>
+<p class="text-on-surface-variant font-body-md">Established 1955</p>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-4 p-4 bg-primary-container/20 text-on-primary-container font-bold rounded-xl">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</div>
+<!-- Other Side Nav items would go here -->
+</div>
+</aside>
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Father background" class="w-full h-full object-cover grayscale-[20%] brightness-[70%]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5XHNCF0Mvb_zvVuayWZ2vUf_5OAT5MXuiGQfxIMGwLcxpW8JWO9kSjWFr731DG2zSZ8XhYBu0DoFJVyhqboktnjhFJdALUee1eZo4PWFQ-f07wdnDqTvvGHNkUrluOTUfQuBd1b1bcqxvXBMLNj_5RPp0FiyPPdGNX-WRgjcuQ_F76MX_Ko_e4bNNSYO1X5K_gJiT1JYJEht9OIlkEvnpryfjH9PzMpNrujHMalKMIwJpN9u4b1uMDdaLvt2adGrRogArMbFR5uw"/>
+</div>
+<div class="relative z-10 text-center px-6">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6 reveal">James Harrison</h1>
+<p class="font-quote-text text-quote-text text-white/90 max-w-2xl mx-auto italic reveal" style="transition-delay: 0.2s;">
+                "A father is someone you look up to no matter how tall you grow."
+            </p>
+<div class="mt-20 flex flex-col items-center gap-4 reveal" style="transition-delay: 0.4s;">
+<span class="font-label-caps text-label-caps text-white/70 uppercase tracking-widest">Scroll to Explore</span>
+<div class="w-px h-16 bg-gradient-to-b from-burnished-gold to-transparent animate-bounce"></div>
+</div>
+</div>
+</section>
+<!-- Memory Timeline Section -->
+<section class="relative py-stack-lg bg-off-white overflow-hidden" id="journey">
+<!-- Ambient Background Animation -->
+<div class="absolute inset-0 pointer-events-none opacity-30">
+<!-- STITCH_SVG_START:ANIMATION_3 class="absolute inset-0 w-full h-full" --><div class="absolute inset-0 w-full h-full" id="animated-svg-ANIMATION_3" style="display:block;"><svg viewbox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialgradient cx="50%" cy="50%" fx="50%" fy="50%" id="goldGlow" r="50%">
+<stop offset="0%" style="stop-color:#c5a059;stop-opacity:0.2"></stop>
+<stop offset="100%" style="stop-color:#c5a059;stop-opacity:0"></stop>
+</radialgradient>
+</defs>
+<circle cx="200" cy="150" fill="url(#goldGlow)" r="100">
+<animate attributename="cx" dur="10s" repeatcount="indefinite" values="200;210;200"></animate>
+<animate attributename="cy" dur="8s" repeatcount="indefinite" values="150;160;150"></animate>
+</circle>
+<circle cx="600" cy="450" fill="url(#goldGlow)" r="150">
+<animate attributename="cx" dur="12s" repeatcount="indefinite" values="600;580;600"></animate>
+<animate attributename="cy" dur="9s" repeatcount="indefinite" values="450;470;450"></animate>
+</circle>
+<circle cx="400" cy="300" fill="url(#goldGlow)" r="80">
+<animate attributename="cx" dur="15s" repeatcount="indefinite" values="400;420;400"></animate>
+<animate attributename="cy" dur="11s" repeatcount="indefinite" values="300;280;300"></animate>
+</circle>
+</svg></div><!-- STITCH_SVG_END:ANIMATION_3 -->
+</div>
+<div class="container mx-auto px-6 md:px-margin-desktop relative">
+<div class="text-center mb-24">
+<div class="w-12 h-1 bg-burnished-gold mx-auto mb-6"></div>
+<h2 class="font-display-lg text-headline-md text-deep-charcoal">The Chapters of a Life</h2>
+</div>
+<!-- Timeline Thread -->
+<div class="absolute left-1/2 top-48 bottom-0 w-px timeline-line -translate-x-1/2 hidden md:block"></div>
+<div class="space-y-32 relative">
+<!-- Timeline Node 1: Left -->
+<div class="flex flex-col md:flex-row items-center justify-between gap-gutter reveal">
+<div class="w-full md:w-[45%] order-2 md:order-1">
+<div class="glass-card p-stack-sm rounded-xl transition-all duration-500 hover:shadow-2xl">
+<div class="overflow-hidden rounded-lg mb-6">
+<img alt="Early days memory" class="w-full h-80 object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD19uvqBY_mb2etPHJJNWLTnZFnTGcaCrAvplf6tKmOIs8e1RpMLnTAdtJ3LxjlqtRf_j1lg-5KFRvw8rkV58jRizjYruePh29FTzDUkEJpG-S-Ajh4AQPFyb4pWN7JlelcnrmalOkNbiydYuq4ZyQmuQXtwECLhgN_RKmGjeu1k_Eboq0GCDe08DV4J8AGxKVPE6u5c4c7wHTAANt8B7yi6ZoZHJ9kgiJZrBPJfGZ8hIG-REZGKNI_O45bV-DxqSgZrin9FCepFAE"/>
+</div>
+<span class="font-label-caps text-label-caps text-burnished-gold uppercase mb-2 block">Chapter One — 1965</span>
+<h3 class="font-display-lg text-headline-md mb-4 text-on-surface">The Foundation</h3>
+<p class="font-body-md text-secondary leading-relaxed">
+                                From the early mornings on the family farm to the first day of university, the lessons of hard work and quiet integrity were carved into the soul of every action.
+                            </p>
+</div>
+</div>
+<div class="hidden md:flex w-10 h-10 rounded-full bg-burnished-gold z-10 items-center justify-center shadow-[0_0_20px_rgba(197,160,89,0.5)] order-2">
+<div class="w-3 h-3 bg-white rounded-full"></div>
+</div>
+<div class="w-full md:w-[45%] order-1 md:order-3"></div>
+</div>
+<!-- Timeline Node 2: Right -->
+<div class="flex flex-col md:flex-row items-center justify-between gap-gutter reveal">
+<div class="w-full md:w-[45%]"></div>
+<div class="hidden md:flex w-10 h-10 rounded-full bg-burnished-gold z-10 items-center justify-center shadow-[0_0_20px_rgba(197,160,89,0.5)]">
+<div class="w-3 h-3 bg-white rounded-full"></div>
+</div>
+<div class="w-full md:w-[45%]">
+<div class="glass-card p-stack-sm rounded-xl transition-all duration-500 hover:shadow-2xl">
+<div class="overflow-hidden rounded-lg mb-6">
+<img alt="Father and son walk" class="w-full h-80 object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2ws8VzyTj0BTnT5HuSwJ9OFmoUOIMrZLQfhavIqZNedLMIyJ79B1DnoaFgJKBDLcF1pY-TcMBndgg3pawtPYxRUgcUpG2aL7vXCrT6EwW2RQFxsihnor6Y3hiSg1xakZnAaTvcmZaqwBiahFRKN6rOLVzicExOA3EeT6iGEb1GHPVUNRp5URZGtm-VdOVnsLR7BuHTjnRhSD_O_M4kenw5CxE94yJAVAIhhIz0LOt0GYNkkX6v270O_SK6IkAP01QzG4deOg6plk"/>
+</div>
+<span class="font-label-caps text-label-caps text-burnished-gold uppercase mb-2 block">Chapter Two — 1988</span>
+<h3 class="font-display-lg text-headline-md mb-4 text-on-surface">Walking the Path</h3>
+<p class="font-body-md text-secondary leading-relaxed">
+                                Guiding hands through every milestone. A mentor not through words, but through the unwavering presence that defined a generation of love.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Quote Section -->
+<section class="py-stack-lg bg-soft-gray border-y border-outline-variant/30 text-center">
+<div class="container mx-auto px-6 max-w-4xl">
+<div class="w-16 h-px bg-burnished-gold mx-auto mb-10"></div>
+<blockquote class="font-quote-text text-quote-text text-deep-charcoal italic leading-relaxed reveal">
+                "The heart of a father is the masterpiece of nature. It carries the weight of a world and the lightness of a child's laughter all at once."
+            </blockquote>
+<p class="mt-8 font-label-caps text-label-caps text-secondary uppercase tracking-widest reveal">Selected Verse</p>
+</div>
+</section>
+<!-- Personal Message Section -->
+<section class="py-stack-lg relative overflow-hidden flex items-center justify-center">
+<div class="container mx-auto px-6 max-w-5xl">
+<div class="glass-card p-12 md:p-20 rounded-3xl relative reveal">
+<div class="absolute top-0 right-0 p-8 opacity-10">
+<span class="material-symbols-outlined text-8xl">format_quote</span>
+</div>
+<h2 class="font-display-lg text-headline-md mb-10 text-on-surface border-b border-burnished-gold pb-4 inline-block">A Message from the Family</h2>
+<div class="space-y-6 font-body-lg text-secondary leading-loose">
+<p>To our dearest Dad, your life is a map we continue to follow. In every quiet moment of strength and every boisterous laugh, we see the legacy you've built — not of stone or wood, but of kindness and enduring love.</p>
+<p>This digital heirloom is but a small window into the vast mountain of memories we share. Thank you for being our anchor and our north star.</p>
+</div>
+<div class="mt-12 flex items-center gap-6">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-burnished-gold text-3xl">favorite</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface uppercase">Forever Grateful,</p>
+<p class="font-display-lg text-body-lg text-burnished-gold">The Harrison Family</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final Section & Footer -->
+<section class="py-stack-lg text-center bg-on-background text-white">
+<div class="container mx-auto px-6">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-10 reveal">Happy Father's Day</h2>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6 reveal">
+<button class="shimmer-btn bg-burnished-gold text-white px-12 py-5 rounded-full font-label-caps text-label-caps uppercase tracking-widest hover:scale-105 transition-transform duration-300">
+                    Replay Journey
+                </button>
+<button class="border border-burnished-gold text-burnished-gold px-12 py-5 rounded-full font-label-caps text-label-caps uppercase tracking-widest hover:bg-burnished-gold/10 transition-colors duration-300">
+                    Download Memoir
+                </button>
+</div>
+</div>
+<footer class="mt-32 w-full py-stack-lg border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center px-6 md:px-20 gap-gutter opacity-80 hover:opacity-100 transition-opacity">
+<p class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">Happy Father's Day — A Digital Heirloom</p>
+<div class="flex gap-8">
+<a class="font-label-caps text-label-caps text-secondary hover:text-burnished-gold transition-colors" href="#">Privacy</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-burnished-gold transition-colors" href="#">Terms</a>
+</div>
+</footer>
+</section>
+<script>
+        // Scroll reveal logic
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImg = document.querySelector('section img');
+            if(heroImg) {
+                heroImg.style.transform = `translateY(${scrolled * 0.4}px)`;
+            }
+        });
+    </script>
+</body></html>

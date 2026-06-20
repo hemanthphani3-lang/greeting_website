@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Constellation of Memories | Father's Day</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@300;400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "primary": "#f2ca50",
+                        "on-secondary": "#182f59",
+                        "on-error": "#690005",
+                        "on-surface": "#eae1d4",
+                        "error": "#ffb4ab",
+                        "surface": "#16130b",
+                        "outline": "#99907c",
+                        "on-primary": "#3c2f00",
+                        "primary-fixed-dim": "#e9c349",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary": "#2f3131",
+                        "tertiary-container": "#b2b3b3",
+                        "inverse-on-surface": "#343027",
+                        "primary-fixed": "#ffe088",
+                        "on-secondary-fixed-variant": "#314671",
+                        "on-primary-container": "#554300",
+                        "surface-dim": "#16130b",
+                        "secondary": "#b1c6f9",
+                        "on-primary-fixed": "#241a00",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-secondary-container": "#a0b5e6",
+                        "surface-container-lowest": "#110e07",
+                        "secondary-fixed-dim": "#b1c6f9",
+                        "error-container": "#93000a",
+                        "outline-variant": "#4d4635",
+                        "secondary-container": "#314671",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "inverse-primary": "#735c00",
+                        "background": "#16130b",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container": "#231f17",
+                        "inverse-surface": "#eae1d4",
+                        "tertiary": "#cecece",
+                        "on-background": "#eae1d4",
+                        "on-surface-variant": "#d0c5af",
+                        "primary-container": "#d4af37",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-tint": "#e9c349",
+                        "surface-container-highest": "#38342b",
+                        "surface-variant": "#38342b",
+                        "surface-container-high": "#2d2a21",
+                        "surface-bright": "#3d392f",
+                        "on-tertiary-container": "#434546",
+                        "on-primary-fixed-variant": "#574500",
+                        "surface-container-low": "#1f1b13",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "glass-padding": "32px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "ui-interactive": ["Inter"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "ui-interactive": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "700"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #031632;
+            color: #eae1d4;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
+        }
+        .glass-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid #d4af37;
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .signature-font {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        .constellation-line {
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            height: 1px;
+            opacity: 0.3;
+        }
+        .star-pulse {
+            animation: pulse 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 10px #d4af37; }
+            50% { transform: scale(1.5); opacity: 1; box-shadow: 0 0 25px #d4af37; }
+        }
+        .gold-shimmer {
+            background: linear-gradient(92deg, #d4af37 0%, #f2ca50 50%, #d4af37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s linear infinite;
+        }
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary selection:text-on-primary">
+<!-- Global Background Shader -->
+<!-- STITCH_SHADER_START:ANIMATION_3 class="fixed inset-0 w-full h-full pointer-events-none opacity-60" -->
+<div class="fixed inset-0 w-full h-full pointer-events-none opacity-60" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_3" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_3');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+float noise(vec2 p) {
+    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec3 color = vec3(0.01, 0.08, 0.2); // Deep Midnight Navy base
+    
+    // Ambient Nebula Glow
+    float n = noise(uv * 3.0 + u_time * 0.05);
+    color += vec3(0.05, 0.1, 0.2) * n * 0.5;
+    
+    // Floating Particles / Distant Stars
+    float stars = pow(noise(uv * 50.0 + u_time * 0.01), 20.0);
+    color += vec3(0.8, 0.8, 1.0) * stars * (0.5 + 0.5 * sin(u_time + uv.x * 10.0));
+    
+    // Soft Blue Glow Gradient
+    float dist = distance(uv, vec2(0.5, 0.5));
+    color += vec3(0.0, 0.1, 0.3) * (1.0 - smoothstep(0.0, 0.8, dist));
+
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_3 -->
+<!-- Top Navigation Anchor (Shared Component Mapping) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 backdrop-blur-md border-b border-outline-variant/10 shadow-[0_0_20px_rgba(212,175,55,0.15)]">
+<div class="font-headline-md text-headline-md text-primary tracking-widest uppercase">
+            Constellation of Memories
+        </div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="auto_awesome">auto_awesome</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="settings">settings</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full min-h-screen">
+<!-- SECTION 1: OPENING -->
+<section class="min-h-screen flex flex-col items-center justify-center px-margin-mobile text-center" id="section-opening">
+<div class="max-w-4xl mx-auto space-y-8">
+<h2 class="font-display-lg-mobile md:text-display-lg font-display-lg leading-tight tracking-tight typewriter-cursor" id="typewriter-text"></h2>
+<h1 class="hidden font-headline-md text-headline-md text-primary gold-shimmer signature-font" id="dad-text">Dad ❤️</h1>
+<div class="opacity-0 translate-y-10 transition-all duration-1000 delay-500 pt-8" id="btn-container">
+<button class="glass-button px-10 py-4 rounded-full font-label-caps text-label-caps tracking-widest text-primary flex items-center gap-3 mx-auto" onclick="startJourney()">
+                        BEGIN THE JOURNEY
+                        <span class="material-symbols-outlined" data-icon="north_star">cards_star</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 2: THE JOURNEY (HIDDEN BY DEFAULT) -->
+<section class="hidden fixed inset-0 flex flex-col items-center justify-center" id="section-journey">
+<!-- 3D Constellation Centerpiece -->
+<!-- STITCH_THREEJS_START:ANIMATION_4 class="absolute inset-0 w-full h-full opacity-90" -->
+<div class="absolute inset-0 w-full h-full opacity-90" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_4" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_4');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(window.devicePixelRatio);
+container.appendChild(renderer.domElement);
+
+// Constellation Data
+const starCount = 5;
+const stars = [];
+const lines = [];
+const starGroup = new THREE.Group();
+
+// Colors from design system
+const goldColor = new THREE.Color(0xD4AF37);
+
+// Create Stars (Memory Nodes)
+for (let i = 0; i < starCount; i++) {
+    const geo = new THREE.SphereGeometry(0.5, 32, 32);
+    const mat = new THREE.MeshPhongMaterial({ 
+        color: goldColor, 
+        emissive: goldColor, 
+        emissiveIntensity: 0.5,
+        transparent: true,
+        opacity: 0.8
+    });
+    const star = new THREE.Mesh(geo, mat);
+    
+    // Organic, handcrafted positioning
+    star.position.set(
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 15,
+        (Math.random() - 0.5) * 5
+    );
+    
+    stars.push(star);
+    starGroup.add(star);
+}
+
+// Create Connection Lines
+const lineMat = new THREE.LineBasicMaterial({ color: goldColor, transparent: true, opacity: 0.3 });
+const points = stars.map(s => s.position);
+const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+const line = new THREE.Line(lineGeo, lineMat);
+starGroup.add(line);
+
+scene.add(starGroup);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(10, 10, 10);
+scene.add(pointLight);
+
+camera.position.z = 25;
+
+// Animation Loop
+function animate() {
+    requestAnimationFrame(animate);
+    
+    starGroup.rotation.y += 0.001;
+    starGroup.rotation.x += 0.0005;
+    
+    // Pulsing effect
+    const time = Date.now() * 0.002;
+    stars.forEach((star, i) => {
+        star.scale.setScalar(1 + Math.sin(time + i) * 0.1);
+    });
+    
+    renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_4 -->
+<!-- Interactive UI Overlay -->
+<div class="relative w-full h-full z-20 pointer-events-none">
+<!-- Floating Quote -->
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-md text-center opacity-0 transition-opacity duration-1000" id="floating-quote">
+<p class="font-headline-sm text-headline-sm italic text-on-surface-variant/70">"Every guiding light in my life began with you."</p>
+</div>
+<!-- Simulated Interaction Nodes (Hotspots) -->
+<div class="absolute inset-0 pointer-events-auto">
+<!-- Memory 1 -->
+<button class="absolute top-[35%] left-[45%] w-6 h-6 rounded-full star-pulse cursor-pointer focus:outline-none" onclick="openMemory(1)"></button>
+<!-- Memory 2 -->
+<button class="absolute top-[55%] left-[58%] w-4 h-4 rounded-full star-pulse cursor-pointer focus:outline-none" onclick="openMemory(2)"></button>
+<!-- Memory 3 -->
+<button class="absolute top-[65%] left-[40%] w-5 h-5 rounded-full star-pulse cursor-pointer focus:outline-none" onclick="openMemory(3)"></button>
+<!-- Memory 4 -->
+<button class="absolute top-[45%] left-[30%] w-4 h-4 rounded-full star-pulse cursor-pointer focus:outline-none" onclick="openMemory(4)"></button>
+<!-- Memory 5 -->
+<button class="absolute top-[25%] left-[65%] w-6 h-6 rounded-full star-pulse cursor-pointer focus:outline-none" onclick="openMemory(5)"></button>
+</div>
+<!-- Progress Footer -->
+<div class="absolute bottom-margin-mobile md:bottom-12 left-1/2 -translate-x-1/2 text-center space-y-2">
+<p class="font-label-caps text-label-caps tracking-[0.3em] text-primary/60" id="progress-text">0 OF 5 MEMORIES DISCOVERED</p>
+<div class="w-64 h-px bg-outline-variant/30 mx-auto relative overflow-hidden rounded-full">
+<div class="absolute left-0 top-0 h-full bg-primary transition-all duration-700 ease-out" id="progress-bar" style="width: 0%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: FINAL REVEAL (HIDDEN) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-2xl" id="final-reveal">
+<div class="text-center px-margin-mobile space-y-12 max-w-4xl">
+<div class="space-y-4">
+<span class="material-symbols-outlined text-primary text-6xl animate-pulse" data-icon="auto_awesome">auto_awesome</span>
+<h2 class="font-display-lg-mobile md:text-display-lg font-display-lg gold-shimmer">Every Star In My Life Points Back To You</h2>
+</div>
+<!-- Message Card -->
+<div class="glass-panel p-8 md:p-12 rounded-2xl text-left border border-primary/20 space-y-6 max-w-2xl mx-auto shadow-2xl">
+<p class="font-body-lg text-body-lg text-on-surface/90 leading-relaxed italic">
+                        "Dad, thank you for being the constant in my universe. No matter how far I wander or how dark the night gets, your wisdom and love are the celestial map that guides me home. You've taught me how to burn bright without fading. Happy Father's Day."
+                    </p>
+<div class="pt-4 border-t border-outline-variant/20 flex justify-between items-end">
+<div>
+<p class="font-label-caps text-label-caps text-primary/60 mb-2">WITH ENDLESS LOVE,</p>
+<p class="font-headline-sm text-headline-sm signature-font text-primary">Your Brightest Star</p>
+</div>
+<span class="material-symbols-outlined text-primary/40 text-4xl" data-icon="stars">stars</span>
+</div>
+</div>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 mx-auto" onclick="window.location.reload()">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+                    REPLAY JOURNEY
+                </button>
+</div>
+</div>
+</main>
+<!-- Modal System -->
+<div class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-10 pointer-events-none" id="memory-modal">
+<div class="absolute inset-0 bg-background/40 backdrop-blur-sm pointer-events-auto" onclick="closeMemory()"></div>
+<div class="relative w-full max-w-3xl glass-panel rounded-2xl overflow-hidden pointer-events-auto transform scale-90 opacity-0 transition-all duration-500 shadow-2xl border border-white/10">
+<div class="flex flex-col md:flex-row h-full">
+<div class="w-full md:w-1/2 aspect-square relative">
+<img class="w-full h-full object-cover" data-alt="A warm, cinematic memory photograph of a father and child silhouetted against a golden sunset at the beach. The lighting is ethereal and high-fidelity, using the Constellation of Memories deep navy and gold palette. Soft grain and lens flare add a nostalgic, timeless feel to the high-contrast professional photograph." id="modal-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnqHR5hjrOVhtLnRz0AG4Y3vpp9AIe50SaYZniSKv-Y8pvqYlwD2S_cUjFu6mVpt_ROyk1EnYh_R7KwvEDEd2LVRdB5ZSUAKamp3E_tmIYxoxKaDormyowRUNVinOKP2L59Gr2lOuBtEGX-Yigk6Q2WGzZ4q1G2etKkX9m2-Wvk4yyYYtROPjh72mxhyDGKLwIIEtcnQt4tRZ45AUJBUP7jCsePO68Jtke6DMF_YftFO64IlodJxBbG2kTnJ53K7_-10dG9YoV0Zs"/>
+</div>
+<div class="w-full md:w-1/2 p-glass-padding flex flex-col justify-center space-y-6">
+<span class="material-symbols-outlined text-primary" data-icon="history_edu">history_edu</span>
+<p class="font-headline-sm text-headline-sm italic text-on-surface leading-tight" id="modal-quote"></p>
+<div class="h-px w-12 bg-primary/40"></div>
+<button class="glass-button w-fit px-6 py-2 rounded-full font-label-caps text-label-caps text-primary" onclick="closeMemory()">
+                        RETURN TO STARS
+                    </button>
+</div>
+</div>
+<button class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors" onclick="closeMemory()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+</div>
+<!-- Side Navigation (Shared Component Mapping) -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full w-20 flex-col items-center z-40 py-margin-desktop bg-surface/10 backdrop-blur-xl border-r border-outline-variant/10">
+<div class="mb-12">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="radio_button_checked">radio_button_checked</span>
+</div>
+<div class="flex-1 flex flex-col gap-8">
+<div class="flex flex-col items-center justify-center bg-primary/20 text-primary border-r-2 border-primary py-4 w-full">
+<span class="material-symbols-outlined mb-1" data-icon="hub">hub</span>
+<span class="font-label-caps text-[10px] tracking-widest">MAP</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 py-4 hover:bg-white/5 hover:text-primary transition-all">
+<span class="material-symbols-outlined mb-1" data-icon="history_edu">history_edu</span>
+<span class="font-label-caps text-[10px] tracking-widest">STORY</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 py-4 hover:bg-white/5 hover:text-primary transition-all">
+<span class="material-symbols-outlined mb-1" data-icon="star">star</span>
+<span class="font-label-caps text-[10px] tracking-widest">ECLIPSE</span>
+</div>
+</div>
+</nav>
+<script>
+        const memories = [
+            { quote: "Every guiding light in my life began with you.", img: "placeholder" },
+            { quote: "You taught me to reach for the stars without losing my gravity.", img: "placeholder" },
+            { quote: "A father's hand is the first compass a child ever knows.", img: "placeholder" },
+            { quote: "In the galaxy of my life, you are the North Star.", img: "placeholder" },
+            { quote: "Love is the gravity that keeps our family constellation together.", img: "placeholder" }
+        ];
+
+        let discovered = new Set();
+
+        // Typewriter Effect
+        const text = "For The Brightest Star In My Life";
+        const typewriter = document.getElementById('typewriter-text');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                typewriter.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 80);
+            } else {
+                typewriter.classList.remove('typewriter-cursor');
+                document.getElementById('dad-text').classList.remove('hidden');
+                document.getElementById('btn-container').style.opacity = '1';
+                document.getElementById('btn-container').style.transform = 'translateY(0)';
+            }
+        }
+
+        window.onload = typeWriter;
+
+        function startJourney() {
+            const opening = document.getElementById('section-opening');
+            const journey = document.getElementById('section-journey');
+            
+            opening.style.transition = 'all 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            opening.style.opacity = '0';
+            opening.style.transform = 'scale(1.1)';
+            
+            setTimeout(() => {
+                opening.classList.add('hidden');
+                journey.classList.remove('hidden');
+                journey.style.opacity = '0';
+                setTimeout(() => {
+                    journey.style.opacity = '1';
+                    journey.style.transition = 'opacity 1s ease';
+                }, 100);
+            }, 1500);
+        }
+
+        function openMemory(index) {
+            const modal = document.getElementById('memory-modal');
+            const inner = modal.querySelector('.glass-panel');
+            const quoteEl = document.getElementById('modal-quote');
+            const imgEl = document.getElementById('modal-img');
+            
+            quoteEl.textContent = memories[index-1].quote;
+            // Update discovery
+            discovered.add(index);
+            updateProgress();
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                inner.classList.remove('scale-90', 'opacity-0');
+                inner.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            // Floating quote logic
+            const float = document.getElementById('floating-quote');
+            float.style.opacity = '1';
+            setTimeout(() => float.style.opacity = '0', 3000);
+        }
+
+        function closeMemory() {
+            const modal = document.getElementById('memory-modal');
+            const inner = modal.querySelector('.glass-panel');
+            
+            inner.classList.add('scale-90', 'opacity-0');
+            inner.classList.remove('scale-100', 'opacity-100');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                if (discovered.size === 5) {
+                    showFinalReveal();
+                }
+            }, 500);
+        }
+
+        function updateProgress() {
+            const bar = document.getElementById('progress-bar');
+            const text = document.getElementById('progress-text');
+            const count = discovered.size;
+            bar.style.width = `${(count / 5) * 100}%`;
+            text.textContent = `${count} OF 5 MEMORIES DISCOVERED`;
+        }
+
+        function showFinalReveal() {
+            setTimeout(() => {
+                const final = document.getElementById('final-reveal');
+                final.classList.remove('hidden');
+                final.style.opacity = '0';
+                final.style.transition = 'opacity 2s ease';
+                setTimeout(() => final.style.opacity = '1', 100);
+            }, 1000);
+        }
+
+        // Randomly floating background icons script
+        const icons = ['star', 'auto_awesome', 'flare', 'north_star'];
+        setInterval(() => {
+            if (document.getElementById('section-journey').classList.contains('hidden')) return;
+            const icon = icons[Math.floor(Math.random() * icons.length)];
+            const span = document.createElement('span');
+            span.className = 'material-symbols-outlined fixed text-primary/10 pointer-events-none transition-all duration-10000 z-0';
+            span.style.fontSize = Math.random() * 20 + 10 + 'px';
+            span.style.left = Math.random() * 100 + 'vw';
+            span.style.top = '110vh';
+            span.innerText = icon;
+            document.body.appendChild(span);
+            
+            setTimeout(() => {
+                span.style.transform = `translateY(-120vh) rotate(${Math.random() * 360}deg)`;
+                span.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => span.remove(), 10000);
+        }, 2000);
+    </script>
+</body></html>

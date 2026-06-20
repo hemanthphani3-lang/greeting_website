@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_4 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_4" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_4');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(window.devicePixelRatio);
+container.appendChild(renderer.domElement);
+
+// Constellation Data
+const starCount = 5;
+const stars = [];
+const lines = [];
+const starGroup = new THREE.Group();
+
+// Colors from design system
+const goldColor = new THREE.Color(0xD4AF37);
+
+// Create Stars (Memory Nodes) with wide handcrafted coordinates
+const starPositions = [
+  { x: -5,   y: 5,  z: 1 },    // Star 1 (Center-Top)
+  { x: 6,    y: -2, z: 5 },    // Star 2 (Right-Bottom)
+  { x: -8,   y: -6, z: -5 },   // Star 3 (Left-Bottom)
+  { x: -14,  y: 2,  z: 3 },    // Star 4 (Left-Middle)
+  { x: 13,   y: 9,  z: -3 }    // Star 5 (Right-Top)
+];
+
+for (let i = 0; i < starCount; i++) {
+    const geo = new THREE.SphereGeometry(0.9, 32, 32);
+    const mat = new THREE.MeshPhongMaterial({ 
+        color: goldColor, 
+        emissive: goldColor, 
+        emissiveIntensity: 0.5,
+        transparent: true,
+        opacity: 0.8
+    });
+    const star = new THREE.Mesh(geo, mat);
+    
+    const pos = starPositions[i];
+    star.position.set(pos.x, pos.y, pos.z);
+    
+    stars.push(star);
+    starGroup.add(star);
+}
+
+// Create Connection Lines (Star 5 -> Star 1 -> Star 4 -> Star 3 -> Star 2)
+const lineMat = new THREE.LineBasicMaterial({ color: goldColor, transparent: true, opacity: 0.3 });
+const linePoints = [
+  stars[4].position, // Star 5
+  stars[0].position, // Star 1
+  stars[3].position, // Star 4
+  stars[2].position, // Star 3
+  stars[1].position  // Star 2
+];
+const lineGeo = new THREE.BufferGeometry().setFromPoints(linePoints);
+const line = new THREE.Line(lineGeo, lineMat);
+starGroup.add(line);
+
+scene.add(starGroup);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(10, 10, 10);
+scene.add(pointLight);
+
+camera.position.z = 16;
+
+// URL parameters and mode checking
+const urlParams = new URLSearchParams(window.location.search);
+const isEditMode = urlParams.get('mode') === 'edit';
+
+// Dynamic HTML labels in edit mode
+let labels = [];
+if (isEditMode) {
+  const labelsContainer = document.createElement('div');
+  labelsContainer.className = 'absolute inset-0 pointer-events-none z-10 overflow-hidden';
+  container.appendChild(labelsContainer);
+  
+  for (let i = 0; i < starCount; i++) {
+    const div = document.createElement('div');
+    div.className = 'absolute -translate-x-1/2 -translate-y-1/2 bg-black/60 text-[#f2ca50] border border-white/10 px-1.5 py-0.5 rounded text-[9px] font-bold pointer-events-none select-none';
+    div.innerText = `Star ${i + 1}`;
+    labelsContainer.appendChild(div);
+    labels.push(div);
+  }
+}
+
+// Raycasting Setup
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+// Mouse Hover Effect (Change cursor)
+function onPointerMove(event) {
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(stars);
+  if (intersects.length > 0) {
+    document.body.style.cursor = 'pointer';
+  } else {
+    document.body.style.cursor = 'default';
+  }
+}
+window.addEventListener('pointermove', onPointerMove);
+
+// Mouse Click Event (Raycast & postMessage to React)
+function onPointerDown(event) {
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(stars);
+  if (intersects.length > 0) {
+    const clickedStar = intersects[0].object;
+    const starIdx = stars.indexOf(clickedStar);
+    if (starIdx !== -1) {
+      window.parent.postMessage({ type: 'GALAXY_NODE_CLICK', nodeId: starIdx + 1 }, '*');
+    }
+  }
+}
+window.addEventListener('pointerdown', onPointerDown);
+
+// Sync State Listener (React -> Iframe)
+window.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'UPDATE_STATE') {
+    const discoveredIds = event.data.discoveredIds || [];
+    stars.forEach((star, i) => {
+      const isDiscovered = discoveredIds.includes(i + 1);
+      if (isDiscovered) {
+        star.material.color.setHex(0xf2ca50);
+        star.material.emissive.setHex(0xf2ca50);
+        star.material.emissiveIntensity = 0.8;
+      } else {
+        star.material.color.setHex(0xD4AF37);
+        star.material.emissive.setHex(0xD4AF37);
+        star.material.emissiveIntensity = 0.4;
+      }
+    });
+  }
+});
+
+// Resize check on every frame to handle initial expansion correctly
+let lastWidth = 0;
+let lastHeight = 0;
+function resize() {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || window.innerHeight;
+  if (w !== lastWidth || h !== lastHeight) {
+    lastWidth = w;
+    lastHeight = h;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  }
+}
+
+// Animation Loop
+function animate() {
+    requestAnimationFrame(animate);
+    resize();
+    
+    starGroup.rotation.y += 0.001;
+    starGroup.rotation.x += 0.0005;
+    
+    // Pulsing effect
+    const time = Date.now() * 0.002;
+    stars.forEach((star, i) => {
+        star.scale.setScalar(1 + Math.sin(time + i) * 0.1);
+    });
+    
+    // Position HTML labels above 3D rotating stars (Edit mode only)
+    if (isEditMode && labels.length > 0) {
+      starGroup.updateMatrixWorld(true);
+      const tempV = new THREE.Vector3();
+      stars.forEach((star, i) => {
+        star.getWorldPosition(tempV);
+        tempV.project(camera);
+        const x = (tempV.x * 0.5 + 0.5) * 100;
+        const y = (tempV.y * -0.5 + 0.5) * 100;
+        const label = labels[i];
+        if (label) {
+          label.style.left = `${x}%`;
+          label.style.top = `calc(${y}% + 28px)`;
+        }
+      });
+    }
+    
+    renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener('resize', resize);
+
+// Notify parent that iframe is ready to receive state
+window.parent.postMessage({ type: 'GALAXY_IFRAME_READY' }, '*');
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_4 -->
+</body>
+</html>

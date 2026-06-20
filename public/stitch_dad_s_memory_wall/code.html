@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dad's Memory Wall | A Tribute</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Epilogue:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+        .shimmer-btn:hover::after {
+            left: 100%;
+        }
+        .polaroid-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(var(--tw-rotate)); }
+            50% { transform: translateY(-15px) rotate(calc(var(--tw-rotate) + 2deg)); }
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .modal-enter {
+            animation: modalZoom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes modalZoom {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#c8c6c8",
+                        "on-secondary-container": "#636264",
+                        "surface-container-high": "#e8e8e8",
+                        "tertiary": "#5d5e60",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#dadada",
+                        "tertiary-fixed": "#e2e2e4",
+                        "inverse-primary": "#e9c349",
+                        "primary": "#735c00",
+                        "surface-tint": "#735c00",
+                        "surface-container-low": "#f3f3f4",
+                        "primary-fixed": "#ffe088",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#e9c349",
+                        "on-primary-fixed-variant": "#574500",
+                        "primary-container": "#d4af37",
+                        "on-surface-variant": "#4d4635",
+                        "surface": "#f9f9f9",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "background": "#f9f9f9",
+                        "on-primary-container": "#554300",
+                        "on-primary-fixed": "#241a00",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#434547",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1a1c1c",
+                        "inverse-surface": "#2f3131",
+                        "outline-variant": "#d0c5af",
+                        "outline": "#7f7663",
+                        "tertiary-container": "#b2b3b5",
+                        "on-tertiary-fixed-variant": "#454749",
+                        "tertiary-fixed-dim": "#c6c6c8",
+                        "secondary-container": "#e2dfe1",
+                        "surface-container": "#eeeeee",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed": "#1a1c1d",
+                        "secondary": "#5f5e60",
+                        "secondary-fixed": "#e4e2e4",
+                        "on-secondary-fixed": "#1b1b1d",
+                        "on-secondary-fixed-variant": "#474649",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "unit": "8px",
+                        "margin-desktop": "60px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "message-script": ["Epilogue"],
+                        "body-main": ["Inter"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "label-caps": ["Inter"],
+                        "display-lg": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "message-script": ["20px", {"lineHeight": "1.5", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                        "body-main": ["17px", {"lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-main selection:bg-primary-container/30">
+<!-- Header (Shared Component) -->
+<header class="bg-surface/80 backdrop-blur-md dark:bg-surface-dim/80 fixed top-0 w-full border-b border-outline-variant/30 shadow-sm z-50 transition-all duration-300">
+<div class="flex justify-between items-center px-margin-desktop h-20 max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim cursor-pointer active:scale-95 transition-transform">
+                Dad's Memory Wall
+            </div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-primary border-b-2 border-primary pb-1 font-semibold" href="#story">Our Story</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#gallery">Gallery</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#message">Message</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#legacy">Legacy</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:bg-primary-container/10 p-2 rounded-full transition-all duration-300 cursor-pointer" data-icon="favorite">favorite</button>
+<button class="material-symbols-outlined text-primary hover:bg-primary-container/10 p-2 rounded-full transition-all duration-300 cursor-pointer" data-icon="share">share</button>
+</div>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden pt-20">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-background/90 z-10"></div>
+<div class="w-full h-full bg-cover bg-center opacity-40" data-alt="A cinematic, high-key photograph of a serene lake at dawn with soft golden light reflecting off the water. The atmosphere is peaceful and archival, featuring a soft grain texture and a premium Apple-inspired aesthetic. The colors are muted golds and soft greys, evoking a sense of timeless love and quiet reverence." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7bBTx0MHu1cjP6seMbFiFl6uamC9p2CPukf9FqX9SaQThGa1NCdU_9QmzA9FxH8z6fbP68bp9YrCVDw9AfiW2Y0XPP5XLxGo_o73BqBI-edNNmywONz-xpVxnKU1yHpYP12TEeLMw7TPLP9Tk28XAT16gFT5gqlqVgETmrvbyzaUBoAMM7MFslx4JvElPyIv1sOOonFWm_eAaHO2KUG4X6DGRDc7wvzvOzHY1OzasO7Zs53lDsvDmdAEpEUTgyXRz-fvErlhC-NtQ')"></div>
+</div>
+<div class="relative z-20 text-center px-margin-mobile max-w-4xl mx-auto space-y-8">
+<h1 class="font-display-lg text-display-lg md:text-display-lg text-on-surface leading-tight">
+                To My Hero,<br/><span class="text-primary italic">Arthur Sinclair</span>
+</h1>
+<p class="font-body-main text-body-main text-on-surface-variant max-w-2xl mx-auto">
+                A life lived with purpose, a heart filled with kindness, and a legacy that will forever guide our path. Welcome to our living tribute.
+            </p>
+<div class="pt-8">
+<a class="shimmer-btn inline-flex items-center gap-2 px-10 py-4 bg-primary text-on-primary rounded-full font-semibold transition-all hover:shadow-xl hover:-translate-y-1 active:scale-95" href="#gallery">
+                    Enter the Gallery
+                    <span class="material-symbols-outlined" data-icon="arrow_downward">arrow_downward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Memory Wall Section -->
+<section class="py-section-gap relative overflow-hidden bg-surface-container-low" id="gallery">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<span class="font-label-caps text-label-caps text-primary-container uppercase tracking-widest block mb-2">Exhibit One</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">The Archives</h2>
+</div>
+<!-- Bento-style Gallery with Polaroid Cards -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 min-h-[800px] perspective-1000 items-center">
+<!-- Card 1 -->
+<div class="md:col-span-4 polaroid-float cursor-pointer group" onclick="openModal(this)" style="--tw-rotate: -3deg;">
+<div class="glass-card p-4 pb-12 shadow-2xl transition-transform duration-500 group-hover:scale-105 group-hover:z-30">
+<div class="aspect-[4/5] overflow-hidden bg-surface-container-highest relative">
+<div class="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A vintage-style sepia photograph of a man in his late 20s laughing heartily while holding a newborn baby in a sunny backyard. The lighting is soft and warm, capturing a candid moment of joy. The image is recessed with a subtle inner shadow, giving it a physical polaroid feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbPQG0SRkkK8khmt0R0BdzaPBotGR7E82cTRJG1cJ97uF6R_ozLoRmuqERYiDcrU8DZnzEnnkhoWyGz7SEhPJBPAbKMxG5-EP8y_2osCDJaElDNhuwYYPOVWRNJqOQ2zj_dY__Sv_W1hclScAOWE32bYh4vJjrhLX31YJfA5jT8rBHJ7nY3ufDww1TC_hv1dbbg2pqEaCh6fEoj9_aeJoIWL9dQejKxr-zwf0EEj4hnoZMgQIW4kOhnWpWpLdbJR7AIMifsjc1JZPD"/>
+</div>
+<p class="font-message-script text-center mt-6 text-on-surface-variant">The day we met. 1985.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="md:col-span-3 polaroid-float cursor-pointer group" onclick="openModal(this)" style="--tw-rotate: 2deg; animation-delay: 1s;">
+<div class="glass-card p-3 pb-10 shadow-xl transition-transform duration-500 group-hover:scale-105 group-hover:z-30">
+<div class="aspect-square overflow-hidden bg-surface-container-highest relative">
+<div class="absolute inset-0 shadow-[inset_0_0_15px_rgba(0,0,0,0.1)] z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A sharp, black and white portrait of a middle-aged man with kind eyes and a gentle smile, wearing a professional suit. The lighting is dramatic but soft, reminiscent of museum gallery photography. The background is a clean, neutral grey that emphasizes the subject's character." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBST4ZuvjLKVYXDEoIeVwCIdWTTaVskhStF9E2xtCegLZRFdEyrK6E8dMZr4ZgiaioIlXn0lBRrU_eB1mVeSZc0oSt5OdZw7XP61SplQBfF-ybs1UBx0PC_QMmcFmA38VIDAWSeij4HW3w6zN6Hw82O3eMpd2VdBcCgWVVveWa7tKRwI174ihKpBOix1j1X7qi2C972zEdPrMXT9C_FtgZ_JchF9Wlt0thWsjmYJi8NtKxU9ddBbwTcwr-pfHfKyIJbUJV6uzF1Zye2"/>
+</div>
+<p class="font-message-script text-center mt-4 text-on-surface-variant">Our North Star.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="md:col-span-5 polaroid-float cursor-pointer group" onclick="openModal(this)" style="--tw-rotate: -1deg; animation-delay: 2s;">
+<div class="glass-card p-5 pb-16 shadow-2xl transition-transform duration-500 group-hover:scale-105 group-hover:z-30">
+<div class="aspect-[16/10] overflow-hidden bg-surface-container-highest relative">
+<div class="absolute inset-0 shadow-[inset_0_0_25px_rgba(0,0,0,0.1)] z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A wide-angle panoramic photo of a father and children hiking in a lush mountain range at sunset. The sky is a beautiful palette of oranges and purples. The mood is adventurous and serene, capturing a moment of family bonding in nature. High-end lens flare adds a cinematic touch." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYhG_j6nrE69_LY0WG2bJHHU9aCEU-Caz7MPl54TuQCFHKvtbheVKGrL4MXMHQ4di2FUlMLMT5EYzJzHHabj30VDZ24WM_d09mlZjjdWzZmKT2x25rCAUvEY-2EMfBZ8AQ_oliHa_4ogWZw2NoyddwQoo66cOmSGv6qz5u4MHA8nhY2aHFliF7c7MqcfIuOfj4rM6P3t49mzjpSh7SBo1gV-NU9_hHFoSOEsP0ehRfENdgWut38qXXwSG0dZRd7zSUDeE0lDwik5qW"/>
+</div>
+<p class="font-message-script text-center mt-8 text-on-surface-variant">Exploring the Cascades together.</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="md:col-span-4 md:col-start-2 polaroid-float cursor-pointer group" onclick="openModal(this)" style="--tw-rotate: 4deg; animation-delay: 1.5s;">
+<div class="glass-card p-4 pb-12 shadow-2xl transition-transform duration-500 group-hover:scale-105 group-hover:z-30">
+<div class="aspect-square overflow-hidden bg-surface-container-highest relative">
+<div class="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A warm, indoor scene of a father teaching his daughter how to play the piano. The lighting comes from a nearby window, creating soft highlights on their hands and the polished wood of the instrument. The atmosphere is intimate and instructional, highlighting a legacy of music." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArorFdBDOcu9SOydYZne9C3Vy8rOovzUddONSRRKxO-KTplmBOs39GyLkMc5lAZueC0VFmiREGWjSNJcCxkTAZ2_YNq1rW5hNUQ9TpdSgadntQLWWmhIU07rjn5VhhgzZCZ4FB4rpJ6-kmAgLK8gVcqebjHwYa1XSqFpHk-LaTCKEvsIWIM2yrmeAtVoaU8t7hXyJMdL0UrsrBv4z_4jWsJiU4z0htOym78JqLDaqJvgUzlKk0XaPl354ugPA2bWFjcllOwiZVxrvz"/>
+</div>
+<p class="font-message-script text-center mt-6 text-on-surface-variant">Learning the classics.</p>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="md:col-span-5 polaroid-float cursor-pointer group" onclick="openModal(this)" style="--tw-rotate: -2.5deg; animation-delay: 0.5s;">
+<div class="glass-card p-4 pb-12 shadow-xl transition-transform duration-500 group-hover:scale-105 group-hover:z-30">
+<div class="aspect-[4/3] overflow-hidden bg-surface-container-highest relative">
+<div class="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A candid photo of an elderly father laughing while surrounded by his grandchildren in a bright, modern living room. The space is filled with plants and books, creating a cozy and intellectually stimulating environment. The colors are vibrant and full of life, celebrating a happy retirement." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOznB9K9yoWAW7s5jgjUXFDTXqfhyEGA9uQa3nnurVvIdSao79_RbpECU-_HyfaF0HjdFrf_ZgC1eAoUWOWEAD0kx6q-rSu7mGbvVbclSt1kxcOQO1-XcT5oVjN8FxIrsHi4W03mraEEbBbXUiZwOz9tSLirzjuN1DqsOH0pgU6IfWxeIlKlbM551O9zuk27pdntEnv-ebImOlXva3NljDQJ2WI0Zjy__p8wxizwBicPazPdMf5qu6ULgTGJwFnD4YJ4ZAv7D2hBIY"/>
+</div>
+<p class="font-message-script text-center mt-6 text-on-surface-variant">Laughter that filled the house.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Message Section -->
+<section class="py-section-gap px-margin-mobile" id="message">
+<div class="max-w-4xl mx-auto">
+<div class="glass-card p-12 md:p-24 rounded-[32px] text-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-container via-primary to-primary-container"></div>
+<span class="material-symbols-outlined text-primary text-6xl mb-8 opacity-40" data-icon="format_quote">format_quote</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-8 italic">"A father is neither an anchor to hold us back, nor a sail to take us there, but a guiding light whose love shows us the way."</h3>
+<div class="space-y-6 font-message-script text-message-script text-on-surface-variant text-left md:text-center">
+<p>To the man who taught us that kindness is the ultimate strength and that family is the most precious treasure of all. Your stories remain carved in our hearts, and your wisdom echoes in every decision we make.</p>
+<p>Thank you for the quiet sacrifices, the loud laughs, and the unwavering belief in our potential. This wall is but a small fraction of the giant life you lived.</p>
+</div>
+<div class="mt-12 flex flex-col items-center">
+<div class="w-24 h-px bg-outline-variant mb-4"></div>
+<p class="font-label-caps text-label-caps tracking-widest text-primary uppercase">With Eternal Love, Your Family</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Thank You Section with Animation -->
+<section class="py-section-gap relative min-h-[600px] flex items-center justify-center text-center overflow-hidden" id="legacy">
+<!-- Heart Particle Animation Background -->
+<!-- STITCH_SVG_START:ANIMATION_2 class="absolute inset-0 w-full h-full opacity-30" --><div class="absolute inset-0 w-full h-full opacity-30" id="animated-svg-ANIMATION_2" style="display:block;">const container = document.getElementById('heart-container');
+const colors = ['#d4af37', '#e5c06d', '#f1d292', '#ffffff'];
+
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤';
+    heart.style.position = 'absolute';
+    heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.bottom = '-20px';
+    heart.style.opacity = '0.8';
+    heart.style.transition = `transform ${Math.random() * 2 + 3}s linear, opacity ${Math.random() * 2 + 3}s ease-out`;
+    heart.style.pointerEvents = 'none';
+    heart.style.zIndex = '5';
+    
+    container.appendChild(heart);
+    
+    requestAnimationFrame(() =&gt; {
+        heart.style.transform = `translateY(-${window.innerHeight + 100}px) translateX(${(Math.random() - 0.5) * 100}px) rotate(${Math.random() * 360}deg)`;
+        heart.style.opacity = '0';
+    });
+    
+    setTimeout(() =&gt; {
+        heart.remove();
+    }, 5000);
+}
+
+setInterval(createHeart, 300);</div><!-- STITCH_SVG_END:ANIMATION_2 -->
+<div class="relative z-10 max-w-2xl px-margin-mobile">
+<div class="flex items-center justify-center gap-4 mb-8">
+<div class="h-px w-20 bg-primary-container"></div>
+<span class="material-symbols-outlined text-primary" data-icon="star" style="font-variation-settings: 'FILL' 1">star</span>
+<div class="h-px w-20 bg-primary-container"></div>
+</div>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-6">Thank You, Dad</h2>
+<p class="font-body-main text-body-main text-on-surface-variant mb-12">
+                This Father's Day, we celebrate the man you were and the legacy you've left behind. You will always be our hero.
+            </p>
+<div class="flex flex-wrap justify-center gap-6">
+<button class="shimmer-btn px-8 py-3 glass-card rounded-full text-primary font-semibold flex items-center gap-2 transition-all hover:bg-primary-container/10">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+                    Leave a Message
+                </button>
+<button class="shimmer-btn px-8 py-3 glass-card rounded-full text-primary font-semibold flex items-center gap-2 transition-all hover:bg-primary-container/10">
+<span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span>
+                    Support Legacy Fund
+                </button>
+</div>
+</div>
+</section>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-low dark:bg-surface-dim w-full py-section-gap border-t border-outline-variant/20">
+<div class="flex flex-col items-center justify-center gap-unit max-w-container-max mx-auto px-margin-desktop text-center">
+<div class="font-headline-md text-headline-md text-primary mb-4">Dad's Memory Wall</div>
+<div class="flex gap-8 mb-8">
+<a class="text-on-tertiary-container hover:text-primary transition-colors font-body-main text-body-main" href="#">Privacy Policy</a>
+<a class="text-on-tertiary-container hover:text-primary transition-colors font-body-main text-body-main" href="#">Terms of Service</a>
+<a class="text-on-tertiary-container hover:text-primary transition-colors font-body-main text-body-main" href="#">Contact Us</a>
+</div>
+<p class="text-secondary dark:text-secondary-fixed-dim font-body-main text-body-main">
+                © 2024 Dad's Memory Wall. A curated tribute of love.
+            </p>
+</div>
+</footer>
+<!-- Glass Modal (Hidden by default) -->
+<div class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-on-surface/20 backdrop-blur-md opacity-0 transition-opacity duration-300" id="imageModal">
+<div class="absolute inset-0 cursor-pointer" onclick="closeModal()"></div>
+<div class="relative max-w-5xl w-full glass-card p-2 md:p-4 rounded-xl shadow-2xl modal-enter overflow-hidden">
+<button class="absolute top-4 right-4 z-50 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all text-on-surface" onclick="closeModal()">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="w-full h-full min-h-[409px] max-h-[870px] flex items-center justify-center bg-surface-container" id="modalContent">
+<!-- Image injected here -->
+</div>
+<div class="p-6 text-center font-message-script text-2xl text-on-surface" id="modalCaption"></div>
+</div>
+</div>
+<script>
+        function openModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalContent = document.getElementById('modalContent');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            const imgSrc = element.querySelector('img').src;
+            const imgAlt = element.querySelector('img').getAttribute('data-alt');
+            const caption = element.querySelector('p').innerText;
+            
+            modalContent.innerHTML = `<img src="${imgSrc}" data-alt="${imgAlt}" class="max-h-[716px] object-contain shadow-lg">`;
+            modalCaption.innerText = caption;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 10);
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        // Simple scroll parallax for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector('section div[style*="background-image"]');
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.4}px)`;
+            }
+        });
+    </script>
+</body></html>
