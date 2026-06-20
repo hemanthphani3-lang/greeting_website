@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { MemoryContainer } from '@/components/MemoryContainer';
@@ -31,6 +31,22 @@ const DEFAULT_MEMORY = {
 function CreateMemoryForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        const params = searchParams.toString();
+        const redirectPath = `/create${params ? `?${params}` : ''}`;
+        router.replace(`/login?redirect=${encodeURIComponent(redirectPath)}`);
+      } else {
+        setCheckingAuth(false);
+      }
+    };
+    checkSession();
+  }, [router, searchParams]);
 
   // Template query synchronization
   const queryTemplate = searchParams.get('template') || 'legacy';
@@ -172,6 +188,15 @@ function CreateMemoryForm() {
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
   };
+
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-heritage-white text-primary">
+        <div className="w-10 h-10 border-4 border-gray-100 border-t-primary rounded-full animate-spin" />
+        <p className="text-xs text-primary/40 mt-4">Verifying session...</p>
+      </div>
+    );
+  }
 
   return (
     <>
