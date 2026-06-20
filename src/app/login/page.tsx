@@ -32,6 +32,10 @@ function LoginContent() {
     try {
       if (isSignUp) {
         // Sign Up Flow
+        const redirectOrigin = window.location.origin.includes('localhost')
+          ? 'https://greeting-website-six.vercel.app'
+          : window.location.origin;
+
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
@@ -39,7 +43,7 @@ function LoginContent() {
             data: {
               display_name: name,
             },
-            emailRedirectTo: `${window.location.origin}/auth/callback?redirect=${redirectTo}`,
+            emailRedirectTo: `${redirectOrigin}/auth/callback?redirect=${redirectTo}`,
           },
         });
 
