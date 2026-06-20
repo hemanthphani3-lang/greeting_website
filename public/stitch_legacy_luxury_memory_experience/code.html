@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heritage Surprises | A Legacy for Father's Day</title>
+<meta content="A personalized memory experience crafted specifically for a timeless legacy." name="description"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Style Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-low": "#f3f3f5",
+                "outline-variant": "#c5c6ce",
+                "on-error-container": "#93000a",
+                "secondary": "#7d5702",
+                "surface-dim": "#d9dadc",
+                "on-error": "#ffffff",
+                "on-primary-container": "#7484a6",
+                "on-surface": "#1a1c1d",
+                "inverse-surface": "#2f3132",
+                "surface": "#f9f9fb",
+                "on-secondary-fixed": "#271900",
+                "tertiary-fixed-dim": "#c9c6c1",
+                "on-primary-fixed-variant": "#364765",
+                "on-tertiary": "#ffffff",
+                "error": "#ba1a1a",
+                "on-secondary-fixed-variant": "#5f4100",
+                "tertiary-container": "#1c1c19",
+                "inverse-primary": "#b6c7eb",
+                "on-tertiary-fixed-variant": "#484743",
+                "on-tertiary-container": "#86837f",
+                "surface-container-highest": "#e2e2e4",
+                "primary-fixed-dim": "#b6c7eb",
+                "secondary-fixed": "#ffdeab",
+                "surface-variant": "#e2e2e4",
+                "background": "#f9f9fb",
+                "surface-container-high": "#e8e8ea",
+                "on-primary-fixed": "#081b37",
+                "surface-container": "#edeef0",
+                "primary-container": "#081b37",
+                "secondary-fixed-dim": "#f1be66",
+                "tertiary": "#000000",
+                "primary": "#000000",
+                "inverse-on-surface": "#f0f0f2",
+                "surface-bright": "#f9f9fb",
+                "surface-container-lowest": "#ffffff",
+                "secondary-container": "#fdc970",
+                "surface-tint": "#4e5f7e",
+                "on-primary": "#ffffff",
+                "primary-fixed": "#d7e3ff",
+                "on-surface-variant": "#44474d",
+                "on-background": "#1a1c1d",
+                "error-container": "#ffdad6",
+                "on-secondary-container": "#775300",
+                "tertiary-fixed": "#e6e2dd",
+                "outline": "#75777e",
+                "on-tertiary-fixed": "#1c1c19",
+                "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "gutter": "24px",
+                "unit": "8px",
+                "margin-desktop": "64px",
+                "container-max": "1200px",
+                "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                "body-md": ["Inter"],
+                "display-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "label-caps": ["Inter"],
+                "headline-md": ["Inter"],
+                "display-lg-mobile": ["Inter"],
+                "serif-quote": ["Playfair Display"],
+                "handwritten": ["Playfair Display", "serif"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                "display-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                "serif-quote": ["28px", {"lineHeight": "1.4", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .gold-shimmer {
+            background: linear-gradient(90deg, #7d5702 0%, #ffdeab 50%, #7d5702 100%);
+            background-size: 200% auto;
+            animation: shimmer 3s infinite linear;
+        }
+        .gold-text-gradient {
+            background: linear-gradient(to right, #7d5702, #f1be66, #7d5702);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .float-slow {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(125, 87, 2, 0.1);
+        }
+        .matting-effect {
+            padding: 12px;
+            background: #F7F3EE;
+            box-shadow: 0 10px 40px -10px rgba(8, 27, 55, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed overflow-x-hidden font-body-md text-body-md">
+<!-- Ambient Animation Layer -->
+<!-- STITCH_SHADER_START:ANIMATION_1 class="fixed inset-0 w-full h-full opacity-40 mix-blend-multiply pointer-events-none z-0" -->
+<div class="fixed inset-0 w-full h-full opacity-40 mix-blend-multiply pointer-events-none z-0" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_1" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_1');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+void main() {
+    vec2 uv = v_texCoord;
+    
+    // Create a very subtle, warm radial glow in the center
+    float dist = distance(uv, vec2(0.5, 0.5));
+    float glow = smoothstep(0.8, 0.2, dist);
+    
+    // Background color: Soft Cream (#F7F3EE) -> Heritage White (#F9F9FB)
+    vec3 baseColor = mix(vec3(0.976, 0.953, 0.933), vec3(0.976, 0.976, 0.984), dist);
+    
+    // Subtle "champagne" shimmer
+    float shimmer = sin(uv.x * 10.0 + uv.y * 8.0 + u_time * 0.5) * 0.02;
+    vec3 champagne = vec3(0.831, 0.643, 0.310) * 0.05; // Faint gold
+    
+    vec3 finalColor = baseColor + (glow * champagne) + shimmer;
+    
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_1 -->
+<canvas id="particle-canvas"></canvas>
+<!-- Navigation Shell -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 bg-surface/80 dark:bg-surface-container-highest/80 backdrop-blur-xl shadow-sm">
+<div class="font-display-lg text-display-lg-mobile md:text-display-lg tracking-tighter text-primary">Heritage Surprises</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-opacity duration-300" href="#">Our Story</a>
+<a class="font-body-md text-body-md text-primary dark:text-primary-fixed border-b-2 border-secondary font-bold pb-1" href="#">Experiences</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-opacity duration-300" href="#">Legacy</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-caps text-label-caps hover:opacity-80 transition-all duration-300 shadow-sm">Create Legacy</button>
+</nav>
+<main class="relative z-10 pt-32 pb-24 overflow-hidden">
+<!-- Floating Decoratives -->
+<div class="absolute top-40 right-10 md:right-32 w-48 h-64 float-slow opacity-90 hidden lg:block" style="z-index: 20;">
+<div class="relative w-full h-full">
+<!-- Luxury Envelope -->
+<div class="bg-[#F7F3EE] w-full h-32 shadow-2xl relative rounded-sm transform rotate-6 border border-secondary/10 flex items-center justify-center">
+<div class="absolute -top-1 w-full h-1 bg-secondary/20 rounded-full"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-secondary rounded-full flex items-center justify-center shadow-lg border-2 border-secondary-fixed">
+<span class="material-symbols-outlined text-white text-xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div class="absolute -right-4 top-1/2 -translate-y-1/2 h-16 w-1 bg-primary-container rounded-full opacity-20"></div>
+</div>
+</div>
+</div>
+<div class="absolute top-64 left-10 md:left-24 w-64 space-y-8 hidden lg:block" style="z-index: 20;">
+<!-- Polaroid Stack -->
+<div class="matting-effect transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 cursor-pointer">
+<div class="w-full h-48 overflow-hidden bg-surface-dim relative">
+<img class="w-full h-full object-cover" data-alt="A vintage style black and white photograph of a father and child laughing together in a sun-drenched park, with soft film grain and classic editorial lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD24QFVjKLQsgwQk4u99larqufqB37F1mD5OYCPGkzt4-tPk5uDQEFm4VrRZYJ_vNM8O2q75gd1F8Lx6DGvg0d0vhTGJRPMnYNeXPAwBr7ShAZObx-6z2WtgE18MVAtSWuwbAeEBCP7zgUJNnbNdRI--dLBy3L1TJdThyRxGLRqtqW-NzycakyartG2rC_0g685PbdaTD13zT283LHJPYJ2A24sM2x5BiuUr0Ht1f35RLzEfGHzarG9K-g9SE0RraI6_gkezEawaTA"/>
+</div>
+<p class="pt-4 font-handwritten italic text-on-surface-variant opacity-70">The best memories...</p>
+</div>
+<div class="relative pl-12">
+<span class="material-symbols-outlined absolute left-0 top-0 text-secondary-fixed-dim text-4xl transform rotate-45">attach_file</span>
+<div class="bg-surface-container-low p-6 shadow-xl border-l-4 border-secondary/30 transform rotate-1">
+<p class="font-handwritten text-on-surface-variant leading-relaxed text-lg">"To the man who taught me everything about kindness and strength."</p>
+</div>
+</div>
+</div>
+<div class="absolute bottom-40 right-20 w-56 hidden lg:block" style="z-index: 20;">
+<div class="bg-white/80 p-8 shadow-2xl backdrop-blur-md transform rotate-2 hover:rotate-0 transition-transform duration-700">
+<div class="flex gap-2 mb-4">
+<div class="w-1.5 h-1.5 bg-secondary rounded-full"></div>
+<div class="w-1.5 h-1.5 bg-secondary rounded-full opacity-50"></div>
+<div class="w-1.5 h-1.5 bg-secondary rounded-full opacity-25"></div>
+</div>
+<p class="font-handwritten text-on-surface-variant">A handwritten note for the greatest father...</p>
+<div class="mt-6 flex justify-end">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-3xl">stylus</span>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -bottom-10 right-4 text-secondary/30 text-5xl float-slow" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<!-- Hero Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center flex flex-col items-center">
+<!-- 3D Gift Badge -->
+<div class="relative w-64 h-64 mb-8 reveal" id="hero-badge">
+<div class="absolute inset-0 bg-secondary/5 rounded-full blur-3xl animate-pulse"></div>
+<div class="absolute inset-0 rounded-full border border-secondary/20 p-2">
+<div class="w-full h-full rounded-full border-2 border-dashed border-secondary/40 flex items-center justify-center">
+<!-- STITCH_THREEJS_START:ANIMATION_2 class="w-48 h-48" -->
+<div class="w-48 h-48" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_2" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_2');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+camera.position.z = 5;
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(window.devicePixelRatio);
+container.appendChild(renderer.domElement);
+
+// Luxury Gift Icon: A stylized Cube (Gift Box) with a Ribbon
+const giftGroup = new THREE.Group();
+
+// Box
+const boxGeo = new THREE.BoxGeometry(2, 2, 2);
+const boxMat = new THREE.MeshPhongMaterial({ 
+    color: 0x031632, // Midnight Navy
+    shininess: 100 
+});
+const box = new THREE.Mesh(boxGeo, boxMat);
+giftGroup.add(box);
+
+// Ribbon (Gold)
+const ribbonVerticalGeo = new THREE.BoxGeometry(0.4, 2.1, 2.1);
+const ribbonHorizontalGeo = new THREE.BoxGeometry(2.1, 0.4, 2.1);
+const ribbonMat = new THREE.MeshPhongMaterial({ 
+    color: 0xD4A44F, // Warm Gold
+    shininess: 150 
+});
+
+const vRibbon = new THREE.Mesh(ribbonVerticalGeo, ribbonMat);
+const hRibbon = new THREE.Mesh(ribbonHorizontalGeo, ribbonMat);
+giftGroup.add(vRibbon);
+giftGroup.add(hRibbon);
+
+// Bow (Spheres as stylized bow)
+const bowGeo = new THREE.SphereGeometry(0.35, 32, 32);
+const bow1 = new THREE.Mesh(bowGeo, ribbonMat);
+bow1.position.set(0.3, 1.1, 0);
+const bow2 = new THREE.Mesh(bowGeo, ribbonMat);
+bow2.position.set(-0.3, 1.1, 0);
+giftGroup.add(bow1);
+giftGroup.add(bow2);
+
+scene.add(giftGroup);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xD4A44F, 1, 100);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
+
+// Floating Animation
+function animate() {
+    requestAnimationFrame(animate);
+    
+    giftGroup.rotation.y += 0.005;
+    giftGroup.position.y = Math.sin(Date.now() * 0.001) * 0.2;
+    
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_2 -->
+</div>
+</div>
+</div>
+<!-- Titles -->
+<div class="space-y-4 max-w-3xl reveal" style="transition-delay: 200ms;">
+<p class="font-handwritten italic text-serif-quote text-secondary-fixed-dim">Just for you</p>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary uppercase tracking-tight">
+                    You have received a
+                </h1>
+<h2 class="font-serif-quote text-5xl md:text-7xl italic gold-text-gradient py-2">
+                    surprise website!
+                </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto pt-4">
+                    A personalized memory experience has been crafted especially for you, capturing the timeless moments that define our legacy.
+                </p>
+</div>
+<!-- CTA -->
+<div class="mt-12 reveal" style="transition-delay: 400ms;">
+<button class="group relative bg-primary-container text-on-primary-fixed-variant px-12 py-5 rounded-full font-label-caps text-label-caps text-white tracking-[0.2em] shadow-2xl transition-all duration-500 hover:scale-105 active:scale-95 border-2 border-secondary-fixed/50 overflow-hidden">
+<span class="relative z-10 flex items-center gap-3">
+                        OPEN YOUR SURPRISE <span class="material-symbols-outlined text-sm">spark</span>
+</span>
+<div class="absolute inset-0 gold-shimmer opacity-20 group-hover:opacity-40 transition-opacity"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</button>
+</div>
+</section>
+<!-- Features Bento Section -->
+<section class="mt-40 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop reveal" style="transition-delay: 600ms;">
+<div class="glass-card rounded-[24px] p-8 md:p-12 shadow-2xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+<!-- Card 1 -->
+<div class="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-6 group-hover:bg-secondary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Private &amp; Secure</h3>
+<p class="font-body-md text-on-surface-variant">Your memories are a sacred family vault. Only for you and those you choose to invite.</p>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-6 group-hover:bg-secondary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Made with Love</h3>
+<p class="font-body-md text-on-surface-variant">Created especially for you with curated messages, photos, and deep gratitude.</p>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col items-center text-center group hover:-translate-y-2 transition-transform duration-500">
+<div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mb-6 group-hover:bg-secondary-fixed-dim transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Beautiful Experience</h3>
+<p class="font-body-md text-on-surface-variant">Watch your legacy unfold in a digital gallery designed to make memories come alive.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-12 px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-6 bg-surface-container-low dark:bg-surface-container-lowest opacity-90 hover:opacity-100 transition-opacity">
+<div class="font-display-lg text-display-lg-mobile text-primary">Heritage Surprises</div>
+<div class="flex flex-col md:flex-row items-center gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest hover:text-secondary transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest hover:text-secondary transition-colors duration-300" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest hover:text-secondary transition-colors duration-300" href="#">Contact Support</a>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">© 2024 Heritage Surprises. Crafted for timeless legacies.</div>
+</footer>
+<!-- Micro-interactions & Particle Script -->
+<script>
+        // Reveal on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Floating Gold Particles & Hearts
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(type) {
+                this.type = type; // 'gold' or 'heart'
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 100;
+                this.size = this.type === 'gold' ? Math.random() * 3 + 1 : Math.random() * 15 + 10;
+                this.speed = Math.random() * 1 + 0.5;
+                this.velX = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = Math.random() * 2 - 1;
+            }
+
+            update() {
+                this.y -= this.speed;
+                this.x += this.velX;
+                this.rotation += this.rotSpeed;
+                if (this.y < -50) this.reset();
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+
+                if (this.type === 'gold') {
+                    ctx.fillStyle = '#f1be66';
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillStyle = '#7d5702';
+                    ctx.beginPath();
+                    // Draw tiny simple heart
+                    const s = this.size / 2;
+                    ctx.moveTo(0, s/2);
+                    ctx.bezierCurveTo(s/2, -s/2, s, s/4, 0, s);
+                    ctx.bezierCurveTo(-s, s/4, -s/2, -s/2, 0, s/2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < 40; i++) {
+                particles.push(new Particle('gold'));
+            }
+            for (let i = 0; i < 15; i++) {
+                particles.push(new Particle('heart'));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+
+        // Parallax effect for scrapbook elements
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 30;
+            const y = (e.clientY / window.innerHeight - 0.5) * 30;
+            
+            document.querySelectorAll('.float-slow').forEach(el => {
+                el.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+            });
+        });
+    </script>
+</body></html>

@@ -2040,39 +2040,111 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       )}
 
       {/* SURPRISE INTRO COVER (Only when published/viewed) */}
+      {/* SURPRISE INTRO COVER (Only when published/viewed) */}
       <AnimatePresence>
         {!opened && !isEditable && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -40 }}
             transition={{ duration: 0.6 }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-white"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-[#f9f9fb] text-[#1a1c1d] overflow-hidden selection:bg-[#ffdeab]"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-rose-500/5 via-transparent to-blue-500/5 -z-10" />
-            <div className="text-center space-y-8 max-w-md">
-              <motion.div
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-20 h-20 bg-secondary-light/40 border border-secondary-light rounded-full flex items-center justify-center text-secondary text-3xl mx-auto shadow-md"
-              >
-                🎁
-              </motion.div>
-              <div className="space-y-3">
-                <h1 className="text-3xl md:text-4xl font-sans font-bold text-primary tracking-tight leading-tight">
-                  You have received a <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-accent font-serif italic font-normal">
-                    surprise website!
-                  </span>
-                </h1>
-                <p className="text-xs text-primary-light/60">A personalized memory layout has been generated especially for you.</p>
+            <style dangerouslySetInnerHTML={{__html: `
+              @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+              
+              .gold-shimmer {
+                  background: linear-gradient(90deg, #7d5702 0%, #ffdeab 50%, #7d5702 100%);
+                  background-size: 200% auto;
+                  animation: shimmer 3s infinite linear;
+              }
+              @keyframes shimmer {
+                  0% { background-position: -200% center; }
+                  100% { background-position: 200% center; }
+              }
+              .gold-text-gradient {
+                  background: linear-gradient(to right, #7d5702, #f1be66, #7d5702);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+              }
+              .float-slow {
+                  animation: float 6s ease-in-out infinite;
+              }
+              @keyframes float {
+                  0%, 100% { transform: translateY(0) rotate(0deg); }
+                  50% { transform: translateY(-20px) rotate(2deg); }
+              }
+            `}} />
+
+            {/* Ambient Background Shader Iframe */}
+            <iframe 
+              src="/stitch_legacy_luxury_memory_experience/shader.html" 
+              className="absolute inset-0 w-full h-full opacity-40 mix-blend-multiply pointer-events-none z-0 border-none"
+              title="Ambient Background Shader"
+            />
+
+            {/* Floating Decorative Elements */}
+            {/* Left Polaroid Stack */}
+            <div className="absolute top-[20%] left-[8%] w-56 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 cursor-pointer hidden lg:block z-20 p-3 bg-[#F7F3EE] shadow-2xl border border-[#7d5702]/10">
+              <div className="w-full h-40 overflow-hidden bg-gray-200">
+                <img 
+                  className="w-full h-full object-cover grayscale-[20%]" 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD24QFVjKLQsgwQk4u99larqufqB37F1mD5OYCPGkzt4-tPk5uDQEFm4VrRZYJ_vNM8O2q75gd1F8Lx6DGvg0d0vhTGJRPMnYNeXPAwBr7ShAZObx-6z2WtgE18MVAtSWuwbAeEBCP7zgUJNnbNdRI--dLBy3L1TJdThyRxGLRqtqW-NzycakyartG2rC_0g685PbdaTD13zT283LHJPYJ2A24sM2x5BiuUr0Ht1f35RLzEfGHzarG9K-g9SE0RraI6_gkezEawaTA" 
+                  alt="Vintage Father & Child laughing"
+                />
+              </div>
+              <p className="pt-3 font-serif italic text-xs text-[#7d5702]/70 text-center">The best memories...</p>
+            </div>
+
+            {/* Right Envelope Decorative */}
+            <div className="absolute top-[20%] right-[10%] w-48 float-slow opacity-90 hidden lg:block z-20">
+              <div className="bg-[#F7F3EE] w-full h-28 shadow-2xl relative rounded-sm transform rotate-6 border border-[#7d5702]/10 flex items-center justify-center">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-[#7d5702] rounded-full flex items-center justify-center shadow-lg border-2 border-[#ffdeab]">
+                  <Heart className="w-5 h-5 text-white fill-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Main Interactive Content */}
+            <div className="relative z-20 text-center px-6 max-w-4xl mx-auto space-y-8 flex flex-col items-center">
+              {/* 3D Gift Box Badge */}
+              <div className="relative w-56 h-56 flex items-center justify-center">
+                <div className="absolute inset-0 bg-[#7d5702]/5 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute inset-0 rounded-full border border-[#7d5702]/20 p-2">
+                  <div className="w-full h-full rounded-full border-2 border-dashed border-[#7d5702]/40 flex items-center justify-center overflow-hidden">
+                    <iframe 
+                      src="/stitch_legacy_luxury_memory_experience/gift.html" 
+                      className="w-44 h-44 border-none pointer-events-none"
+                      title="3D Gift Box"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="pt-6">
+              {/* Cover Headers */}
+              <div className="space-y-4 max-w-2xl">
+                <p className="font-serif italic text-lg sm:text-xl text-[#7d5702] tracking-wide">Just for you</p>
+                <h1 className="font-sans text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#1a1c1d] leading-none">
+                  You have received a
+                </h1>
+                <h2 className="font-serif italic text-4xl sm:text-6xl gold-text-gradient font-bold leading-tight">
+                  surprise website!
+                </h2>
+                <p className="font-sans text-sm sm:text-base text-[#44474d] max-w-xl mx-auto pt-4 leading-relaxed">
+                  A personalized memory experience has been crafted especially for you, capturing the timeless moments that define our legacy.
+                </p>
+              </div>
+
+              {/* Action Button CTA */}
+              <div className="pt-4">
                 <button
                   onClick={handleOpenSurprise}
-                  className="px-10 py-5 bg-primary text-white font-bold uppercase tracking-wider text-xs rounded-full inline-flex items-center gap-2 hover:scale-105 active:scale-95 hover:shadow-2xl transition-all cursor-pointer"
+                  className="group relative bg-[#081b37] text-white px-10 py-4 rounded-full font-sans text-xs font-bold tracking-[0.2em] uppercase shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 border-2 border-[#ffdeab]/50 overflow-hidden cursor-pointer"
                 >
-                  Open Surprise <Sparkles className="w-4.5 h-4.5 text-accent fill-accent" />
+                  <span className="relative z-10 flex items-center gap-2">
+                    OPEN YOUR SURPRISE <Sparkles className="w-4 h-4 text-[#ffdeab] fill-[#ffdeab]" />
+                  </span>
+                  <div className="absolute inset-0 gold-shimmer opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                 </button>
               </div>
             </div>
