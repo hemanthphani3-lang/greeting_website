@@ -123,8 +123,7 @@ export default function Home() {
                     <span className="px-3 py-1 rounded-full bg-secondary-light text-secondary font-bold text-[10px] tracking-widest uppercase">
                       BIRTHDAY
                     </span>
-                    <h4 className="text-white font-serif italic text-2xl mt-2 mb-1">Happy Birthday, Dad!</h4>
-                    <p className="text-white/80 text-xs font-sans">Created by Emily • 5 Photos</p>
+                    <h4 className="text-white font-serif italic text-2xl mt-2">Happy Birthday, Dad!</h4>
                   </div>
                 </div>
               </div>
