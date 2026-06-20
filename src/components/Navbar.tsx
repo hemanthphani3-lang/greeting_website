@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Sparkles, Menu, X, ArrowRight } from 'lucide-react';
+import { Sparkles, Menu, X, LogIn } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,10 +60,10 @@ export const Navbar: React.FC = () => {
             Dashboard
           </Link>
           <Link
-            href="/create"
-            className="inline-flex items-center gap-1 bg-primary text-white text-[12px] font-bold tracking-wider uppercase px-5 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 hover:shadow-lg"
+            href="/login"
+            className="inline-flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold tracking-wider uppercase px-5 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 hover:shadow-lg"
           >
-            Create Memory <ArrowRight className="w-3.5 h-3.5" />
+            Login <LogIn className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -101,11 +101,11 @@ export const Navbar: React.FC = () => {
             Dashboard
           </Link>
           <Link
-            href="/create"
+            href="/login"
             onClick={() => setIsOpen(false)}
             className="inline-flex items-center justify-center gap-2 bg-primary text-white text-[13px] font-bold tracking-wider uppercase py-3.5 rounded-2xl transition-all duration-200"
           >
-            Create Memory <ArrowRight className="w-4 h-4" />
+            Login <LogIn className="w-4 h-4" />
           </Link>
         </div>
       )}
