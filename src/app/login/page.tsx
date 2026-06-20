@@ -79,9 +79,6 @@ function LoginContent() {
     }
   };
 
-  const handleGuestLogin = () => {
-    router.push(redirectTo);
-  };
 
   return (
     <div className="w-full max-w-md">
@@ -259,23 +256,7 @@ function LoginContent() {
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="relative my-6 flex items-center justify-center">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200/50"></div>
-          </div>
-          <span className="relative bg-[#fafafc] px-4 text-[10px] font-bold uppercase tracking-wider text-primary/30">
-            or
-          </span>
-        </div>
 
-        {/* Guest access */}
-        <button
-          onClick={handleGuestLogin}
-          className="w-full py-3.5 bg-white/60 hover:bg-white border border-gray-200/40 text-primary hover:border-gray-300 text-xs font-bold uppercase tracking-wider rounded-xl inline-flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow active:scale-98 cursor-pointer"
-        >
-          Continue as Guest <ArrowRight className="w-4 h-4" />
-        </button>
       </motion.div>
     </div>
   );
