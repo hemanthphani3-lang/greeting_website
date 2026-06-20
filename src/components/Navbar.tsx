@@ -2,11 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Sparkles, Menu, X, LogIn } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Sparkles, Menu, X, LogIn, LogOut } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,8 +21,31 @@ export const Navbar: React.FC = () => {
       }
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Initial session check
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
+    checkSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      subscription.unsubscribe();
+    };
   }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsOpen(false);
+    router.push('/');
+    router.refresh();
+  };
 
   return (
     <nav
@@ -59,12 +86,21 @@ export const Navbar: React.FC = () => {
           >
             Dashboard
           </Link>
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold tracking-wider uppercase px-5 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 hover:shadow-lg"
-          >
-            Login <LogIn className="w-3.5 h-3.5" />
-          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1.5 bg-accent hover:bg-accent/90 text-white text-[12px] font-bold tracking-wider uppercase px-5 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 hover:shadow-lg cursor-pointer animate-in fade-in duration-200"
+            >
+              Logout <LogOut className="w-3.5 h-3.5" />
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-1.5 bg-primary text-white text-[12px] font-bold tracking-wider uppercase px-5 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 hover:shadow-lg"
+            >
+              Login <LogIn className="w-3.5 h-3.5" />
+            </Link>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -100,13 +136,22 @@ export const Navbar: React.FC = () => {
           >
             Dashboard
           </Link>
-          <Link
-            href="/login"
-            onClick={() => setIsOpen(false)}
-            className="inline-flex items-center justify-center gap-2 bg-primary text-white text-[13px] font-bold tracking-wider uppercase py-3.5 rounded-2xl transition-all duration-200"
-          >
-            Login <LogIn className="w-4 h-4" />
-          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center justify-center gap-2 bg-accent text-white text-[13px] font-bold tracking-wider uppercase py-3.5 rounded-2xl transition-all duration-200 cursor-pointer animate-in fade-in duration-200"
+            >
+              Logout <LogOut className="w-4 h-4" />
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setIsOpen(false)}
+              className="inline-flex items-center justify-center gap-2 bg-primary text-white text-[13px] font-bold tracking-wider uppercase py-3.5 rounded-2xl transition-all duration-200"
+            >
+              Login <LogIn className="w-4 h-4" />
+            </Link>
+          )}
         </div>
       )}
     </nav>
