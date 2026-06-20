@@ -94,12 +94,7 @@ export default function Home() {
                 >
                   Create Memory <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link
-                  href="#templates"
-                  className="px-8 py-4 bg-white/70 backdrop-blur-md border border-gray-200/80 text-primary rounded-2xl font-bold hover:bg-white/95 transition-all duration-300 inline-flex items-center justify-center gap-2 text-sm uppercase tracking-wider shadow-sm"
-                >
-                  View Demo
-                </Link>
+
               </motion.div>
             </motion.div>
 
