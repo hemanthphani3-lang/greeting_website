@@ -17,7 +17,12 @@ import {
   Copy,
   Layers,
   ArrowRight,
-  Upload
+  Upload,
+  Calendar,
+  Palette,
+  Link,
+  ChevronDown,
+  Wand2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/lib/supabase';
@@ -1948,67 +1953,105 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
       {/* Builder Top controls panel */}
       {isEditable && (
-        <div className="fixed top-6 left-6 right-6 z-50 flex flex-col md:flex-row justify-between items-center max-w-[1120px] mx-auto bg-white/80 backdrop-blur-md border border-gray-200/50 shadow-lg px-6 py-4 rounded-3xl gap-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 bg-yellow-500 rounded-full animate-pulse" />
-            <span className="text-xs font-bold uppercase tracking-wider text-primary">Live Builder</span>
+        <div className="fixed top-6 left-6 right-6 z-[100] max-w-[1120px] mx-auto w-[calc(100%-3rem)] bg-[#fffdf9]/70 backdrop-blur-xl border border-amber-200/50 shadow-apple px-8 py-5 rounded-[2.5rem] flex flex-col lg:flex-row justify-between items-center gap-6 transition-bezier animate-in fade-in slide-in-from-top-6 duration-300">
+          
+          {/* Left Info Section */}
+          <div className="flex items-center gap-4 shrink-0">
+            <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-100/50 to-orange-100/70 border border-amber-200/40 flex items-center justify-center text-accent shadow-sm animate-pulse-slow">
+              <Wand2 className="w-6 h-6 text-accent fill-accent/10" />
+            </div>
+            <div className="text-left">
+              <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block">Live Builder</span>
+              <h4 className="font-sans font-bold text-lg text-primary tracking-tight leading-none mt-1 flex items-center gap-1.5">
+                Create Magic <Sparkles className="w-4 h-4 text-accent fill-accent" />
+              </h4>
+              <p className="text-[11px] text-primary-light/60 font-medium mt-1">Build a surprise they'll never forget 💛</p>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-primary">
+          {/* Form Controls Section */}
+          <div className="flex flex-wrap lg:flex-nowrap items-center gap-5 w-full lg:w-auto">
+            
             {/* Occasion Selector */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-bold text-primary/40 uppercase tracking-wider">Occasion:</span>
-              <select
-                value={selectedOccasion}
-                onChange={(e) => setSelectedOccasion(e.target.value)}
-                className="text-xs bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none"
-              >
-                <option value="fathersday">Father's Day</option>
-                <option value="mothersday">Mother's Day</option>
-                <option value="birthday">Birthday</option>
-                <option value="anniversary">Anniversary</option>
-                <option value="friendship">Friendship Day</option>
-                <option value="custom">Custom Occasion</option>
-              </select>
+            <div className="flex-1 min-w-[170px] space-y-1.5 text-left">
+              <label className="text-[10px] font-bold text-primary/40 uppercase tracking-widest block ml-1">
+                Occasion
+              </label>
+              <div className="relative">
+                <Calendar className="w-4 h-4 text-accent absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <select
+                  value={selectedOccasion}
+                  onChange={(e) => setSelectedOccasion(e.target.value)}
+                  className="w-full bg-white border border-amber-200/40 hover:border-amber-300/60 pl-10 pr-8 py-2.5 rounded-2xl shadow-sm text-xs font-semibold text-primary-light font-sans focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/20 transition-all appearance-none cursor-pointer"
+                >
+                  <option value="fathersday">Father's Day</option>
+                  <option value="mothersday">Mother's Day</option>
+                  <option value="birthday">Birthday</option>
+                  <option value="anniversary">Anniversary</option>
+                  <option value="friendship">Friendship Day</option>
+                  <option value="custom">Custom Occasion</option>
+                </select>
+                <ChevronDown className="w-3.5 h-3.5 text-primary/40 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
             </div>
 
-            {/* Template Selector */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-bold text-primary/40 uppercase tracking-wider">Theme:</span>
-              <select
-                value={selectedTemplate}
-                onChange={(e) => setSelectedTemplate(e.target.value)}
-                className="text-xs bg-gray-50 border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none"
-              >
-                <option value="reveal">Memory Wall</option>
-                <option value="legacy">Legacy Timeline</option>
-                <option value="scrapbook">Constellation of Memories</option>
-                <option value="glass">Heritage Letter</option>
-              </select>
+            {/* Theme Selector */}
+            <div className="flex-1 min-w-[170px] space-y-1.5 text-left">
+              <label className="text-[10px] font-bold text-primary/40 uppercase tracking-widest block ml-1">
+                Theme
+              </label>
+              <div className="relative">
+                <Palette className="w-4 h-4 text-secondary absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <select
+                  value={selectedTemplate}
+                  onChange={(e) => setSelectedTemplate(e.target.value)}
+                  className="w-full bg-white border border-amber-200/40 hover:border-amber-300/60 pl-10 pr-8 py-2.5 rounded-2xl shadow-sm text-xs font-semibold text-primary-light font-sans focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/20 transition-all appearance-none cursor-pointer"
+                >
+                  <option value="reveal">Memory Wall</option>
+                  <option value="legacy">Legacy Timeline</option>
+                  <option value="scrapbook">Constellation of Memories</option>
+                  <option value="glass">Heritage Letter</option>
+                </select>
+                <ChevronDown className="w-3.5 h-3.5 text-primary/40 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
             </div>
 
             {/* Music Input */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] font-bold text-primary/40 uppercase tracking-wider">Music URL:</span>
-              <input
-                type="text"
-                value={musicUrl}
-                onChange={(e) => setMusicUrl(e.target.value)}
-                placeholder="Direct MP3 or YouTube link"
-                className="text-xs bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1 w-36 md:w-44 focus:outline-none"
-              />
+            <div className="flex-[1.5] min-w-[220px] space-y-1.5 text-left">
+              <label className="text-[10px] font-bold text-primary/40 uppercase tracking-widest block ml-1">
+                Music URL (Optional)
+              </label>
+              <div className="relative">
+                <Link className="w-4 h-4 text-primary/40 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={musicUrl}
+                  onChange={(e) => setMusicUrl(e.target.value)}
+                  placeholder="Direct MP3 or YouTube link"
+                  className="w-full bg-white border border-amber-200/40 hover:border-amber-300/60 pl-10 pr-4 py-2.5 rounded-2xl shadow-sm text-xs font-semibold text-primary-light font-sans focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/20 transition-all placeholder-primary-light/30"
+                />
+              </div>
             </div>
+
           </div>
 
-          <div>
+          {/* Action Button Section */}
+          <div className="shrink-0 w-full lg:w-auto">
             <button
               onClick={handlePublishClick}
               disabled={isPublishing}
-              className="bg-primary hover:bg-primary-light text-white text-[11px] font-bold uppercase tracking-wider px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-transform disabled:opacity-50 inline-flex items-center gap-1.5 cursor-pointer shadow-md"
+              className="w-full lg:w-auto px-8 py-4 bg-gradient-to-r from-primary to-primary-light text-white text-xs font-extrabold uppercase tracking-wider rounded-full hover:scale-103 active:scale-97 transition-all duration-300 disabled:opacity-50 inline-flex items-center justify-center gap-2 cursor-pointer border border-amber-400/30 shadow-[0_4px_20px_-4px_rgba(251,191,36,0.25)] hover:shadow-[0_8px_25px_-4px_rgba(251,191,36,0.4)]"
             >
-              Publish Surprise <Sparkles className="w-3.5 h-3.5 text-accent fill-accent" />
+              {isPublishing ? (
+                <>Publishing...</>
+              ) : (
+                <>
+                  Publish Surprise <Sparkles className="w-3.5 h-3.5 text-accent fill-accent animate-pulse" />
+                </>
+              )}
             </button>
           </div>
+
         </div>
       )}
 
