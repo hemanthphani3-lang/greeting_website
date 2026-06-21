@@ -120,10 +120,15 @@ function CreateMemoryForm() {
         .replace(/[^a-z0-9]/g, '-');
       const slug = `${cleanName}-${Math.random().toString(36).substring(2, 7)}`;
 
+      // Get current logged-in user
+      const { data: { session } } = await supabase.auth.getSession();
+      const userId = session?.user?.id || null;
+
       // Insert core memory details
       const { data: memoryData, error: memoryError } = await supabase
         .from('memories')
         .insert({
+          user_id: userId,
           recipient_name: updatedMemory.recipient_name || 'Thomas Harrison',
           sender_name: updatedMemory.sender_name || null,
           message: updatedMemory.message || '',

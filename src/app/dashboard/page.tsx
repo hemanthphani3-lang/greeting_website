@@ -65,43 +65,91 @@ export default function Dashboard() {
     setLoading(true);
     try {
       if (typeof window === 'undefined') return;
+
+      const { data: { session } } = await supabase.auth.getSession();
+      const currentUser = session?.user || null;
+
       const stored = localStorage.getItem('memoryverse_created_ids');
-      const ids: string[] = stored ? JSON.parse(stored) : [];
+      const localIds: string[] = stored ? JSON.parse(stored) : [];
 
-      if (ids.length === 0) {
-        setMemories([]);
-        setTotalViews(0);
-        setTotalShares(0);
-        setLoading(false);
-        return;
-      }
+      if (currentUser) {
+        // If there are local IDs, associate them with the user account
+        if (localIds.length > 0) {
+          try {
+            await supabase
+              .from('memories')
+              .update({ user_id: currentUser.id })
+              .in('id', localIds)
+              .is('user_id', null);
+            
+            // Clear local storage once migrated
+            localStorage.removeItem('memoryverse_created_ids');
+          } catch (migrateErr) {
+            console.error('Error migrating local memories to account:', migrateErr);
+          }
+        }
 
-      // Fetch memory records including their related views and shares counts
-      const { data, error } = await supabase
-        .from('memories')
-        .select(`
-          *,
-          memory_photos(url),
-          memory_views(id),
-          memory_shares(id)
-        `)
-        .in('id', ids)
-        .order('created_at', { ascending: false });
+        // Fetch memories for the authenticated user
+        const { data, error } = await supabase
+          .from('memories')
+          .select(`
+            *,
+            memory_photos(url),
+            memory_views(id),
+            memory_shares(id)
+          `)
+          .eq('user_id', currentUser.id)
+          .order('created_at', { ascending: false });
 
-      if (error) throw error;
+        if (error) throw error;
 
-      if (data) {
-        setMemories(data as Memory[]);
-        
-        // Sum analytics
-        let views = 0;
-        let shares = 0;
-        data.forEach((m: any) => {
-          views += m.memory_views?.length || 0;
-          shares += m.memory_shares?.length || 0;
-        });
-        setTotalViews(views);
-        setTotalShares(shares);
+        if (data) {
+          setMemories(data as Memory[]);
+          // Sum analytics
+          let views = 0;
+          let shares = 0;
+          data.forEach((m: any) => {
+            views += m.memory_views?.length || 0;
+            shares += m.memory_shares?.length || 0;
+          });
+          setTotalViews(views);
+          setTotalShares(shares);
+        }
+      } else {
+        // Fallback for non-logged-in users (show local storage memories)
+        if (localIds.length === 0) {
+          setMemories([]);
+          setTotalViews(0);
+          setTotalShares(0);
+          setLoading(false);
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from('memories')
+          .select(`
+            *,
+            memory_photos(url),
+            memory_views(id),
+            memory_shares(id)
+          `)
+          .in('id', localIds)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (data) {
+          setMemories(data as Memory[]);
+          // Sum analytics
+          let views = 0;
+          let shares = 0;
+          data.forEach((m: any) => {
+            views += m.memory_views?.length || 0;
+            shares += m.memory_shares?.length || 0;
+          });
+          setTotalViews(views);
+          setTotalShares(shares);
+        }
       }
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
@@ -156,10 +204,15 @@ export default function Dashboard() {
       setLoading(true);
       const newSlug = `${memory.recipient_name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${Math.random().toString(36).substring(2, 7)}`;
       
+      // Get current logged-in user
+      const { data: { session } } = await supabase.auth.getSession();
+      const currentUser = session?.user || null;
+
       // 1. Insert new memory
       const { data: newMemory, error: memoryError } = await supabase
         .from('memories')
         .insert({
+          user_id: currentUser?.id || null,
           recipient_name: `${memory.recipient_name} (Copy)`,
           sender_name: memory.sender_name || null,
           message: memory.message,
