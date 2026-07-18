@@ -52,7 +52,7 @@ function CreateMemoryForm() {
   const queryTemplate = searchParams.get('template') || 'legacy';
   const initialMemory = {
     ...DEFAULT_MEMORY,
-    template: ['reveal', 'legacy', 'scrapbook', 'glass'].includes(queryTemplate) ? queryTemplate : 'legacy'
+    template: ['reveal', 'legacy', 'scrapbook', 'glass', 'bday_sis'].includes(queryTemplate) ? queryTemplate : 'legacy'
   };
 
   // Live Publishing status state

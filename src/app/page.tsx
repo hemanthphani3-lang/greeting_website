@@ -267,6 +267,13 @@ export default function Home() {
                   theme: 'Editorial design, alternating layouts, custom parchment cards, scrolling reveals.',
                   image: '/stitch_paternal_heritage_letter_experience/screen.png',
                 },
+                {
+                  id: 'bday_sis',
+                  title: 'Birthday Scrapbook (bday sis)',
+                  desc: 'A premium, nostalgic glassmorphic scrapbook with curated layout elements. Features a bento memory grid, personalized character files, family wishes, and a surprise gift box.',
+                  theme: 'Soft Peach, Lavender, and Rose Pink, Glassmorphism, interactive gift box, typing letter.',
+                  image: '/stitch_sister_s_digital_birthday_scrapbook/screen.png',
+                },
               ].map((template) => (
                 <div 
                   key={template.id}

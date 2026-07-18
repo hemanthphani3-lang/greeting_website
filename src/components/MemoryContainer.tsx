@@ -22,7 +22,12 @@ import {
   Palette,
   Link,
   ChevronDown,
-  Wand2
+  Wand2,
+  Smile,
+  Gift,
+  Users,
+  Award,
+  HeartHandshake
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/lib/supabase';
@@ -53,6 +58,26 @@ interface MemoryContainerProps {
   publishText?: string;
   onPublish?: (updatedMemory: Partial<Memory>, updatedPhotos: { file?: File; url: string; base64?: string }[]) => Promise<void>;
 }
+
+const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  
+  useEffect(() => {
+    let index = 0;
+    setDisplayedText('');
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setDisplayedText(prev => prev + text.charAt(index));
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 20);
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return <p className="font-body text-lg text-[#665781] leading-relaxed whitespace-pre-wrap">{displayedText}</p>;
+};
 
 export const MemoryContainer: React.FC<MemoryContainerProps> = ({ 
   memory, 
@@ -166,7 +191,11 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           middleQuote: parsed.middleQuote || '',
           customTitle: parsed.customTitle || '',
           finalHeading: parsed.finalHeading || '',
-          finalSubtitle: parsed.finalSubtitle || ''
+          finalSubtitle: parsed.finalSubtitle || '',
+          traits: parsed.traits || null,
+          facts: parsed.facts || null,
+          wishes: parsed.wishes || null,
+          gift: parsed.gift || null
         };
       }
     } catch (e) {}
@@ -178,7 +207,11 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       middleQuote: '',
       customTitle: '',
       finalHeading: '',
-      finalSubtitle: ''
+      finalSubtitle: '',
+      traits: null,
+      facts: null,
+      wishes: null,
+      gift: null
     };
   };
 
@@ -211,6 +244,50 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
   const [discoveredNodes, setDiscoveredNodes] = useState<Set<number>>(new Set());
   const [activeGalaxyNode, setActiveGalaxyNode] = useState<number | null>(null);
   const [galaxyStars, setGalaxyStars] = useState<{ id: number; top: string; left: string; size: string; opacity: number }[]>([]);
+
+  // Bday Sis Template States
+  const [traits, setTraits] = useState<{ title: string; desc: string }[]>(
+    initialMsgData.traits || [
+      { title: "Smile", desc: "The kind that lights up the darkest rooms." },
+      { title: "Kindness", desc: "You give without ever expecting a return." },
+      { title: "Strength", desc: "Graceful under pressure, resilient as always." },
+      { title: "Humor", desc: "My favorite comedy partner for life." },
+      { title: "Support", desc: "The first call I make whenever things get hard." },
+      { title: "Positivity", desc: "A beacon of light in every single season." },
+      { title: "Creativity", desc: "Your vision makes the world more beautiful." },
+      { title: "Heart", desc: "Pure gold. Bigger than anyone I've ever known." }
+    ]
+  );
+
+  const [facts, setFacts] = useState<{ label: string; value: string }[]>(
+    initialMsgData.facts || [
+      { label: "Nickname", value: "The Sunshine Queen" },
+      { label: "Favorite Food", value: "Matcha & Macarons" },
+      { label: "Go-to Movie", value: "Anything Ghibli" },
+      { label: "Dream Trip", value: "Cotswolds, England" },
+      { label: "Current Song", value: "Anti-Hero (Taylor's Version)" },
+      { label: "Hidden Talent", value: "Extreme Gardening" }
+    ]
+  );
+
+  const [familyWishes, setFamilyWishes] = useState<{ name: string; relation: string; text: string }[]>(
+    initialMsgData.wishes || [
+      { name: "Dad", relation: "The Rock", text: "Proud of the woman you've become. Happy birthday, munchkin!" },
+      { name: "Mom", relation: "Your #1 Fan", text: "You make every day brighter. I love you more than words can say." },
+      { name: "Leo", relation: "Little Brother", text: "Happy bday! Thanks for always letting me win at Mario Kart (mostly)." },
+      { name: "Aunt Sarah", relation: "The Fun One", text: "Keep shining, baby! Let's go to that spa soon!" }
+    ]
+  );
+
+  const [gift, setGift] = useState<{ title: string; msg: string; code: string }>(
+    initialMsgData.gift || {
+      title: "Happy Birthday!",
+      msg: "Thank you for being the best sister anyone could ask for.",
+      code: "SPA DAY TICKET"
+    }
+  );
+
+  const [giftOpened, setGiftOpened] = useState(false);
 
   useEffect(() => {
     const colors = ['#d4af37', '#e5c06d', '#f1d292', '#ffffff', '#ba1a1a'];
@@ -291,7 +368,27 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     setMusicUrl(memory.music_url || '');
     setSelectedTemplate(memory.template);
     setSelectedOccasion(memory.occasion);
-    setLocalPhotos(photos.map(p => ({ id: p.id, url: p.url })));
+
+    let loadedPhotos = photos.map(p => ({ id: p.id, url: p.url }));
+    if (memory.template === 'bday_sis' && loadedPhotos.length < 8) {
+      const placeholders = [
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuBK9YFKYH9RnHf2mJoJHIIFIu-r8MDsbTtPkg6UgzAutruZRJ6L_Rzl1c0cav31HdK0GOTNoI9kSPmcdklfmvaeuOCcMSQla1clXl-_wEaH3Ie2Jub53eAm52IGxW-X0BugAo9fmSFhiAikg_8B7JusfRAJ62cmCeg7tfrO2yjBpuwDbm_z9xDRrzmY3bu2VTBAQZ5ZXcERI5GrTXt3Ztwk9B6eQrszLyEuCzNrYCCz-jZZF12w3a9ZJnw04rduDP4EaWNOuVBTdfc',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuCt7_gWY70pGCF5LKsHiyCGOPerXnhw5BcFtkRq34TlO44IuxbmEaaOg04NDMWHq0MM6vVJRQX1Gwx9ONmMFO4L5j5c3pFPMo3aWRrCBLTRgV3CIsJz3jncZMaQlUSG0tyAPSHfzZ6VYJlPiz9zaloMj9miQF6Ei4JTf1vbbzKDwYHxW64aTpRBBfEYNRST-JfdOpIU7UZsCQdXM58GVB2R-8W12DfQMcSL64Ng6PJmyt4CqidGJErxITwn2L46hjHgl0xZeJRJOy0',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuDfpDCgYx-DHgRn3AjZHkpoILuN8hLqit3w-_hw7D1NBD5Jizra2bRsHhO81Ulezq31Rh9dr4kDGWCYZJuunf-S5F7bHKeIq5PVPWAKUpGZ2Wlk1YbpahWZYhP0sAXym5QBybpvoyzOY33ve4ZixnNUdZ_EkpKe6kK5ZtM1AZuEgF1FVQn4zKxHYfDXdOmsBzSuhU-wUwdRdPewN7jZOrRDQPV3Qjj1tI2T9zZSWhrE38dSnDhloUau5-laZF4vNyo2y4EAngdJYUg',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuD-lbcvQxmFk2X-5rqYnrpvAOItZetffbGaw2WabyHbuaJPtgXv_v0YvjTswZm2NvQalunuf8w16SwZimr6iIsPYk_abePR1GyjY0zyXXpBvZZD2pZ_KnX1f4WerjMog7Qz17fuenw93fff6hVYwmQA4YNrySVCrc335vJJnYUr807QWuM5kvPkuKXzEbF3o0GI5ZIYJHOiO7nGmJ6EITp1khEVKnkd2COdXZFk4o1PzArtcqAwIN1VatdbU0wBR1zp2e9lcz63fiM',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuBdIkFAsKz0OPWTd1SC56TniUaNVRjnarksXXr4ZyRO7MGVOVGPmykRN8lmKCPtgiQ441ZisKmIuBAu3gXE9RUXzOA9QUnvC1rGxi4Z9BU_O5fZyDZTlx7nZ8P80WnmJ3YJR3eiiwYv2kwa78EFsSSvzINzOog337GzNwkyllnbZXu8Ahnm79maEntNmKe3vVjoYtDINHcJrQ6FAyE8YkhA30TXZGGnPk54zqzIQhfnXKpbggkY9yQ7PvjNw3xT8WpwplmU3wPJz74',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuC05owSxpGsVkpuI6EK0uvCJ1lz013NvY5QAaBOZwh1gv233LPbponJBPfwbah9lqh2jG6ZSyXivzPsSBjF9VxZq1Tmf7oqg-K5L2XheA778jIjxnrr2YDY1rU1KYvRW9EMvlIo-986azpwxMMvxSNGGewiQUg6jShl1MeXjlYRWxE_aiSn6wgFAKvRrTKpJl5ZMU1oixT-3VgIlTccfvaQ9hTNYI9DJmWqWH_JOa-CDCZqEg8mKFMvd0x28LxbvrgvlBMyDoBWdGU',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuBxa3-Df0Dvlm8K6uFzw0nEn__DOGEMHpsT0TC0MoWNgXpSQUZ3I_gaYisjDhhH9AvhcpeyuPs-1U4rKg5GnE_oIInKwEyReU_Bgyt0ExZ-2XO_ccPXHORpg3WOEAvDHXxBfhpiO09TZ3Jr8896ha8zu4FeGdJy301p61gOWjdR3PZynWyiZdy4NFxtAdp9JCtaOco2m3Nb7jhd4qzmxKEwGLzTWz1xDJkk5NXd85vNU5_sebR-julsvzvr4AC1jDUiXyDQke4_Y4k',
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuCC-eqUTVvEbcvnfs7s3KgKKgi_VrjgGnAHvcYmEqKqyr-wnGBSsOR-aKKPb_C1ef_VVgLhwrJCPHIVM9Ra3R5L3FTGZVWyz4lBH2GDNvq1-itKY4JVw9bkTML_jlvM96ZFQJDDsStGBvXOPRs6Lqjxz4WCK68rXFE8N7qorLaR-RA4JugWLcicTq7dlq_YQYNScot31kH2aCTtQeSla1qKJVx_jZ1XOrv_2Xvli77MggE3-7noN9IUY2twWN5-ja7giMA8WWcHwPQ'
+      ];
+      while (loadedPhotos.length < 8) {
+        loadedPhotos.push({
+          id: `padded-${loadedPhotos.length}`,
+          url: placeholders[loadedPhotos.length]
+        });
+      }
+    }
+    setLocalPhotos(loadedPhotos);
 
     const msgData = parseMessageData(memory.message);
     setPersonalLetter(msgData.personalLetter);
@@ -302,6 +399,10 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     setCustomTitle(msgData.customTitle);
     setFinalHeading(msgData.finalHeading || '');
     setFinalSubtitle(msgData.finalSubtitle || '');
+    if (msgData.traits) setTraits(msgData.traits);
+    if (msgData.facts) setFacts(msgData.facts);
+    if (msgData.wishes) setFamilyWishes(msgData.wishes);
+    if (msgData.gift) setGift(msgData.gift);
   }, [memory, photos]);
 
   // Sync chapters length with localPhotos length
@@ -506,7 +607,11 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       middleQuote: middleQuote || 'The beauty of a lifetime is found in the moments we share, the lessons we carry, and the footprints of love we leave behind.',
       customTitle: customTitle,
       finalHeading: finalHeading,
-      finalSubtitle: finalSubtitle
+      finalSubtitle: finalSubtitle,
+      traits: selectedTemplate === 'bday_sis' ? traits : undefined,
+      facts: selectedTemplate === 'bday_sis' ? facts : undefined,
+      wishes: selectedTemplate === 'bday_sis' ? familyWishes : undefined,
+      gift: selectedTemplate === 'bday_sis' ? gift : undefined
     });
 
     onPublish(
@@ -1910,14 +2015,819 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     );
   };
 
+  const renderSisterScrapbookTemplate = () => {
+    const getPhotoUrl = (idx: number) => {
+      if (localPhotos.length === 0) return '';
+      return localPhotos[idx % localPhotos.length]?.url || '';
+    };
+
+    const getChapterTitle = (idx: number) => {
+      return chapters[idx]?.title || '';
+    };
+
+    const handleChapterTitleChange = (idx: number, val: string) => {
+      setChapters(prev => {
+        const updated = [...prev];
+        if (!updated[idx]) updated[idx] = { title: '', desc: '' };
+        updated[idx].title = val;
+        return updated;
+      });
+    };
+
+    return (
+      <div className="bg-gradient-to-br from-[#fff7fb] via-[#fce7ff] to-[#fff7fb] text-[#241729] font-sans min-h-screen w-full relative overflow-x-hidden selection:bg-[#f49fb6]/30 selection:text-[#8e495e]">
+        <style dangerouslySetInnerHTML={{__html: `
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap');
+          
+          .font-display-sis {
+            font-family: 'Playfair Display', Georgia, serif;
+          }
+          .font-body-sis {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+          }
+          .font-handwritten-sis {
+            font-family: 'Dancing Script', cursive;
+          }
+          .glass-card-sis {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 40px -10px rgba(142, 73, 94, 0.1);
+          }
+          @keyframes float-sis {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+          }
+          .animate-float-sis {
+            animation: float-sis 6s ease-in-out infinite;
+          }
+          .gift-box-shake:hover {
+            animation: shake-sis 0.5s infinite;
+          }
+          @keyframes shake-sis {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+          }
+          @keyframes scroll-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-scroll-marquee {
+            display: flex;
+            width: max-content;
+            animation: scroll-marquee 30s linear infinite;
+          }
+          .animate-scroll-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}} />
+
+        {/* Section 1: Hero Section */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+          <div className="absolute inset-0 bg-radial-gradient from-[#f49fb6]/10 to-transparent pointer-events-none" />
+          <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center max-w-6xl">
+            <div className="space-y-8 text-left">
+              {isEditable ? (
+                <textarea
+                  value={customTitle || "Happy Birthday, My Forever Best Friend!"}
+                  onChange={(e) => setCustomTitle(e.target.value)}
+                  className="font-display-sis text-4xl md:text-6xl font-bold leading-tight text-[#8e495e] tracking-tight bg-transparent border-b border-dashed border-[#8e495e]/30 focus:outline-none w-full resize-none"
+                  rows={2}
+                  placeholder="Hero Title"
+                />
+              ) : (
+                <h1 className="font-display-sis text-4xl md:text-6xl font-bold leading-tight text-[#8e495e] tracking-tight whitespace-pre-line">
+                  {customTitle || "Happy Birthday,\nMy Forever Best Friend!"}
+                </h1>
+              )}
+
+              {isEditable ? (
+                <textarea
+                  value={heroQuote || "Today isn't just about another year. It's about celebrating the soul who has been my anchor..."}
+                  onChange={(e) => setHeroQuote(e.target.value)}
+                  className="font-body-sis text-[#665781] text-lg bg-transparent border border-dashed border-gray-300 focus:outline-none w-full p-3 rounded-2xl"
+                  rows={3}
+                  placeholder="Hero Subtitle / Description"
+                />
+              ) : (
+                <p className="font-body-sis text-[#665781] text-lg leading-relaxed max-w-lg">
+                  {heroQuote || "Today isn't just about another year. It's about celebrating the soul who has been my anchor, my confidante, and my greatest adventure partner since day one."}
+                </p>
+              )}
+
+              <div>
+                <button 
+                  onClick={() => {
+                    const el = document.getElementById('bento-grid-sec');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="bg-[#8e495e] hover:bg-[#733347] text-white px-8 py-4 rounded-full font-semibold shadow-lg shadow-[#8e495e]/25 hover:scale-105 active:scale-95 transition-all text-sm uppercase tracking-wider font-body-sis"
+                >
+                  Scroll to Celebrate
+                </button>
+              </div>
+            </div>
+
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-md aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-all duration-700 bg-white/20 p-2 group">
+                <div className="w-full h-full rounded-[2.2rem] overflow-hidden relative">
+                  <img 
+                    src={getPhotoUrl(0)} 
+                    alt="Hero Portrait" 
+                    className="w-full h-full object-cover" 
+                  />
+                  {isEditable && (
+                    <div 
+                      onClick={() => triggerPhotoReplace(0)}
+                      className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                    >
+                      <Upload className="w-6 h-6 mb-1" />
+                      <span className="text-[10px] uppercase font-bold tracking-wider">Replace Hero Photo</span>
+                    </div>
+                  )}
+                </div>
+                <div className="absolute inset-0 border-[12px] border-white/30 backdrop-blur-[2px] pointer-events-none rounded-[2.5rem]" />
+              </div>
+            </div>
+          </div>
+
+          {/* Floating elements */}
+          <div className="absolute top-20 left-10 text-[#f49fb6] opacity-40 animate-float-sis" style={{ animationDelay: '0s' }}>
+            <Heart className="w-10 h-10 fill-current" />
+          </div>
+          <div className="absolute bottom-40 right-20 text-[#665781] opacity-30 animate-float-sis" style={{ animationDelay: '1s' }}>
+            <Sparkles className="w-14 h-14" />
+          </div>
+          <div className="absolute top-1/2 left-1/4 text-[#8e495e] opacity-20 animate-float-sis" style={{ animationDelay: '2s' }}>
+            <Sparkles className="w-8 h-8" />
+          </div>
+        </section>
+
+        {/* Section 2: Bento Grid (Our Visual Diary) */}
+        <section id="bento-grid-sec" className="py-24 px-6 bg-white/30 relative z-10 border-y border-white/20">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16 space-y-3">
+              <h2 className="font-display-sis text-3xl md:text-5xl text-[#8e495e] font-bold">Our Visual Diary</h2>
+              <p className="text-[#665781] font-body-sis">A collection of moments that define our bond.</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 auto-rows-[220px]">
+              {/* Card 1: Large Vertical */}
+              <div className="glass-card-sis rounded-[2rem] overflow-hidden row-span-2 col-span-2 md:col-span-1 group relative flex flex-col justify-end p-6">
+                <img 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  src={getPhotoUrl(1)} 
+                  alt="Memory Grid 1" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={getChapterTitle(1)}
+                    onChange={(e) => handleChapterTitleChange(1, e.target.value)}
+                    className="relative z-10 font-body-sis text-xs font-semibold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/20 focus:outline-none w-full text-center"
+                    placeholder="Caption"
+                  />
+                ) : (
+                  <p className="relative z-10 text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    {getChapterTitle(1) || "Memory 1"}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <div 
+                    onClick={() => triggerPhotoReplace(1)}
+                    className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    <Upload className="w-6 h-6 mb-1" />
+                    <span className="text-[10px] uppercase font-bold tracking-wider">Replace Photo</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Card 2: Large Horizontal */}
+              <div className="glass-card-sis rounded-[2rem] overflow-hidden col-span-2 group relative flex flex-col justify-end p-6">
+                <img 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  src={getPhotoUrl(2)} 
+                  alt="Memory Grid 2" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={getChapterTitle(2)}
+                    onChange={(e) => handleChapterTitleChange(2, e.target.value)}
+                    className="relative z-10 font-body-sis text-xs font-semibold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/20 focus:outline-none w-full text-center"
+                    placeholder="Caption"
+                  />
+                ) : (
+                  <p className="relative z-10 text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    {getChapterTitle(2) || "Memory 2"}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <div 
+                    onClick={() => triggerPhotoReplace(2)}
+                    className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    <Upload className="w-6 h-6 mb-1" />
+                    <span className="text-[10px] uppercase font-bold tracking-wider">Replace Photo</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Card 3: Standard */}
+              <div className="glass-card-sis rounded-[2rem] overflow-hidden group relative flex flex-col justify-end p-6">
+                <img 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  src={getPhotoUrl(3)} 
+                  alt="Memory Grid 3" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={getChapterTitle(3)}
+                    onChange={(e) => handleChapterTitleChange(3, e.target.value)}
+                    className="relative z-10 font-body-sis text-xs font-semibold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/20 focus:outline-none w-full text-center"
+                    placeholder="Caption"
+                  />
+                ) : (
+                  <p className="relative z-10 text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    {getChapterTitle(3) || "Memory 3"}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <div 
+                    onClick={() => triggerPhotoReplace(3)}
+                    className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    <Upload className="w-6 h-6 mb-1" />
+                    <span className="text-[10px] uppercase font-bold tracking-wider">Replace Photo</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Card 4: Standard */}
+              <div className="glass-card-sis rounded-[2rem] overflow-hidden group relative flex flex-col justify-end p-6">
+                <img 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  src={getPhotoUrl(4)} 
+                  alt="Memory Grid 4" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={getChapterTitle(4)}
+                    onChange={(e) => handleChapterTitleChange(4, e.target.value)}
+                    className="relative z-10 font-body-sis text-xs font-semibold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/20 focus:outline-none w-full text-center"
+                    placeholder="Caption"
+                  />
+                ) : (
+                  <p className="relative z-10 text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    {getChapterTitle(4) || "Memory 4"}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <div 
+                    onClick={() => triggerPhotoReplace(4)}
+                    className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    <Upload className="w-6 h-6 mb-1" />
+                    <span className="text-[10px] uppercase font-bold tracking-wider">Replace Photo</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Card 5: Standard */}
+              <div className="glass-card-sis rounded-[2rem] overflow-hidden group relative flex flex-col justify-end p-6">
+                <img 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  src={getPhotoUrl(5)} 
+                  alt="Memory Grid 5" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={getChapterTitle(5)}
+                    onChange={(e) => handleChapterTitleChange(5, e.target.value)}
+                    className="relative z-10 font-body-sis text-xs font-semibold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/20 focus:outline-none w-full text-center"
+                    placeholder="Caption"
+                  />
+                ) : (
+                  <p className="relative z-10 text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    {getChapterTitle(5) || "Memory 5"}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <div 
+                    onClick={() => triggerPhotoReplace(5)}
+                    className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    <Upload className="w-6 h-6 mb-1" />
+                    <span className="text-[10px] uppercase font-bold tracking-wider">Replace Photo</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Card 6: Large Vertical */}
+              <div className="glass-card-sis rounded-[2rem] overflow-hidden row-span-2 col-span-2 md:col-span-1 group relative flex flex-col justify-end p-6">
+                <img 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  src={getPhotoUrl(6)} 
+                  alt="Memory Grid 6" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={getChapterTitle(6)}
+                    onChange={(e) => handleChapterTitleChange(6, e.target.value)}
+                    className="relative z-10 font-body-sis text-xs font-semibold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/20 focus:outline-none w-full text-center"
+                    placeholder="Caption"
+                  />
+                ) : (
+                  <p className="relative z-10 text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    {getChapterTitle(6) || "Memory 6"}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <div 
+                    onClick={() => triggerPhotoReplace(6)}
+                    className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    <Upload className="w-6 h-6 mb-1" />
+                    <span className="text-[10px] uppercase font-bold tracking-wider">Replace Photo</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Card 7: Standard */}
+              <div className="glass-card-sis rounded-[2rem] overflow-hidden group relative flex flex-col justify-end p-6">
+                <img 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  src={getPhotoUrl(7)} 
+                  alt="Memory Grid 7" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={getChapterTitle(7)}
+                    onChange={(e) => handleChapterTitleChange(7, e.target.value)}
+                    className="relative z-10 font-body-sis text-xs font-semibold text-white bg-black/40 px-3 py-1.5 rounded-lg border border-white/20 focus:outline-none w-full text-center"
+                    placeholder="Caption"
+                  />
+                ) : (
+                  <p className="relative z-10 text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                    {getChapterTitle(7) || "Memory 7"}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <div 
+                    onClick={() => triggerPhotoReplace(7)}
+                    className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center text-white cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                  >
+                    <Upload className="w-6 h-6 mb-1" />
+                    <span className="text-[10px] uppercase font-bold tracking-wider">Replace Photo</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Why You Are Rare */}
+        <section className="py-24 px-6 overflow-hidden">
+          <div className="max-w-6xl mx-auto space-y-16">
+            <h2 className="font-display-sis text-center text-3xl md:text-5xl text-[#8e495e] font-bold">Why You Are Rare</h2>
+            <div className="flex flex-wrap justify-center gap-6">
+              {traits.map((trait, idx) => (
+                <div 
+                  key={idx} 
+                  className="glass-card-sis p-8 rounded-3xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300 group"
+                >
+                  <div className="text-[#8e495e] mb-4">
+                    {idx % 8 === 0 && <Smile className="w-12 h-12" />}
+                    {idx % 8 === 1 && <Heart className="w-12 h-12" />}
+                    {idx % 8 === 2 && <Award className="w-12 h-12" />}
+                    {idx % 8 === 3 && <Smile className="w-12 h-12 text-[#665781]" />}
+                    {idx % 8 === 4 && <HeartHandshake className="w-12 h-12" />}
+                    {idx % 8 === 5 && <Sparkles className="w-12 h-12" />}
+                    {idx % 8 === 6 && <Palette className="w-12 h-12" />}
+                    {idx % 8 === 7 && <Heart className="w-12 h-12 fill-[#f49fb6] text-[#8e495e]" />}
+                  </div>
+                  {isEditable ? (
+                    <div className="w-full space-y-2">
+                      <input
+                        type="text"
+                        value={trait.title}
+                        onChange={(e) => {
+                          const updated = [...traits];
+                          updated[idx].title = e.target.value;
+                          setTraits(updated);
+                        }}
+                        className="font-display-sis font-semibold text-lg text-[#8e495e] bg-transparent border-b border-dashed border-gray-300 focus:outline-none text-center w-full"
+                        placeholder="Trait Title"
+                      />
+                      <input
+                        type="text"
+                        value={trait.desc}
+                        onChange={(e) => {
+                          const updated = [...traits];
+                          updated[idx].desc = e.target.value;
+                          setTraits(updated);
+                        }}
+                        className="text-xs text-[#665781] bg-transparent border-b border-dashed border-gray-300 focus:outline-none text-center w-full"
+                        placeholder="Description"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <h3 className="font-display-sis font-semibold text-lg text-[#8e495e] mb-2">{trait.title}</h3>
+                      <p className="text-xs text-[#665781] leading-relaxed">{trait.desc}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 4: Birthday Letter */}
+        <section className="py-24 bg-[#fce7ff]/40 relative">
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="glass-card-sis p-10 md:p-16 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#f49fb6]/10 rounded-full blur-3xl" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#665781]/10 rounded-full blur-3xl" />
+              
+              <h3 className="font-handwritten-sis text-4xl text-[#8e495e] mb-8 font-semibold">
+                Dearest {isEditable ? (
+                  <input
+                    type="text"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    className="font-handwritten-sis text-4xl text-[#8e495e] bg-transparent border-b border-dashed border-[#8e495e]/30 focus:outline-none w-48 inline-block font-semibold"
+                    placeholder="Recipient Name"
+                  />
+                ) : (
+                  recipientName
+                )},
+              </h3>
+
+              <div className="font-body-sis text-[#665781] text-lg leading-relaxed min-h-[220px]">
+                {isEditable ? (
+                  <textarea
+                    value={personalLetter}
+                    onChange={(e) => setPersonalLetter(e.target.value)}
+                    className="font-body-sis text-[#665781] text-lg leading-relaxed whitespace-pre-wrap bg-transparent border border-dashed border-gray-300 focus:outline-none w-full p-4 rounded-2xl"
+                    rows={8}
+                    placeholder="Write your birthday letter here..."
+                  />
+                ) : (
+                  <TypewriterText text={personalLetter} />
+                )}
+              </div>
+
+              <div className="font-handwritten-sis text-3xl text-[#8e495e] mt-12 text-right">
+                {isEditable ? (
+                  <div className="flex items-center justify-end gap-2">
+                    <span className="font-handwritten-sis text-3xl text-[#8e495e]">With love,</span>
+                    <input
+                      type="text"
+                      value={senderName}
+                      onChange={(e) => setSenderName(e.target.value)}
+                      className="font-handwritten-sis text-3xl text-[#8e495e] bg-transparent border-b border-dashed border-[#8e495e]/30 focus:outline-none w-32 font-semibold text-right"
+                      placeholder="Your Name"
+                    />
+                  </div>
+                ) : (
+                  <p>With love, {senderName || "Me"} ❤️</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5: The "Sister" Files (Fun Facts) */}
+        <section className="py-24 px-6 bg-white/10">
+          <div className="max-w-6xl mx-auto space-y-16">
+            <h2 className="font-display-sis text-center text-3xl md:text-5xl text-[#8e495e] font-bold">The Profile Details</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {facts.map((fact, idx) => (
+                <div 
+                  key={idx} 
+                  className="glass-card-sis p-8 rounded-3xl border-l-4 border-l-[#8e495e] hover:bg-white/80 transition-all flex flex-col justify-center"
+                >
+                  {isEditable ? (
+                    <div className="space-y-2 text-left">
+                      <input
+                        type="text"
+                        value={fact.label}
+                        onChange={(e) => {
+                          const updated = [...facts];
+                          updated[idx].label = e.target.value;
+                          setFacts(updated);
+                        }}
+                        className="text-[#8e495e] font-bold uppercase tracking-widest text-[10px] bg-transparent border-b border-dashed border-gray-300 focus:outline-none w-full"
+                        placeholder="Label"
+                      />
+                      <input
+                        type="text"
+                        value={fact.value}
+                        onChange={(e) => {
+                          const updated = [...facts];
+                          updated[idx].value = e.target.value;
+                          setFacts(updated);
+                        }}
+                        className="font-display-sis text-lg text-[#665781] font-semibold bg-transparent border-b border-dashed border-gray-300 focus:outline-none w-full"
+                        placeholder="Value"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-[#8e495e] font-bold uppercase tracking-widest text-[10px] mb-1">{fact.label}</p>
+                      <p className="font-display-sis text-lg text-[#665781] font-semibold">{fact.value}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 6: Family Wishes */}
+        <section className="py-24 bg-[#fff7fb]/60 overflow-hidden relative border-t border-white/20">
+          <div className="max-w-6xl mx-auto px-6 mb-12">
+            <h2 className="font-display-sis text-3xl md:text-5xl text-[#8e495e] font-bold text-center">Messages From Home</h2>
+          </div>
+          
+          <div className="w-full overflow-hidden py-4">
+            <div className="animate-scroll-marquee py-4 px-6 flex gap-8">
+              {familyWishes.map((wish, idx) => (
+                <div 
+                  key={idx} 
+                  className="glass-card-sis p-8 rounded-[2rem] w-[360px] shrink-0 whitespace-normal shadow-lg flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-[#f49fb6]/30 flex items-center justify-center font-bold text-[#8e495e] text-lg">
+                        {wish.name.charAt(0)}
+                      </div>
+                      <div className="flex-1 text-left">
+                        {isEditable ? (
+                          <div className="space-y-1">
+                            <input
+                              type="text"
+                              value={wish.name}
+                              onChange={(e) => {
+                                const updated = [...familyWishes];
+                                updated[idx].name = e.target.value;
+                                setFamilyWishes(updated);
+                              }}
+                              className="font-bold text-sm text-[#8e495e] bg-transparent border-b border-dashed border-gray-300 focus:outline-none w-full"
+                              placeholder="Name"
+                            />
+                            <input
+                              type="text"
+                              value={wish.relation}
+                              onChange={(e) => {
+                                const updated = [...familyWishes];
+                                updated[idx].relation = e.target.value;
+                                setFamilyWishes(updated);
+                              }}
+                              className="text-[10px] text-[#665781] bg-transparent border-b border-dashed border-gray-300 focus:outline-none w-full"
+                              placeholder="Relation"
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            <h4 className="font-bold text-sm text-[#8e495e]">{wish.name}</h4>
+                            <p className="text-[10px] text-[#665781]">{wish.relation}</p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    {isEditable ? (
+                      <textarea
+                        value={wish.text}
+                        onChange={(e) => {
+                          const updated = [...familyWishes];
+                          updated[idx].text = e.target.value;
+                          setFamilyWishes(updated);
+                        }}
+                        className="italic text-xs text-[#665781] bg-transparent border border-dashed border-gray-300 focus:outline-none w-full p-2 rounded-xl"
+                        rows={3}
+                        placeholder="Wish message"
+                      />
+                    ) : (
+                      <p className="italic text-sm text-[#665781] leading-relaxed text-left">
+                        "{wish.text}"
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {/* Duplicate wishes list to enable seamless infinite scroll in view mode */}
+              {!isEditable && familyWishes.map((wish, idx) => (
+                <div 
+                  key={`dup-${idx}`} 
+                  className="glass-card-sis p-8 rounded-[2rem] w-[360px] shrink-0 whitespace-normal shadow-lg flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-[#f49fb6]/30 flex items-center justify-center font-bold text-[#8e495e] text-lg">
+                        {wish.name.charAt(0)}
+                      </div>
+                      <div className="flex-1 text-left">
+                        <h4 className="font-bold text-sm text-[#8e495e]">{wish.name}</h4>
+                        <p className="text-[10px] text-[#665781]">{wish.relation}</p>
+                      </div>
+                    </div>
+                    <p className="italic text-sm text-[#665781] leading-relaxed text-left">
+                      "{wish.text}"
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 7: Surprise Gift */}
+        <section className="py-24 flex flex-col items-center justify-center bg-white/20 border-t border-white/20">
+          <h2 className="font-display-sis text-3xl md:text-5xl text-[#8e495e] font-bold mb-16">A Little Surprise...</h2>
+          
+          <div className="relative">
+            {isEditable ? (
+              <div className="glass-card-sis p-8 rounded-[2rem] w-80 text-center space-y-4 shadow-xl border border-white">
+                <p className="text-[10px] font-bold text-[#8e495e] uppercase tracking-widest block">Surprise Gift Setup</p>
+                <div className="space-y-3">
+                  <div className="text-left">
+                    <label className="text-[9px] font-semibold text-[#8e495e]/60 uppercase tracking-wider block ml-1">Card Title</label>
+                    <input
+                      type="text"
+                      value={gift.title}
+                      onChange={(e) => setGift({ ...gift, title: e.target.value })}
+                      className="font-display-sis text-base text-[#8e495e] bg-transparent border-b border-dashed border-gray-300 focus:outline-none w-full font-bold"
+                      placeholder="Card Title"
+                    />
+                  </div>
+                  <div className="text-left">
+                    <label className="text-[9px] font-semibold text-[#8e495e]/60 uppercase tracking-wider block ml-1">Secret Message</label>
+                    <input
+                      type="text"
+                      value={gift.msg}
+                      onChange={(e) => setGift({ ...gift, msg: e.target.value })}
+                      className="text-xs text-[#665781] bg-transparent border-b border-dashed border-gray-300 focus:outline-none w-full"
+                      placeholder="Secret Message"
+                    />
+                  </div>
+                  <div className="text-left">
+                    <label className="text-[9px] font-semibold text-[#8e495e]/60 uppercase tracking-wider block ml-1">Voucher/Ticket Text</label>
+                    <input
+                      type="text"
+                      value={gift.code}
+                      onChange={(e) => setGift({ ...gift, code: e.target.value })}
+                      className="font-mono text-xs text-[#8e495e] bg-transparent border-b border-dashed border-gray-300 focus:outline-none w-full font-bold"
+                      placeholder="e.g. SPA DAY TICKET"
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="relative flex flex-col items-center">
+                <div 
+                  onClick={() => {
+                    if (!giftOpened) {
+                      setGiftOpened(true);
+                      confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#f49fb6', '#8e495e', '#fce7ff']
+                      });
+                    }
+                  }}
+                  className={`w-52 h-52 bg-[#8e495e] rounded-3xl relative transition-all duration-700 shadow-2xl cursor-pointer flex items-center justify-center overflow-hidden group ${!giftOpened ? 'gift-box-shake' : 'scale-50 opacity-0 translate-y-12 pointer-events-none'}`}
+                >
+                  {/* Lid */}
+                  <div className="absolute -top-3 -inset-x-2 h-7 bg-[#f49fb6] rounded-lg shadow-md z-10" />
+                  {/* Ribbons */}
+                  <div className="absolute inset-y-0 left-1/2 -ml-2.5 w-5 bg-white/40" />
+                  <div className="absolute inset-x-0 top-1/2 -mt-2.5 h-5 bg-white/40" />
+                  {/* Bow */}
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 flex items-center justify-center text-white">
+                    <Gift className="w-10 h-10 drop-shadow" />
+                  </div>
+                  <div className="text-white/20 select-none font-bold text-center text-sm font-body-sis uppercase tracking-widest mt-6">Open Me</div>
+                </div>
+                
+                {giftOpened && (
+                  <div className="glass-card-sis p-8 rounded-[2rem] w-80 text-center shadow-2xl border border-white/60 animate-in zoom-in-95 duration-500">
+                    <p className="font-display-sis text-2xl text-[#8e495e] font-bold mb-2">{gift.title}</p>
+                    <p className="text-sm text-[#665781] mb-6">"{gift.msg}"</p>
+                    <div className="w-full py-4 bg-[#f49fb6]/20 rounded-xl flex items-center justify-center border-2 border-dashed border-[#8e495e]">
+                      <span className="text-[#8e495e] font-extrabold tracking-wider font-mono text-sm">{gift.code}</span>
+                    </div>
+                  </div>
+                )}
+                {!giftOpened && (
+                  <p className="mt-6 text-xs font-semibold text-[#8e495e] animate-bounce">Click to open!</p>
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Section 8: Final Tribute */}
+        <section className="py-32 relative flex items-center justify-center overflow-hidden bg-[#8e495e] text-white px-6">
+          <div className="absolute inset-0 bg-radial-gradient from-white/10 to-transparent pointer-events-none" />
+          
+          <div className="relative z-10 text-center max-w-2xl space-y-8 flex flex-col items-center">
+            <div className="inline-block p-4 rounded-full border-2 border-white/30 mb-2 animate-pulse bg-white/5">
+              <Heart className="w-8 h-8 text-white fill-white" />
+            </div>
+
+            {isEditable ? (
+              <textarea
+                value={finalHeading || "No matter where life takes us..."}
+                onChange={(e) => setFinalHeading(e.target.value)}
+                className="font-display-sis text-3xl md:text-5xl text-white font-bold text-center bg-transparent border-b border-dashed border-white/30 focus:outline-none w-full resize-none leading-tight"
+                rows={2}
+                placeholder="Final Tribute Heading"
+              />
+            ) : (
+              <h2 className="font-display-sis text-3xl md:text-5xl text-white font-bold leading-tight whitespace-pre-line">
+                {finalHeading || "No matter where\nlife takes us..."}
+              </h2>
+            )}
+
+            {isEditable ? (
+              <textarea
+                value={finalSubtitle || "You'll always be my first friend and my forever sister."}
+                onChange={(e) => setFinalSubtitle(e.target.value)}
+                className="font-body-sis text-white/80 text-lg text-center bg-transparent border border-dashed border-white/20 focus:outline-none w-full p-2 rounded-xl"
+                rows={2}
+                placeholder="Final Tribute Subtitle"
+              />
+            ) : (
+              <p className="font-body-sis text-white/80 text-lg leading-relaxed">
+                {finalSubtitle || "You'll always be my first friend and my forever sister."}
+              </p>
+            )}
+
+            <div className="pt-8">
+              <p className="font-handwritten-sis text-4xl text-[#f49fb6] font-semibold">Happy Birthday ❤️</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  };
+
   return (
     <div className={`relative min-h-screen w-full flex flex-col justify-between ${
-      selectedTemplate === 'glass' ? 'bg-[#031632] text-white' : 'bg-heritage-white text-primary'
+      selectedTemplate === 'glass' ? 'bg-[#031632] text-white' :
+      selectedTemplate === 'bday_sis' ? 'bg-[#fff7fb] text-[#241729]' :
+      'bg-heritage-white text-primary'
     }`}>
       {/* Background visual shader */}
-      {selectedTemplate !== 'glass' && <div className="fixed inset-0 bg-gradient-to-tr from-rose-500/5 via-transparent to-blue-500/5 -z-10" />}
+      {selectedTemplate !== 'glass' && selectedTemplate !== 'bday_sis' && (
+        <div className="fixed inset-0 bg-gradient-to-tr from-rose-500/5 via-transparent to-blue-500/5 -z-10" />
+      )}
       {selectedTemplate === 'glass' && (
         <div className="fixed inset-0 bg-radial-gradient from-primary-light/50 to-primary -z-10" />
+      )}
+      {selectedTemplate === 'bday_sis' && (
+        <div className="fixed inset-0 bg-gradient-to-br from-[#fff7fb] via-[#fce7ff] to-[#fff7fb] -z-10" />
       )}
 
       {/* Hidden file input for inline replacement */}
@@ -2011,6 +2921,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                   <option value="legacy">Legacy Timeline</option>
                   <option value="scrapbook">Constellation of Memories</option>
                   <option value="glass">Heritage Letter</option>
+                  <option value="bday_sis">Bday Sis Scrapbook</option>
                 </select>
                 <ChevronDown className="w-3.5 h-3.5 text-primary/40 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
@@ -2222,13 +3133,14 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           {selectedTemplate === 'legacy' && renderLegacyTemplate()}
           {selectedTemplate === 'scrapbook' && renderGalaxyTemplate()}
           {selectedTemplate === 'glass' && renderHeritageTemplate()}
+          {selectedTemplate === 'bday_sis' && renderSisterScrapbookTemplate()}
         </main>
       )}
 
       {/* FOOTER */}
       {opened && (
         <footer className={`py-8 text-center text-[10px] font-bold uppercase tracking-widest opacity-40 border-t ${
-          selectedTemplate === 'glass' ? 'border-white/10' : 'border-gray-100'
+          selectedTemplate === 'glass' || selectedTemplate === 'bday_sis' ? 'border-white/10' : 'border-gray-100'
         }`}>
           Create your own at memoryverse.app
         </footer>

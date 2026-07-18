@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MemoryVerse – Sister Birthday Edition</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Dancing+Script:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --primary-pink: #f49fb6;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff7fb 0%, #fce7ff 50%, #fff7fb 100%);
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(244, 159, 182, 0.1);
+        }
+
+        .font-handwritten {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(244, 159, 182, 0.15) 0%, transparent 70%);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gift-box-shake:hover {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8e495e",
+                        "primary-container": "#f49fb6",
+                        "secondary": "#665781",
+                        "surface": "#fff7fb",
+                        "surface-container": "#fce7ff",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    spacing: {
+                        "stack-xl": "64px",
+                        "stack-lg": "32px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- Section 1: Loading Screen -->
+<div class="fixed inset-0 z-[100] bg-surface flex flex-col items-center justify-center transition-opacity duration-1000" id="loader">
+<div class="relative w-48 h-64 perspective-1000">
+<div class="w-full h-full bg-primary-container rounded-r-lg shadow-xl origin-left transition-transform duration-[2000ms] ease-in-out border-2 border-primary/20" id="loading-book">
+<div class="absolute inset-0 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-5xl">auto_awesome</span>
+</div>
+</div>
+<div class="absolute inset-0 bg-white rounded-r-lg -z-10 shadow-inner"></div>
+</div>
+<p class="mt-8 font-display text-headline-md text-primary animate-pulse">Preparing something special...</p>
+</div>
+<!-- Section 2: Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-stack-xl">
+
+<div class="absolute inset-0 hero-gradient"></div>
+<div class="container mx-auto px-margin-mobile lg:px-margin-desktop relative z-10 grid lg:grid-cols-2 gap-stack-xl items-center">
+<div class="order-2 lg:order-1 space-y-stack-lg" id="hero-text">
+<h1 class="font-display text-[48px] md:text-[84px] leading-tight text-primary tracking-tighter">
+                    Happy Birthday,<br/>
+<span class="text-secondary italic">My Forever</span><br/>
+                    Best Friend!
+                </h1>
+<p class="text-body-lg text-secondary max-w-lg">
+                    Today isn't just about another year. It's about celebrating the soul who has been my anchor, my confidante, and my greatest adventure partner since day one.
+                </p>
+<div class="flex gap-4">
+<button class="bg-primary text-white px-8 py-4 rounded-full font-semibold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+                        Scroll to Celebrate
+                    </button>
+</div>
+</div>
+<div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+<div class="relative w-full max-w-md aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700">
+<img alt="Beautiful portrait of sister" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBK9YFKYH9RnHf2mJoJHIIFIu-r8MDsbTtPkg6UgzAutruZRJ6L_Rzl1c0cav31HdK0GOTNoI9kSPmcdklfmvaeuOCcMSQla1clXl-_wEaH3Ie2Jub53eAm52IGxW-X0BugAo9fmSFhiAikg_8B7JusfRAJ62cmCeg7tfrO2yjBpuwDbm_z9xDRrzmY3bu2VTBAQZ5ZXcERI5GrTXt3Ztwk9B6eQrszLyEuCzNrYCCz-jZZF12w3a9ZJnw04rduDP4EaWNOuVBTdfc"/>
+<div class="absolute inset-0 border-[12px] border-white/30 backdrop-blur-sm pointer-events-none rounded-[2rem]"></div>
+</div>
+</div>
+</div>
+<!-- Floating Particles -->
+<div class="absolute top-20 left-10 text-primary-container opacity-40 animate-float" style="animation-delay: 0s;">
+<span class="material-symbols-outlined text-4xl">favorite</span>
+</div>
+<div class="absolute bottom-40 right-20 text-secondary opacity-30 animate-float" style="animation-delay: 1s;">
+<span class="material-symbols-outlined text-6xl">auto_awesome</span>
+</div>
+<div class="absolute top-1/2 left-1/4 text-primary opacity-20 animate-float" style="animation-delay: 2s;">
+<span class="material-symbols-outlined text-3xl">flare</span>
+</div>
+</section>
+<!-- Section 3: Memories Grid (Bento Box) -->
+<section class="py-stack-xl px-margin-mobile lg:px-margin-desktop bg-white/30">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-stack-xl">
+<h2 class="font-display text-display-lg text-primary mb-4">Our Visual Diary</h2>
+<p class="text-secondary font-body-md">A collection of moments that define our bond.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[200px]">
+<!-- Large Vertical Card -->
+<div class="glass-card rounded-3xl overflow-hidden row-span-2 col-span-2 md:col-span-1 group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A vintage-style film photograph showing two sisters laughing on a sun-drenched beach during golden hour. The colors are warm and nostalgic with soft grain, reflecting a precious childhood memory. High-end editorial photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt7_gWY70pGCF5LKsHiyCGOPerXnhw5BcFtkRq34TlO44IuxbmEaaOg04NDMWHq0MM6vVJRQX1Gwx9ONmMFO4L5j5c3pFPMo3aWRrCBLTRgV3CIsJz3jncZMaQlUSG0tyAPSHfzZ6VYJlPiz9zaloMj9miQF6Ei4JTf1vbbzKDwYHxW64aTpRBBfEYNRST-JfdOpIU7UZsCQdXM58GVB2R-8W12DfQMcSL64Ng6PJmyt4CqidGJErxITwn2L46hjHgl0xZeJRJOy0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end">
+<p class="text-white font-semibold">Summer '18</p>
+</div>
+</div>
+<!-- Large Horizontal Card -->
+<div class="glass-card rounded-3xl overflow-hidden col-span-2 group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A high-angle shot of a vibrant picnic spread on lush green grass, featuring artisanal sandwiches, fresh strawberries, and two glasses of sparkling pink lemonade. Soft morning light creates a dreamy, joyful atmosphere with lavender flowers scattered around the edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfpDCgYx-DHgRn3AjZHkpoILuN8hLqit3w-_hw7D1NBD5Jizra2bRsHhO81Ulezq31Rh9dr4kDGWCYZJuunf-S5F7bHKeIq5PVPWAKUpGZ2Wlk1YbpahWZYhP0sAXym5QBybpvoyzOY33ve4ZixnNUdZ_EkpKe6kK5ZtM1AZuEgF1FVQn4zKxHYfDXdOmsBzSuhU-wUwdRdPewN7jZOrRDQPV3Qjj1tI2T9zZSWhrE38dSnDhloUau5-laZF4vNyo2y4EAngdJYUg"/>
+</div>
+<!-- Standard Card -->
+<div class="glass-card rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close-up of two pairs of hands holding colorful gelato cones against a pastel-colored European street backdrop. The image has a high-saturation, cheerful aesthetic with soft bokeh effects and a focus on texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-lbcvQxmFk2X-5rqYnrpvAOItZetffbGaw2WabyHbuaJPtgXv_v0YvjTswZm2NvQalunuf8w16SwZimr6iIsPYk_abePR1GyjY0zyXXpBvZZD2pZ_KnX1f4WerjMog7Qz17fuenw93fff6hVYwmQA4YNrySVCrc335vJJnYUr807QWuM5kvPkuKXzEbF3o0GI5ZIYJHOiO7nGmJ6EITp1khEVKnkd2COdXZFk4o1PzArtcqAwIN1VatdbU0wBR1zp2e9lcz63fiM"/>
+</div>
+<!-- Standard Card -->
+<div class="glass-card rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A cozy indoor scene featuring a glowing fireplace and two mugs of steaming cocoa on a chunky knit blanket. The lighting is warm and amber-toned, evoking feelings of comfort and sisterly late-night talks during winter." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdIkFAsKz0OPWTd1SC56TniUaNVRjnarksXXr4ZyRO7MGVOVGPmykRN8lmKCPtgiQ441ZisKmIuBAu3gXE9RUXzOA9QUnvC1rGxi4Z9BU_O5fZyDZTlx7nZ8P80WnmJ3YJR3eiiwYv2kwa78EFsSSvzINzOog337GzNwkyllnbZXu8Ahnm79maEntNmKe3vVjoYtDINHcJrQ6FAyE8YkhA30TXZGGnPk54zqzIQhfnXKpbggkY9yQ7PvjNw3xT8WpwplmU3wPJz74"/>
+</div>
+<!-- Standard Card -->
+<div class="glass-card rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A candid overhead shot of a chaotic but beautiful scrapbooking session with polaroid photos, stickers, and colorful pens scattered across a white marble table. Artistic and vibrant layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC05owSxpGsVkpuI6EK0uvCJ1lz013NvY5QAaBOZwh1gv233LPbponJBPfwbah9lqh2jG6ZSyXivzPsSBjF9VxZq1Tmf7oqg-K5L2XheA778jIjxnrr2YDY1rU1KYvRW9EMvlIo-986azpwxMMvxSNGGewiQUg6jShl1MeXjlYRWxE_aiSn6wgFAKvRrTKpJl5ZMU1oixT-3VgIlTccfvaQ9hTNYI9DJmWqWH_JOa-CDCZqEg8mKFMvd0x28LxbvrgvlBMyDoBWdGU"/>
+</div>
+<!-- Large Card -->
+<div class="glass-card rounded-3xl overflow-hidden col-span-2 md:col-span-1 row-span-1 md:row-span-2 group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Two sisters silhouetted against a breathtaking mountain sunset. The sky is a gradient of deep orange and purple. The composition is epic and cinematic, symbolizing their journey through life together." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxa3-Df0Dvlm8K6uFzw0nEn__DOGEMHpsT0TC0MoWNgXpSQUZ3I_gaYisjDhhH9AvhcpeyuPs-1U4rKg5GnE_oIInKwEyReU_Bgyt0ExZ-2XO_ccPXHORpg3WOEAvDHXxBfhpiO09TZ3Jr8896ha8zu4FeGdJy301p61gOWjdR3PZynWyiZdy4NFxtAdp9JCtaOco2m3Nb7jhd4qzmxKEwGLzTWz1xDJkk5NXd85vNU5_sebR-julsvzvr4AC1jDUiXyDQke4_Y4k"/>
+</div>
+<!-- Standard Card -->
+<div class="glass-card rounded-3xl overflow-hidden group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A bright morning shot of a birthday breakfast table with a stack of pancakes, a 'Happy Birthday' banner in the background, and soft sunlight streaming through a window with white linen curtains." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC-eqUTVvEbcvnfs7s3KgKKgi_VrjgGnAHvcYmEqKqyr-wnGBSsOR-aKKPb_C1ef_VVgLhwrJCPHIVM9Ra3R5L3FTGZVWyz4lBH2GDNvq1-itKY4JVw9bkTML_jlvM96ZFQJDDsStGBvXOPRs6Lqjxz4WCK68rXFE8N7qorLaR-RA4JugWLcicTq7dlq_YQYNScot31kH2aCTtQeSla1qKJVx_jZ1XOrv_2Xvli77MggE3-7noN9IUY2twWN5-ja7giMA8WWcHwPQ"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Things That Make You Special -->
+<section class="py-stack-xl px-margin-mobile overflow-hidden">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-display text-center text-display-lg text-primary mb-stack-lg">Why You Are Rare</h2>
+<div class="flex flex-wrap justify-center gap-6">
+<!-- Special Cards -->
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">mood</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Smile</h3>
+<p class="text-body-md text-secondary">The kind that lights up the darkest rooms.</p>
+</div>
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Kindness</h3>
+<p class="text-body-md text-secondary">You give without ever expecting a return.</p>
+</div>
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Strength</h3>
+<p class="text-body-md text-secondary">Graceful under pressure, resilient as always.</p>
+</div>
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">sentiment_very_satisfied</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Humor</h3>
+<p class="text-body-md text-secondary">My favorite comedy partner for life.</p>
+</div>
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">groups</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Support</h3>
+<p class="text-body-md text-secondary">The first call I make whenever things get hard.</p>
+</div>
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">auto_awesome_motion</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Positivity</h3>
+<p class="text-body-md text-secondary">A beacon of light in every single season.</p>
+</div>
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">palette</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Creativity</h3>
+<p class="text-body-md text-secondary">Your vision makes the world more beautiful.</p>
+</div>
+<div class="glass-card p-8 rounded-2xl w-full sm:w-64 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+<span class="material-symbols-outlined text-primary text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<h3 class="font-display text-headline-md text-primary mb-2">Heart</h3>
+<p class="text-body-md text-secondary">Pure gold. Bigger than anyone I've ever known.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Birthday Letter -->
+<section class="py-stack-xl bg-surface-container relative">
+<div class="max-w-4xl mx-auto px-margin-mobile">
+<div class="glass-card p-12 md:p-20 rounded-[3rem] shadow-2xl relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-10 -left-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl"></div>
+<h3 class="font-handwritten text-[48px] text-primary mb-8">Dearest Sister,</h3>
+<div class="font-body text-body-lg text-secondary leading-relaxed space-y-6 min-h-[300px]" id="typing-container">
+<!-- Typing animation happens here via JS -->
+</div>
+<p class="font-handwritten text-[40px] text-primary mt-12 text-right">With all my love, Me ❤️</p>
+</div>
+</div>
+</section>
+<!-- Section 6: Fun Facts -->
+<section class="py-stack-xl px-margin-mobile">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-display text-display-lg text-primary text-center mb-stack-lg">The "Sister" Files</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glass-card p-8 rounded-3xl border-l-4 border-l-primary group cursor-pointer hover:bg-white/80 transition-all">
+<p class="text-primary font-bold uppercase tracking-widest text-xs mb-2">Nickname</p>
+<p class="font-display text-headline-md text-secondary">The Sunshine Queen</p>
+</div>
+<div class="glass-card p-8 rounded-3xl border-l-4 border-l-secondary group cursor-pointer hover:bg-white/80 transition-all">
+<p class="text-secondary font-bold uppercase tracking-widest text-xs mb-2">Favorite Food</p>
+<p class="font-display text-headline-md text-secondary">Matcha &amp; Macarons</p>
+</div>
+<div class="glass-card p-8 rounded-3xl border-l-4 border-l-primary-container group cursor-pointer hover:bg-white/80 transition-all">
+<p class="text-primary font-bold uppercase tracking-widest text-xs mb-2">Go-to Movie</p>
+<p class="font-display text-headline-md text-secondary">Anything Ghibli</p>
+</div>
+<div class="glass-card p-8 rounded-3xl border-l-4 border-l-primary group cursor-pointer hover:bg-white/80 transition-all">
+<p class="text-primary font-bold uppercase tracking-widest text-xs mb-2">Dream Trip</p>
+<p class="font-display text-headline-md text-secondary">Cotswolds, England</p>
+</div>
+<div class="glass-card p-8 rounded-3xl border-l-4 border-l-secondary group cursor-pointer hover:bg-white/80 transition-all">
+<p class="text-secondary font-bold uppercase tracking-widest text-xs mb-2">Current Song</p>
+<p class="font-display text-headline-md text-secondary">Anti-Hero (Taylor's Version)</p>
+</div>
+<div class="glass-card p-8 rounded-3xl border-l-4 border-l-primary-container group cursor-pointer hover:bg-white/80 transition-all">
+<p class="text-primary font-bold uppercase tracking-widest text-xs mb-2">Hidden Talent</p>
+<p class="font-display text-headline-md text-secondary">Extreme Gardening</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 7: Family Wishes -->
+<section class="py-stack-xl bg-white/40 overflow-hidden">
+<h2 class="font-display text-display-lg text-primary text-center mb-stack-lg px-margin-mobile">Messages From Home</h2>
+<div class="flex animate-[scroll_40s_linear_infinite] whitespace-nowrap gap-8 py-8" id="carousel">
+<!-- Carousel items (duplicated for loop) -->
+<div class="inline-block glass-card p-8 rounded-2xl min-w-[350px] whitespace-normal">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-primary-container"></div>
+<div>
+<h4 class="font-bold text-primary">Dad</h4>
+<p class="text-xs text-secondary">The Rock</p>
+</div>
+</div>
+<p class="italic text-secondary">"Proud of the woman you've become. Happy birthday, munchkin!"</p>
+</div>
+<div class="inline-block glass-card p-8 rounded-2xl min-w-[350px] whitespace-normal">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container"></div>
+<div>
+<h4 class="font-bold text-primary">Mom</h4>
+<p class="text-xs text-secondary">Your #1 Fan</p>
+</div>
+</div>
+<p class="italic text-secondary">"You make every day brighter. I love you more than words can say."</p>
+</div>
+<div class="inline-block glass-card p-8 rounded-2xl min-w-[350px] whitespace-normal">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-primary/20"></div>
+<div>
+<h4 class="font-bold text-primary">Leo</h4>
+<p class="text-xs text-secondary">Little Brother</p>
+</div>
+</div>
+<p class="italic text-secondary">"Happy bday! Thanks for always letting me win at Mario Kart (mostly)."</p>
+</div>
+<div class="inline-block glass-card p-8 rounded-2xl min-w-[350px] whitespace-normal">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-container"></div>
+<div>
+<h4 class="font-bold text-primary">Aunt Sarah</h4>
+<p class="text-xs text-secondary">The Fun One</p>
+</div>
+</div>
+<p class="italic text-secondary">"Keep shining, baby! Let's go to that spa soon!"</p>
+</div>
+</div>
+</section>
+<!-- Section 8: Surprise Gift -->
+<section class="py-stack-xl flex flex-col items-center">
+<h2 class="font-display text-display-lg text-primary mb-stack-lg">A Little Surprise...</h2>
+<div class="relative cursor-pointer group" id="gift-container">
+<div class="w-64 h-64 bg-primary rounded-xl relative transition-all duration-500 shadow-2xl gift-box-shake" id="gift-box">
+<!-- Lid -->
+<div class="absolute -top-4 -inset-x-2 h-8 bg-primary-container rounded-lg shadow-md z-10"></div>
+<!-- Ribbons -->
+<div class="absolute inset-y-0 left-1/2 -ml-3 w-6 bg-white/40"></div>
+<div class="absolute inset-x-0 top-1/2 -mt-3 h-6 bg-white/40"></div>
+<!-- Bow -->
+<div class="absolute -top-12 left-1/2 -ml-8 w-16 h-16 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-6xl">featured_seasonal_and_gifts</span>
+</div>
+</div>
+<div class="hidden absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full glass-card p-8 rounded-2xl w-80 text-center opacity-0 scale-50 transition-all duration-500 z-50" id="gift-message">
+<p class="font-display text-headline-md text-primary mb-4">Happy Birthday!</p>
+<p class="text-secondary mb-6">"Thank you for being the best sister anyone could ask for."</p>
+<div class="w-full h-24 bg-primary-container/20 rounded-lg flex items-center justify-center border-2 border-dashed border-primary">
+<span class="text-primary font-bold">SPA DAY TICKET</span>
+</div>
+</div>
+</div>
+<p class="mt-8 text-secondary animate-bounce font-medium">Click to open!</p>
+</section>
+<!-- Section 9: Final Section -->
+<section class="min-h-screen relative flex items-center justify-center overflow-hidden bg-primary px-margin-mobile">
+
+<div class="relative z-10 text-center max-w-4xl space-y-stack-lg">
+<div class="inline-block p-4 rounded-full border-2 border-white/30 mb-8 animate-pulse">
+<span class="material-symbols-outlined text-white text-4xl">favorite</span>
+</div>
+<h2 class="font-display text-[42px] md:text-[64px] text-white leading-tight">
+                No matter where life takes us...
+            </h2>
+<p class="font-display text-headline-md text-white/80 max-w-2xl mx-auto">
+                You'll always be my first friend and my forever sister.
+            </p>
+<div class="pt-8">
+<p class="font-handwritten text-[48px] text-white">Happy Birthday ❤️</p>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-primary py-12 border-t border-white/10">
+<div class="container mx-auto px-margin-mobile text-center">
+<h2 class="font-display text-headline-md text-white mb-4">For My Sister</h2>
+<div class="flex justify-center gap-6 mb-8">
+<a class="text-white/60 hover:text-white transition-colors" href="#">Our Memories</a>
+<a class="text-white/60 hover:text-white transition-colors" href="#">Forever Connected</a>
+<a class="text-white/60 hover:text-white transition-colors" href="#">Made for You</a>
+</div>
+<p class="text-white/40 font-body-md">Handcrafted with love for the best sister ever • 2024</p>
+</div>
+</footer>
+<script>
+        // Loader logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const book = document.getElementById('loading-book');
+            
+            // Animation for book
+            setTimeout(() => {
+                book.style.transform = 'rotateY(-160deg)';
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        startLetterAnimation();
+                    }, 1000);
+                }, 2000);
+            }, 500);
+        });
+
+        // Letter Typing Animation
+        function startLetterAnimation() {
+            const text = "Looking back at all the scrapbooks of our lives, from messy mud pies in the garden to late-night phone calls about life's big questions, one thing remains constant: You. You are the heartbeat of our family, the person who keeps us all laughing, and the first one I want to celebrate every win with. Today, I hope you feel even half as special as you make the rest of us feel every single day. Here is to another year of adventures, inside jokes, and being each other's favorite person.";
+            const container = document.getElementById('typing-container');
+            let index = 0;
+
+            // Wait for section to be visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && index === 0) {
+                        type();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            observer.observe(container);
+
+            function type() {
+                if (index < text.length) {
+                    container.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(type, 30);
+                }
+            }
+        }
+
+        // Gift Box Interaction
+        const giftContainer = document.getElementById('gift-container');
+        const giftBox = document.getElementById('gift-box');
+        const giftMessage = document.getElementById('gift-message');
+
+        giftContainer.addEventListener('click', () => {
+            if (!giftBox.classList.contains('opened')) {
+                giftBox.classList.add('opened');
+                giftBox.style.transform = 'scale(0.8) rotate(10deg) translateY(100px)';
+                giftBox.style.opacity = '0.5';
+                
+                giftMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    giftMessage.style.opacity = '1';
+                    giftMessage.style.transform = 'translateX(-50%) translateY(-100%) scale(1)';
+                    
+                    // Confetti trigger
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#f49fb6', '#8e495e', '#fce7ff']
+                    });
+                }, 100);
+            }
+        });
+
+        // Parallax-ish scroll effects for grid images
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroText = document.getElementById('hero-text');
+            if (heroText) {
+                heroText.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Carousel loop duplication
+        const carousel = document.getElementById('carousel');
+        const items = carousel.innerHTML;
+        carousel.innerHTML += items + items; // Triple it to ensure smooth infinite loop
+    </script>
+</body></html>
