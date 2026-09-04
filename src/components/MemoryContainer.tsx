@@ -36,7 +36,8 @@ import {
   Star,
   Crown,
   Terminal,
-  Ticket
+  Ticket,
+  History
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/lib/supabase';
@@ -2782,304 +2783,215 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       });
     };
 
-    const defaultPhotoTitles = [
-      "The Road Trip Incident 🚗",
-      "Late Night Gaming Marathon 🎮",
-      "Legendary Night Out 🥂",
-      "Partner In Crime 🚀",
-      "Unstoppable Duo ⚡",
-      "Classic Bro Moment 👑",
-      "The Ultimate Flex 🏆",
-      "Unfiltered Chaos 🔥"
+    const defaultPlateTitles = [
+      "Where the horizon taught us to dream.",
+      "Midnight conversations & endless theories.",
+      "Cold drinks and honest confessions.",
+      "Years pass, banter stays timeless.",
+      "The architect of his own destiny.",
+      "Unspoken loyalty carved in stone.",
+      "Classic road trip memories.",
+      "Unfiltered brotherly energy."
+    ];
+
+    const defaultPlateSubtitles = [
+      "Pacific cliffs, cold dawn mist, two brothers charting unwritten maps.",
+      "When two coffees turned into five hours of untangling life.",
+      "The corner booth that heard the truth before anyone else did.",
+      "The identical grin that has outlived every phase and hairstyle.",
+      "Stepping into the prime of life with composure and dignity.",
+      "First call when trouble strikes, zero questions asked.",
+      "Navigating high speeds and legendary detours together.",
+      "Built on shared history and relentless humor."
     ];
 
     return (
-      <div className="bg-[#0A0E17] text-white font-sans min-h-screen w-full relative overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+      <div className="bg-[#0B0B0C] text-[#E5E2E3] font-sans min-h-screen w-full relative overflow-x-hidden selection:bg-[#D4AF37]/30 selection:text-[#F8F6F0]">
         <style dangerouslySetInnerHTML={{__html: `
-          @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
           
-          .font-bro-display {
-            font-family: 'Outfit', sans-serif;
+          .font-serif-bro {
+            font-family: 'Playfair Display', Georgia, serif;
           }
-          .font-bro-mono {
-            font-family: 'Space Grotesk', sans-serif;
+          .font-sans-bro {
+            font-family: 'Plus Jakarta Sans', sans-serif;
           }
-          .glass-card-bro {
-            background: rgba(13, 19, 35, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.15);
+          @keyframes pulse-gold {
+            0%, 100% { border-color: rgba(212, 175, 55, 0.3); box-shadow: 0 0 15px rgba(212, 175, 55, 0.15); }
+            50% { border-color: rgba(212, 175, 55, 0.7); box-shadow: 0 0 30px rgba(212, 175, 55, 0.35); }
           }
-          .glass-card-bro-amber {
-            background: rgba(20, 16, 10, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            box-shadow: 0 10px 40px -10px rgba(245, 158, 11, 0.15);
-          }
-          @keyframes pulse-cyan {
-            0%, 100% { border-color: rgba(6, 182, 212, 0.4); box-shadow: 0 0 15px rgba(6, 182, 212, 0.2); }
-            50% { border-color: rgba(6, 182, 212, 0.8); box-shadow: 0 0 30px rgba(6, 182, 212, 0.4); }
-          }
-          .animate-pulse-cyan {
-            animation: pulse-cyan 3s infinite ease-in-out;
+          .animate-pulse-gold {
+            animation: pulse-gold 3s infinite ease-in-out;
           }
         `}} />
 
-        {/* Ambient Grid overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#06b6d40d_1px,transparent_1px),linear-gradient(to_bottom,#06b6d40d_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+        {/* SECTION 1: HERO / ARRIVAL */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 bg-[#0E0E0F]">
+          <div className="absolute inset-0 z-0 opacity-20 bg-cover bg-center" style={{ backgroundImage: `url(${getPhotoUrl(0)})` }}>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C] via-[#0B0B0C]/80 to-[#0B0B0C]" />
+          </div>
 
-        {/* Section 1: Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-24">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
+          <div className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
+            {/* Overline Tag */}
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping" />
+              <span className="font-sans-bro text-xs font-semibold tracking-[0.3em] text-[#D4AF37] uppercase">
+                ARCHIVE ENTRY // KINSHIP MONOGRAPH
+              </span>
+            </div>
 
-          <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-12 gap-12 items-center max-w-6xl">
-            {/* Hero Left Content */}
-            <div className="lg:col-span-7 space-y-8 text-left">
-              {/* Badges */}
-              <div className="flex flex-wrap gap-3">
-                <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bro-mono font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
-                  <Gamepad2 className="w-3.5 h-3.5 text-cyan-400" /> LEVEL MAX BROTHER
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bro-mono font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
-                  <Crown className="w-3.5 h-3.5 text-amber-400" /> WINGMAN FOR LIFE
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bro-mono font-bold tracking-wider uppercase flex items-center gap-1.5">
-                  <Zap className="w-3.5 h-3.5 text-purple-400" /> BUILT DIFFERENT
-                </span>
+            {/* Title */}
+            {isEditable ? (
+              <textarea
+                value={customTitle || `FOR ${recipientName.toUpperCase()}`}
+                onChange={(e) => setCustomTitle(e.target.value)}
+                className="font-serif-bro text-4xl md:text-7xl font-normal tracking-tight text-[#F8F6F0] bg-transparent border-b border-dashed border-[#D4AF37]/30 focus:outline-none w-full text-center uppercase resize-none"
+                rows={2}
+                placeholder="Hero Title"
+              />
+            ) : (
+              <h1 className="font-serif-bro text-4xl md:text-7xl font-normal tracking-tight text-[#F8F6F0] uppercase max-w-4xl leading-tight">
+                FOR <span className="text-[#D4AF37] italic font-serif-bro">{recipientName.toUpperCase()}</span>
+              </h1>
+            )}
+
+            {/* Divider */}
+            <div className="w-24 h-[1px] bg-[#D4AF37]/40 my-6" />
+
+            {/* Hero Quote */}
+            {isEditable ? (
+              <textarea
+                value={heroQuote || "A bespoke monograph commemorating shared battles, unwritten tomorrows, and an unbreakable fraternal testament."}
+                onChange={(e) => setHeroQuote(e.target.value)}
+                className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl text-center italic bg-black/40 border border-[#D4AF37]/30 focus:outline-none w-full p-4"
+                rows={3}
+                placeholder="Hero Quote"
+              />
+            ) : (
+              <p className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl italic leading-relaxed">
+                {heroQuote || "A bespoke monograph commemorating shared battles, unwritten tomorrows, and an unbreakable fraternal testament."}
+              </p>
+            )}
+
+            {/* Chapter Badge */}
+            <div className="mt-8 flex items-center gap-3 bg-[#201F20]/80 backdrop-blur-md px-5 py-2 border border-[#D4AF37]/30 text-xs font-sans-bro font-semibold tracking-widest text-[#D4AF37]">
+              <span>CHAPTER 01</span>
+              <span className="w-1 h-1 bg-[#8E8D8A] rounded-full" />
+              <span className="text-[#F8F6F0]">ARCHIVE NO. 088</span>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2: THE PASSAGE */}
+        <section className="w-full py-24 relative bg-[#0B0B0C] border-t border-white/[0.04]">
+          <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
+            <div className="lg:col-span-4 flex flex-col items-start gap-4 border-l border-[#D4AF37]/40 pl-6">
+              <span className="font-sans-bro text-xs font-semibold text-[#D4AF37] tracking-[0.2em]">
+                CH. II // THE PASSAGE
+              </span>
+              <div className="font-serif-bro text-2xl text-[#F8F6F0] tracking-wider">
+                FRATERNAL SOLSTICE
               </div>
+              <p className="font-sans-bro text-xs text-[#8E8D8A] leading-relaxed">
+                A definitive solar mark. Another 365 revolutions marked not by years alone, but by character, quiet courage, and brotherly allegiance.
+              </p>
+            </div>
 
-              {/* Editable Hero Title */}
+            <div className="lg:col-span-8 flex flex-col gap-4">
+              <h2 className="font-serif-bro text-4xl md:text-6xl text-[#F8F6F0] leading-none uppercase">
+                <span className="italic font-normal text-[#8E8D8A] block">ANOTHER</span>
+                <span className="text-[#D4AF37] font-semibold tracking-tight">YEAR.</span>
+              </h2>
+              <p className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl italic">
+                “Another year of memories, late-night arguments, quiet growth, and everything in between.”
+              </p>
+              <div className="flex items-center gap-3 pt-2">
+                <span className="w-8 h-[1px] bg-[#D4AF37]" />
+                <span className="font-serif-bro text-lg text-[#D4AF37] italic">Happy Birthday, Bro.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 3: THE ARCHIVE (BENTO GRID) */}
+        <section className="w-full py-24 bg-[#0E0E0F] relative border-t border-white/[0.04]">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-b border-white/10 pb-6 text-left">
               <div>
-                {isEditable ? (
-                  <textarea
-                    value={customTitle || `HAPPY BIRTHDAY TO THE LEGEND, ${recipientName.toUpperCase()}! 👑`}
-                    onChange={(e) => setCustomTitle(e.target.value)}
-                    className="font-bro-display text-4xl md:text-6xl font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 tracking-tight bg-transparent border-b border-dashed border-cyan-500/30 focus:outline-none w-full resize-none uppercase"
-                    rows={2}
-                    placeholder="Hero Title"
-                  />
-                ) : (
-                  <h1 className="font-bro-display text-4xl md:text-6xl font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 tracking-tight uppercase">
-                    {customTitle || `HAPPY BIRTHDAY TO THE LEGEND, ${recipientName.toUpperCase()}! 👑`}
-                  </h1>
-                )}
+                <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] block mb-2">
+                  03 // CURATED CHRONOLOGY
+                </span>
+                <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] uppercase">
+                  THE ARCHIVE
+                </h2>
               </div>
-
-              {/* Editable Subtitle / Hero Quote */}
-              {isEditable ? (
-                <textarea
-                  value={heroQuote || "To the guy who has been my partner in crime, my late-night sounding board, and the definition of a real brother."}
-                  onChange={(e) => setHeroQuote(e.target.value)}
-                  className="font-bro-mono text-gray-300 text-lg bg-black/40 border border-cyan-500/30 focus:outline-none w-full p-4 rounded-2xl"
-                  rows={3}
-                  placeholder="Hero Quote"
-                />
-              ) : (
-                <p className="font-bro-mono text-gray-300 text-lg md:text-xl leading-relaxed">
-                  {heroQuote || "To the guy who has been my partner in crime, my late-night sounding board, and the definition of a real brother."}
-                </p>
-              )}
-
-              {/* Quick Counter Bar */}
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-cyan-500/20">
-                <div className="bg-[#0D1322]/80 border border-cyan-500/20 p-3.5 rounded-2xl">
-                  <p className="text-[10px] font-bro-mono font-bold text-cyan-400 uppercase tracking-widest">Co-Op Level</p>
-                  <p className="text-xl md:text-2xl font-bold font-bro-display text-white mt-1">999 MAX 👑</p>
-                </div>
-                <div className="bg-[#0D1322]/80 border border-amber-500/20 p-3.5 rounded-2xl">
-                  <p className="text-[10px] font-bro-mono font-bold text-amber-400 uppercase tracking-widest">Loyalty</p>
-                  <p className="text-xl md:text-2xl font-bold font-bro-display text-white mt-1">100% REAL 🛡️</p>
-                </div>
-                <div className="bg-[#0D1322]/80 border border-purple-500/20 p-3.5 rounded-2xl">
-                  <p className="text-[10px] font-bro-mono font-bold text-purple-400 uppercase tracking-widest">Chaos Rating</p>
-                  <p className="text-xl md:text-2xl font-bold font-bro-display text-white mt-1">∞ HYPE 🚀</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Hero Right Featured Photo Card */}
-            <div className="lg:col-span-5 relative flex justify-center">
-              <div className="relative group w-full max-w-md">
-                <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 to-amber-500 rounded-[2.5rem] blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-cyan" />
-                <div className="relative glass-card-bro p-4 rounded-[2.2rem] space-y-4">
-                  <div className="relative aspect-[4/5] rounded-[1.8rem] overflow-hidden bg-slate-900 border border-cyan-500/20">
-                    <img 
-                      src={getPhotoUrl(0)} 
-                      alt="Bro Hero" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-transparent opacity-80" />
-                    
-                    {/* Inline Uploader */}
-                    {isEditable && (
-                      <button
-                        onClick={() => triggerPhotoReplace(0)}
-                        className="absolute inset-0 bg-cyan-950/70 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-cyan-300 font-bro-mono text-sm font-bold backdrop-blur-sm"
-                      >
-                        <Upload className="w-8 h-8 text-cyan-400 animate-bounce" />
-                        <span>Change Hero Photo</span>
-                      </button>
-                    )}
-
-                    <div className="absolute bottom-4 left-4 right-4 text-left">
-                      <span className="bg-cyan-500/20 border border-cyan-400/40 backdrop-blur-md px-3 py-1 rounded-full text-cyan-300 text-xs font-mono font-bold uppercase tracking-wider inline-block mb-1">
-                        FEATURED MEMORY
-                      </span>
-                      <p className="font-bro-display text-lg font-bold text-white">The Legendary Duo</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs font-bro-mono text-gray-400 px-2">
-                    <span>STATUS: UNSTOPPABLE</span>
-                    <span>TAG: #BESTBRO</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 2: Bro Stats & Achievements Bento Grid */}
-        <section className="py-24 relative border-t border-cyan-500/10 bg-[#0A0E17]/60">
-          <div className="container mx-auto px-6 max-w-6xl">
-            <div className="text-center space-y-3 mb-16">
-              <span className="text-cyan-400 text-xs font-bro-mono font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                PLAYER STATS & ACHIEVEMENTS
-              </span>
-              <h2 className="font-bro-display text-3xl md:text-5xl font-extrabold text-white tracking-tight">
-                THE BRO MATRIX 📊
-              </h2>
-              <p className="font-bro-mono text-gray-400 text-sm max-w-xl mx-auto">
-                Quantifying the legendary moments, late night chaos, and unbreakable brotherhood.
+              <p className="font-sans-bro text-xs text-[#8E8D8A] max-w-md">
+                Fragments of an unbroken bond captured across years, cities, and shared silence.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {broStats.map((stat, idx) => (
-                <div 
-                  key={idx} 
-                  className="glass-card-bro p-6 rounded-3xl space-y-4 hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1 relative"
-                >
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
-                    {idx === 0 && <Gamepad2 className="w-6 h-6" />}
-                    {idx === 1 && <Zap className="w-6 h-6" />}
-                    {idx === 2 && <Flame className="w-6 h-6" />}
-                    {idx === 3 && <ShieldCheck className="w-6 h-6" />}
-                    {idx === 4 && <Smile className="w-6 h-6" />}
-                    {idx === 5 && <Award className="w-6 h-6" />}
-                  </div>
-
-                  <div className="space-y-2 text-left">
-                    {isEditable ? (
-                      <input
-                        type="text"
-                        value={stat.label}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          setBroStats(prev => {
-                            const updated = [...prev];
-                            updated[idx] = { ...updated[idx], label: val };
-                            return updated;
-                          });
-                        }}
-                        className="bg-black/50 border border-cyan-500/30 rounded-xl px-2 py-1 text-xs font-bro-mono font-bold text-cyan-400 uppercase tracking-wider w-full"
-                      />
-                    ) : (
-                      <span className="text-xs font-bro-mono font-bold text-cyan-400 uppercase tracking-wider block">
-                        {stat.label}
-                      </span>
-                    )}
-
-                    {isEditable ? (
-                      <input
-                        type="text"
-                        value={stat.value}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          setBroStats(prev => {
-                            const updated = [...prev];
-                            updated[idx] = { ...updated[idx], value: val };
-                            return updated;
-                          });
-                        }}
-                        className="bg-black/50 border border-amber-500/30 rounded-xl px-2 py-1 text-lg font-bro-display font-extrabold text-white w-full"
-                      />
-                    ) : (
-                      <h3 className="font-bro-display text-xl font-extrabold text-white">
-                        {stat.value}
-                      </h3>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Section 3: The Epic Photo Vault (Bento Grid) */}
-        <section className="py-24 relative border-t border-cyan-500/10">
-          <div className="container mx-auto px-6 max-w-6xl">
-            <div className="text-center space-y-3 mb-16">
-              <span className="text-amber-400 text-xs font-bro-mono font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20">
-                CLASSIFIED ARCHIVES
-              </span>
-              <h2 className="font-bro-display text-3xl md:text-5xl font-extrabold text-white tracking-tight">
-                THE MEMORY VAULT 📸
-              </h2>
-              <p className="font-bro-mono text-gray-400 text-sm max-w-xl mx-auto">
-                Moments etched in time. Click any photo in edit mode to replace it.
-              </p>
-            </div>
-
-            {/* Bento Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {/* Asymmetric Editorial Bento Gallery Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
               {Array.from({ length: Math.max(localPhotos.length, 6) }).slice(0, 8).map((_, idx) => {
                 const photoUrl = getPhotoUrl(idx);
-                const title = getChapterTitle(idx) || defaultPhotoTitles[idx % defaultPhotoTitles.length];
+                const title = getChapterTitle(idx) || defaultPlateTitles[idx % defaultPlateTitles.length];
+                const subtitle = defaultPlateSubtitles[idx % defaultPlateSubtitles.length];
 
                 return (
                   <div 
                     key={idx}
-                    className={`group relative rounded-3xl overflow-hidden glass-card-bro p-3 transition-all duration-500 hover:-translate-y-1.5 hover:border-cyan-400/50 ${
-                      idx % 5 === 0 ? 'md:col-span-2 md:row-span-2' : ''
+                    className={`group relative bg-[#161618] p-4 border border-white/[0.08] hover:border-[#D4AF37]/50 transition-all duration-500 text-left ${
+                      idx === 0 ? 'md:col-span-7' :
+                      idx === 1 ? 'md:col-span-5 md:mt-10' :
+                      idx === 2 ? 'md:col-span-4' :
+                      idx === 3 ? 'md:col-span-4 md:-mt-6' :
+                      'md:col-span-4'
                     }`}
                   >
-                    <div className="relative w-full h-full min-h-[220px] rounded-2xl overflow-hidden bg-slate-900">
+                    <div className="relative overflow-hidden aspect-[4/3] bg-[#0E0E0F]">
                       <img 
                         src={photoUrl} 
-                        alt={`Memory ${idx + 1}`} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        alt={`Plate ${idx + 1}`} 
+                        className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-transparent opacity-90" />
-
+                      
                       {/* Inline Image Uploader */}
                       {isEditable && (
                         <button
                           onClick={() => triggerPhotoReplace(idx)}
-                          className="absolute inset-0 bg-cyan-950/80 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-cyan-300 font-bro-mono text-xs font-bold backdrop-blur-sm z-20"
+                          className="absolute inset-0 bg-black/80 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-[#D4AF37] font-sans-bro text-xs font-bold backdrop-blur-sm z-20"
                         >
-                          <Upload className="w-6 h-6 text-cyan-400" />
-                          <span>Change Photo</span>
+                          <Upload className="w-6 h-6 text-[#D4AF37]" />
+                          <span>REPLACE PLATE PHOTO</span>
                         </button>
                       )}
 
-                      <div className="absolute bottom-3 left-3 right-3 text-left z-10 space-y-1">
-                        {isEditable ? (
-                          <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => handleChapterTitleChange(idx, e.target.value)}
-                            className="bg-black/60 border border-cyan-400/40 text-xs font-bro-mono font-bold text-cyan-300 rounded px-2 py-1 w-full"
-                          />
-                        ) : (
-                          <p className="font-bro-display text-base font-bold text-white drop-shadow">
-                            {title}
-                          </p>
-                        )}
+                      <div className="absolute top-3 left-3 bg-[#0B0B0C]/80 backdrop-blur-md px-2.5 py-1 text-[10px] font-sans-bro font-bold text-[#D4AF37] tracking-widest border border-[#D4AF37]/20">
+                        PLATE 0{idx + 1}
                       </div>
+                    </div>
+
+                    <div className="pt-4 flex flex-col gap-1">
+                      <span className="font-sans-bro text-[10px] font-bold text-[#C5A059] tracking-widest uppercase">
+                        CH. 0{idx + 1} — MEMORY
+                      </span>
+                      
+                      {isEditable ? (
+                        <input
+                          type="text"
+                          value={title}
+                          onChange={(e) => handleChapterTitleChange(idx, e.target.value)}
+                          className="bg-black/60 border border-[#D4AF37]/30 text-xs font-serif-bro font-bold text-[#F8F6F0] p-1.5 w-full mt-1"
+                        />
+                      ) : (
+                        <h3 className="font-serif-bro text-lg text-[#F8F6F0]">
+                          {title}
+                        </h3>
+                      )}
+                      
+                      <p className="font-sans-bro text-xs text-[#8E8D8A] mt-1">
+                        {subtitle}
+                      </p>
                     </div>
                   </div>
                 );
@@ -3088,72 +3000,181 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           </div>
         </section>
 
-        {/* Section 4: The Bro Code & Personal Letter */}
-        <section className="py-24 relative border-t border-cyan-500/10 bg-[#0A0E17]/80">
-          <div className="container mx-auto px-6 max-w-4xl">
-            <div className="glass-card-bro-amber p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden text-left space-y-8">
-              <div className="flex items-center justify-between border-b border-amber-500/20 pb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                    <Terminal className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bro-mono font-bold text-amber-400 uppercase tracking-widest block">
-                      PERSONAL TRANSMISSION
-                    </span>
-                    <h3 className="font-bro-display text-xl font-bold text-white">
-                      THE BRO CODE ARCHIVE 📜
-                    </h3>
-                  </div>
+        {/* SECTION 4: EVOLUTION & STATS */}
+        <section className="w-full py-24 bg-[#161618] relative border-y border-white/[0.05]">
+          <div className="max-w-6xl mx-auto px-6 text-left">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-6 h-[1px] bg-[#D4AF37]" />
+              <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.2em] uppercase">
+                04 // EVOLUTION & ALLEGIANCE
+              </span>
+            </div>
+            <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] tracking-tight mb-12 uppercase">
+              WE’VE COME A <span className="italic text-[#D4AF37] font-normal">LONG WAY.</span>
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 bg-[#201F20] border border-white/[0.06] hover:border-[#D4AF37]/30 transition-all duration-300">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10 text-xs font-sans-bro text-[#8E8D8A] uppercase tracking-widest">
+                  <span>FLASHBACK // PHASE I</span>
+                  <History className="w-4 h-4 text-[#D4AF37]" />
                 </div>
-                <span className="text-xs font-bro-mono text-amber-400/60 uppercase tracking-wider hidden sm:inline-block">
-                  ENCRYPTED // SECURE
-                </span>
+                <div className="py-6 space-y-2">
+                  <p className="font-serif-bro text-lg text-[#8E8D8A] line-through opacity-70">
+                    From stupid arguments over stolen gear…
+                  </p>
+                  <p className="font-serif-bro text-xl text-[#D4AF37] italic">
+                    → To stupid, unforgettable midnight adventures across borders.
+                  </p>
+                </div>
+                <div className="pt-2 text-xs font-sans-bro text-[#C8C6C1]">
+                  Shared scars, identical comedic timing, and zero regrets.
+                </div>
               </div>
 
-              {/* Personal Letter Textarea or Display */}
-              {isEditable ? (
-                <textarea
-                  value={personalLetter}
-                  onChange={(e) => setPersonalLetter(e.target.value)}
-                  className="font-bro-mono text-gray-200 text-base md:text-lg leading-relaxed bg-black/40 border border-amber-500/30 focus:outline-none w-full p-4 rounded-2xl"
-                  rows={6}
-                  placeholder="Write your personal letter/tribute to your brother here..."
-                />
-              ) : (
-                <p className="font-bro-mono text-gray-200 text-base md:text-lg leading-relaxed whitespace-pre-wrap">
-                  {personalLetter || "Bro, through every high speed win and every late-night bump in the road, you've been the realest guy in my corner. Thanks for always having my back, keeping it 100, and turning normal days into legendary stories. Here's to the next chapter of epic adventures!"}
-                </p>
-              )}
-
-              {/* Bro Oath Pills */}
-              <div className="flex flex-wrap gap-3 pt-4 border-t border-amber-500/20">
-                <span className="px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bro-mono font-semibold">
-                  🛡️ Always Has Your Back
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bro-mono font-semibold">
-                  💯 Keeps It 100
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-bro-mono font-semibold">
-                  🚀 Legendary Energy
-                </span>
-                <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bro-mono font-semibold">
-                  👑 Built Different
-                </span>
+              <div className="p-6 bg-[#201F20] border border-white/[0.06] hover:border-[#D4AF37]/30 transition-all duration-300">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10 text-xs font-sans-bro text-[#8E8D8A] uppercase tracking-widest">
+                  <span>FLASHBACK // PHASE II</span>
+                  <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+                </div>
+                <div className="py-6 space-y-2">
+                  <p className="font-serif-bro text-lg text-[#8E8D8A] line-through opacity-70">
+                    From competing over who drove faster…
+                  </p>
+                  <p className="font-serif-bro text-xl text-[#D4AF37] italic">
+                    → To quietly having each other’s back when the world gets loud.
+                  </p>
+                </div>
+                <div className="pt-2 text-xs font-sans-bro text-[#C8C6C1]">
+                  No grand gestures required. An understanding carved into stone.
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 5: The Interactive "VIP BRO PASS" Voucher */}
-        <section className="py-24 relative border-t border-cyan-500/10">
-          <div className="container mx-auto px-6 max-w-xl text-center space-y-8">
-            <div className="space-y-3">
-              <span className="text-cyan-400 text-xs font-bro-mono font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                EXCLUSIVE GIFT REVEAL
+        {/* SECTION 5: THE BROCODE */}
+        <section className="w-full py-24 bg-[#0B0B0C] relative">
+          <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
+            <div className="space-y-2">
+              <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] uppercase">
+                05 // FRATERNAL DOGMA
               </span>
-              <h2 className="font-bro-display text-3xl md:text-4xl font-extrabold text-white tracking-tight">
-                THE VIP BRO PASS 🎫
+              <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] uppercase">
+                THE BROTHERHOOD CODE
+              </h2>
+              <p className="font-sans-bro text-xs text-[#8E8D8A] tracking-widest uppercase">
+                Unwritten laws engraved in blood & persistent mockery
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 text-left">
+              {broStats.map((stat, idx) => (
+                <div key={idx} className="bg-[#161618] p-6 border border-white/[0.08] space-y-3 hover:border-[#D4AF37]/40 transition-colors">
+                  <span className="text-[10px] font-sans-bro font-bold text-[#D4AF37] tracking-widest block uppercase">
+                    CANON LAW #0{idx + 1}
+                  </span>
+                  
+                  {isEditable ? (
+                    <input
+                      type="text"
+                      value={stat.label}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setBroStats(prev => {
+                          const updated = [...prev];
+                          updated[idx] = { ...updated[idx], label: val };
+                          return updated;
+                        });
+                      }}
+                      className="bg-black/50 border border-[#D4AF37]/30 text-xs font-sans-bro text-[#D4AF37] font-bold p-1 w-full"
+                    />
+                  ) : (
+                    <p className="font-sans-bro text-xs font-bold text-[#D4AF37] uppercase tracking-wider">
+                      {stat.label}
+                    </p>
+                  )}
+
+                  {isEditable ? (
+                    <input
+                      type="text"
+                      value={stat.value}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setBroStats(prev => {
+                          const updated = [...prev];
+                          updated[idx] = { ...updated[idx], value: val };
+                          return updated;
+                        });
+                      }}
+                      className="bg-black/50 border border-white/20 text-base font-serif-bro text-[#F8F6F0] p-1 w-full"
+                    />
+                  ) : (
+                    <h3 className="font-serif-bro text-lg text-[#F8F6F0] italic">
+                      “{stat.value}”
+                    </h3>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 6: THE EDITORIAL LETTER (STATIONERY) */}
+        <section className="w-full py-24 bg-[#F8F6F0] text-stone-900 relative shadow-2xl overflow-hidden">
+          <div className="max-w-[860px] mx-auto px-6 relative z-10 text-left">
+            <div className="flex flex-col items-center text-center mb-12">
+              <div className="w-16 h-16 rounded-full bg-[#3c2f00] text-[#f2ca50] flex items-center justify-center shadow-lg border-2 border-[#f2ca50]/40 mb-3 font-serif-bro font-bold text-xl">
+                KJ
+              </div>
+              <span className="text-[11px] tracking-[0.3em] font-semibold text-stone-500 uppercase font-sans-bro">
+                A PRIVATE COMMUNIQUÉ // ARCHIVE NO. 088
+              </span>
+              <div className="w-12 h-[1px] bg-stone-400 my-2" />
+            </div>
+
+            <div className="bg-white/95 p-8 md:p-14 rounded-none shadow-sm border border-stone-200 space-y-8">
+              <h3 className="font-serif-bro text-3xl md:text-4xl text-stone-950 tracking-normal">
+                Dear <span className="underline decoration-[#d4af37] decoration-1 underline-offset-8">{recipientName}</span>,
+              </h3>
+
+              {isEditable ? (
+                <textarea
+                  value={personalLetter}
+                  onChange={(e) => setPersonalLetter(e.target.value)}
+                  className="font-serif-bro text-lg md:text-xl text-stone-800 leading-relaxed bg-stone-50 border border-stone-300 focus:outline-none w-full p-4 rounded-none"
+                  rows={6}
+                  placeholder="Write your personal letter/tribute to your brother here..."
+                />
+              ) : (
+                <div className="space-y-6 font-serif-bro text-lg md:text-xl text-stone-800 leading-relaxed whitespace-pre-wrap">
+                  {personalLetter || "We’ve shared more moments than I could ever condense into a digital monograph. We have laughed until our ribs ached, fought fiercely over nothing, annoyed the hell out of each other, and supported each other through chapters nobody else will ever fully comprehend.\n\nI am profoundly grateful that life gave me you as a brother — but I am endlessly more grateful that across these years, you chose to be my genuine friend."}
+                </div>
+              )}
+
+              <div className="pt-8 border-t border-stone-200 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                <div>
+                  <span className="text-xs font-sans-bro tracking-widest text-stone-500 uppercase block">
+                    WITH REVERENCE & ALLEGIANCE,
+                  </span>
+                  <span className="font-serif-bro italic text-3xl text-stone-950 block mt-1">
+                    — {senderName || "Marcus"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 7: THE SURPRISE VOUCHER */}
+        <section className="w-full py-24 bg-[#0E0E0F] relative border-t border-white/[0.04]">
+          <div className="max-w-xl mx-auto px-6 text-center space-y-8">
+            <div className="space-y-2">
+              <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] uppercase">
+                09 // CLASSIFIED ENTRY
+              </span>
+              <h2 className="font-serif-bro text-3xl md:text-4xl text-[#F8F6F0] uppercase">
+                ONE LAST THING…
               </h2>
             </div>
 
@@ -3165,37 +3186,35 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                     particleCount: 120,
                     spread: 80,
                     origin: { y: 0.6 },
-                    colors: ['#06b6d4', '#f59e0b', '#8b5cf6', '#ffffff']
+                    colors: ['#d4af37', '#f2ca50', '#ffffff']
                   });
                 }
               }}
-              className={`glass-card-bro p-8 rounded-[2.5rem] relative overflow-hidden transition-all duration-500 cursor-pointer hover:border-cyan-400 ${
-                broVoucherOpened ? 'border-cyan-400 ring-2 ring-cyan-400/30' : 'animate-pulse-cyan'
+              className={`bg-[#161618] p-8 border transition-all duration-500 cursor-pointer text-center ${
+                broVoucherOpened ? 'border-[#D4AF37]' : 'border-white/10 animate-pulse-gold hover:border-[#D4AF37]'
               }`}
             >
               <div className="space-y-6">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-500 to-amber-500 p-0.5 mx-auto">
-                  <div className="w-full h-full rounded-full bg-[#0A0E17] flex items-center justify-center text-cyan-400">
-                    {broVoucherOpened ? <Ticket className="w-8 h-8 text-cyan-400" /> : <Gift className="w-8 h-8 text-amber-400 animate-bounce" />}
-                  </div>
+                <div className="w-16 h-16 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37] mx-auto">
+                  {broVoucherOpened ? <Ticket className="w-8 h-8 text-[#D4AF37]" /> : <Gift className="w-8 h-8 text-[#D4AF37] animate-bounce" />}
                 </div>
 
                 {!broVoucherOpened ? (
                   <div className="space-y-2">
-                    <p className="font-bro-display text-xl font-bold text-white">TAP TO UNLOCK VIP PASS</p>
-                    <p className="font-bro-mono text-xs text-cyan-400">A special reward for the legend</p>
+                    <p className="font-serif-bro text-xl font-bold text-[#F8F6F0]">OPEN YOUR SURPRISE VOUCHER</p>
+                    <p className="font-sans-bro text-xs text-[#D4AF37] tracking-widest uppercase">Sealed under fraternal protocol</p>
                   </div>
                 ) : (
-                  <div className="space-y-4 animate-in fade-in zoom-in duration-300">
+                  <div className="space-y-4">
                     {isEditable ? (
                       <input
                         type="text"
                         value={broVoucher.title}
                         onChange={(e) => setBroVoucher({ ...broVoucher, title: e.target.value })}
-                        className="bg-black/60 border border-cyan-400/40 text-center font-bro-display text-2xl font-black text-cyan-400 rounded-xl p-2 w-full"
+                        className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-2xl font-bold text-[#D4AF37] p-2 w-full uppercase"
                       />
                     ) : (
-                      <h3 className="font-bro-display text-2xl font-black text-cyan-400 tracking-wider uppercase">
+                      <h3 className="font-serif-bro text-2xl font-bold text-[#D4AF37] tracking-wider uppercase">
                         {broVoucher.title}
                       </h3>
                     )}
@@ -3204,26 +3223,26 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                       <textarea
                         value={broVoucher.msg}
                         onChange={(e) => setBroVoucher({ ...broVoucher, msg: e.target.value })}
-                        className="bg-black/60 border border-cyan-400/40 text-center font-bro-mono text-sm text-gray-200 rounded-xl p-2 w-full"
+                        className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-sm text-[#E5E2E3] p-2 w-full"
                         rows={2}
                       />
                     ) : (
-                      <p className="font-bro-mono text-sm text-gray-200 leading-relaxed">
-                        {broVoucher.msg}
+                      <p className="font-serif-bro text-sm text-[#E5E2E3] leading-relaxed italic">
+                        “{broVoucher.msg}”
                       </p>
                     )}
 
-                    <div className="pt-4 border-t border-cyan-500/20">
-                      <span className="text-[10px] font-bro-mono text-cyan-400/70 uppercase block mb-1">CLAIM CODE</span>
+                    <div className="pt-4 border-t border-white/10">
+                      <span className="text-[10px] font-sans-bro text-[#D4AF37] uppercase block mb-1 tracking-widest">CLAIM CODE</span>
                       {isEditable ? (
                         <input
                           type="text"
                           value={broVoucher.code}
                           onChange={(e) => setBroVoucher({ ...broVoucher, code: e.target.value })}
-                          className="bg-cyan-950/80 border border-cyan-400/60 text-center font-bro-mono text-sm font-bold text-amber-400 tracking-widest rounded-xl p-2 w-full"
+                          className="bg-[#0B0B0C] border border-[#D4AF37]/60 text-center font-sans-bro text-sm font-bold text-[#F8F6F0] tracking-widest p-2 w-full"
                         />
                       ) : (
-                        <span className="px-4 py-2 rounded-xl bg-cyan-950/80 border border-cyan-400/50 text-amber-400 font-bro-mono text-sm font-bold tracking-widest inline-block">
+                        <span className="px-4 py-2 bg-[#0B0B0C] border border-[#D4AF37]/50 text-[#F8F6F0] font-sans-bro text-xs font-bold tracking-widest inline-block">
                           {broVoucher.code}
                         </span>
                       )}
@@ -3235,38 +3254,42 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           </div>
         </section>
 
-        {/* Section 6: Final Epic Toast & Outro */}
-        <section className="py-24 relative border-t border-cyan-500/10 text-center">
-          <div className="container mx-auto px-6 max-w-2xl space-y-6">
+        {/* SECTION 8: EPILOGUE & FINAL SIGN OFF */}
+        <section className="w-full py-24 bg-[#0B0B0C] relative text-center">
+          <div className="max-w-2xl mx-auto px-6 space-y-6">
+            <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.3em] uppercase block">
+              10 // EPILOGUE & COMMENCEMENT
+            </span>
+
             {isEditable ? (
               <input
                 type="text"
-                value={finalHeading || "CHEERS TO THE LEGEND! 🥂"}
+                value={finalHeading || "CHAPTER BEGINS NOW."}
                 onChange={(e) => setFinalHeading(e.target.value)}
-                className="bg-black/60 border border-cyan-400/40 text-center font-bro-display text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 rounded-xl p-2 w-full uppercase"
+                className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-3xl md:text-5xl font-normal italic text-[#D4AF37] p-2 w-full uppercase"
               />
             ) : (
-              <h2 className="font-bro-display text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 tracking-tight uppercase">
-                {finalHeading || "CHEERS TO THE LEGEND! 🥂"}
+              <h2 className="font-serif-bro text-3xl md:text-5xl font-normal italic text-[#D4AF37] tracking-tight uppercase">
+                {finalHeading || "CHAPTER BEGINS NOW."}
               </h2>
             )}
 
             {isEditable ? (
               <textarea
-                value={finalSubtitle || "Always proud to call you my brother."}
+                value={finalSubtitle || "Happy Birthday, Bro. With unwavering respect."}
                 onChange={(e) => setFinalSubtitle(e.target.value)}
-                className="bg-black/60 border border-cyan-400/40 text-center font-bro-mono text-gray-300 text-lg rounded-xl p-2 w-full"
+                className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-gray-300 text-lg p-2 w-full"
                 rows={2}
               />
             ) : (
-              <p className="font-bro-mono text-gray-300 text-lg">
-                {finalSubtitle || "Always proud to call you my brother."}
+              <p className="font-serif-bro text-[#E5E2E3] text-lg italic">
+                {finalSubtitle || `Happy Birthday, ${recipientName}. With unwavering respect.`}
               </p>
             )}
 
             <div className="pt-6">
-              <span className="font-bro-mono text-cyan-400 text-sm font-bold tracking-widest uppercase block">
-                — {senderName ? `From ${senderName}` : "Your Bro For Life"} 🤜🤛
+              <span className="font-sans-bro text-[#D4AF37] text-xs font-bold tracking-widest uppercase block">
+                — {senderName ? `From ${senderName}` : "Your Brother For Life"} 🤜🤛
               </span>
             </div>
           </div>
@@ -3279,7 +3302,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     <div className={`relative min-h-screen w-full flex flex-col justify-between ${
       selectedTemplate === 'glass' ? 'bg-[#031632] text-white' :
       selectedTemplate === 'bday_sis' ? 'bg-[#fff7fb] text-[#241729]' :
-      selectedTemplate === 'bro' ? 'bg-[#0A0E17] text-white' :
+      selectedTemplate === 'bro' ? 'bg-[#0B0B0C] text-[#E5E2E3]' :
       'bg-heritage-white text-primary'
     }`}>
       {/* Background visual shader */}
@@ -3293,7 +3316,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
         <div className="fixed inset-0 bg-gradient-to-br from-[#fff7fb] via-[#fce7ff] to-[#fff7fb] -z-10" />
       )}
       {selectedTemplate === 'bro' && (
-        <div className="fixed inset-0 bg-gradient-to-br from-[#0A0E17] via-[#0D1527] to-[#0A0E17] -z-10" />
+        <div className="fixed inset-0 bg-gradient-to-b from-[#0B0B0C] via-[#0E0E0F] to-[#0B0B0C] -z-10" />
       )}
 
       {/* Hidden file input for inline replacement */}

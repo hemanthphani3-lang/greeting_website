@@ -276,10 +276,10 @@ export default function Home() {
                 },
                 {
                   id: 'bro',
-                  title: 'The Bro Vault (BRO)',
-                  desc: 'A high-energy cyber-arcade and adventure tribute layout for your partner-in-crime. Features player stats, iconic memory bento grid, bro code archive, and an interactive surprise VIP Bro Pass.',
-                  theme: 'Cyber Midnight Charcoal, Electric Cyan & Amber Glow, Bento Grid, VIP Bro Pass.',
-                  image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80',
+                  title: 'Kinship Nocturne (BRO)',
+                  desc: 'An intimate, cinematic luxury monograph commemorating brotherly bonds. Features deep obsidian and champagne gold design, asymmetric bento gallery, canon law ledger, parchment letter, and sealed surprise voucher.',
+                  theme: 'Deep Obsidian Nocturne, Muted Champagne Gold, Asymmetric Bento, Parchment Letter.',
+                  image: '/stitch_cinematic_luxury_brother_birthday_editorial/screen.png',
                 },
               ].map((template) => (
                 <div 
