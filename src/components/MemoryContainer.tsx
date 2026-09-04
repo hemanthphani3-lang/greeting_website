@@ -37,7 +37,9 @@ import {
   Crown,
   Terminal,
   Ticket,
-  History
+  History,
+  Plus,
+  Trash2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/lib/supabase';
@@ -209,7 +211,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           broStats: parsed.broStats || null,
           broVoucher: parsed.broVoucher || null,
           broFlashbacks: parsed.broFlashbacks || null,
-          broHeaders: parsed.broHeaders || null
+          broHeaders: parsed.broHeaders || null,
+          broCardSizes: parsed.broCardSizes || null
         };
       }
     } catch (e) {}
@@ -229,7 +232,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       broStats: null,
       broVoucher: null,
       broFlashbacks: null,
-      broHeaders: null
+      broHeaders: null,
+      broCardSizes: null
     };
   };
 
@@ -402,6 +406,19 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     setBroHeaders(prev => ({ ...prev, [field]: val }));
   };
 
+  const [broCardSizes, setBroCardSizes] = useState<string[]>(
+    initialMsgData.broCardSizes || [
+      'md:col-span-7',
+      'md:col-span-5 md:mt-10',
+      'md:col-span-4',
+      'md:col-span-4 md:-mt-6',
+      'md:col-span-4',
+      'md:col-span-6',
+      'md:col-span-6',
+      'md:col-span-12'
+    ]
+  );
+
   useEffect(() => {
     const colors = ['#d4af37', '#e5c06d', '#f1d292', '#ffffff', '#ba1a1a'];
     const generated = Array.from({ length: 20 }).map((_, i) => ({
@@ -529,6 +546,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     if (msgData.broVoucher) setBroVoucher(msgData.broVoucher);
     if (msgData.broFlashbacks) setBroFlashbacks(msgData.broFlashbacks);
     if (msgData.broHeaders) setBroHeaders(msgData.broHeaders);
+    if (msgData.broCardSizes) setBroCardSizes(msgData.broCardSizes);
   }, [memory, photos]);
 
   // Sync chapters length with localPhotos length
@@ -580,6 +598,74 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       return chapters[index].desc;
     }
     return getDefaultChapterDesc(selectedTemplate, index);
+  };
+
+  // BRO Template Card Management Handlers
+  const handleAddBroCard = () => {
+    const newIdx = localPhotos.length;
+    const defaultImgUrl = 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80';
+    setLocalPhotos(prev => [
+      ...prev,
+      { id: `plate-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`, url: defaultImgUrl }
+    ]);
+    setChapters(prev => [
+      ...prev,
+      {
+        title: `Where the journey continues ${newIdx + 1}.`,
+        desc: `Unwritten chapters of brotherhood carved across time.`
+      }
+    ]);
+    setBroCardSizes(prev => [
+      ...prev,
+      'md:col-span-6'
+    ]);
+  };
+
+  const handleDeleteBroCard = (idx: number) => {
+    if (localPhotos.length <= 1) return;
+    setLocalPhotos(prev => prev.filter((_, i) => i !== idx));
+    setChapters(prev => prev.filter((_, i) => i !== idx));
+    setBroCardSizes(prev => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleMoveBroCard = (idx: number, direction: 'left' | 'right') => {
+    const targetIdx = direction === 'left' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= localPhotos.length) return;
+
+    setLocalPhotos(prev => {
+      const arr = [...prev];
+      const temp = arr[idx];
+      arr[idx] = arr[targetIdx];
+      arr[targetIdx] = temp;
+      return arr;
+    });
+
+    setChapters(prev => {
+      const arr = [...prev];
+      const temp = arr[idx];
+      arr[idx] = arr[targetIdx];
+      arr[targetIdx] = temp;
+      return arr;
+    });
+
+    setBroCardSizes(prev => {
+      const arr = [...prev];
+      const temp = arr[idx];
+      arr[idx] = arr[targetIdx];
+      arr[targetIdx] = temp;
+      return arr;
+    });
+  };
+
+  const handleSetBroCardSize = (idx: number, sizeClass: string) => {
+    setBroCardSizes(prev => {
+      const updated = [...prev];
+      while (updated.length <= idx) {
+        updated.push('md:col-span-6');
+      }
+      updated[idx] = sizeClass;
+      return updated;
+    });
   };
 
   // Track page view (only if not in editable mode)
@@ -741,7 +827,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       broStats: selectedTemplate === 'bro' ? broStats : undefined,
       broVoucher: selectedTemplate === 'bro' ? broVoucher : undefined,
       broFlashbacks: selectedTemplate === 'bro' ? broFlashbacks : undefined,
-      broHeaders: selectedTemplate === 'bro' ? broHeaders : undefined
+      broHeaders: selectedTemplate === 'bro' ? broHeaders : undefined,
+      broCardSizes: selectedTemplate === 'bro' ? broCardSizes : undefined
     });
 
     onPublish(
@@ -3139,38 +3226,108 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                 )}
               </div>
 
-              {isEditable ? (
-                <textarea
-                  value={broHeaders.archiveDesc}
-                  onChange={(e) => updateBroHeader('archiveDesc', e.target.value)}
-                  className="bg-black/60 border border-white/20 text-xs font-sans-bro text-[#8E8D8A] p-2 max-w-md focus:outline-none focus:border-[#D4AF37]"
-                  rows={2}
-                />
-              ) : (
-                <p className="font-sans-bro text-xs text-[#8E8D8A] max-w-md">
-                  {broHeaders.archiveDesc}
-                </p>
-              )}
+              <div className="flex flex-col md:flex-row items-start md:items-end gap-4">
+                {isEditable ? (
+                  <textarea
+                    value={broHeaders.archiveDesc}
+                    onChange={(e) => updateBroHeader('archiveDesc', e.target.value)}
+                    className="bg-black/60 border border-white/20 text-xs font-sans-bro text-[#8E8D8A] p-2 max-w-md focus:outline-none focus:border-[#D4AF37]"
+                    rows={2}
+                  />
+                ) : (
+                  <p className="font-sans-bro text-xs text-[#8E8D8A] max-w-md">
+                    {broHeaders.archiveDesc}
+                  </p>
+                )}
+
+                {isEditable && (
+                  <button
+                    type="button"
+                    onClick={handleAddBroCard}
+                    className="flex items-center gap-2 bg-[#D4AF37] hover:bg-[#c4a030] text-black px-4 py-2.5 text-xs font-bold font-sans-bro transition-all duration-300 shadow-xl cursor-pointer tracking-wider uppercase"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>ADD NEW PLATE CARD</span>
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Asymmetric Editorial Bento Gallery Grid */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-              {Array.from({ length: Math.max(localPhotos.length, 6) }).slice(0, 8).map((_, idx) => {
+              {localPhotos.map((_, idx) => {
                 const photoUrl = getPhotoUrl(idx);
                 const title = chapters[idx]?.title || defaultPlateTitles[idx % defaultPlateTitles.length];
                 const subtitle = chapters[idx]?.desc || defaultPlateSubtitles[idx % defaultPlateSubtitles.length];
 
+                const defaultClasses = [
+                  'md:col-span-7',
+                  'md:col-span-5 md:mt-10',
+                  'md:col-span-4',
+                  'md:col-span-4 md:-mt-6',
+                  'md:col-span-4',
+                  'md:col-span-6',
+                  'md:col-span-6',
+                  'md:col-span-12'
+                ];
+                const currentSizeClass = broCardSizes[idx] || defaultClasses[idx % defaultClasses.length] || 'md:col-span-6';
+
                 return (
                   <div 
                     key={idx}
-                    className={`group relative bg-[#161618] p-4 border border-white/[0.08] hover:border-[#D4AF37]/50 transition-all duration-500 text-left ${
-                      idx === 0 ? 'md:col-span-7' :
-                      idx === 1 ? 'md:col-span-5 md:mt-10' :
-                      idx === 2 ? 'md:col-span-4' :
-                      idx === 3 ? 'md:col-span-4 md:-mt-6' :
-                      'md:col-span-4'
-                    }`}
+                    className={`group relative bg-[#161618] p-4 border border-white/[0.08] hover:border-[#D4AF37]/50 transition-all duration-500 text-left ${currentSizeClass}`}
                   >
+                    {/* Card Edit Toolbar (Size, Move, Delete) */}
+                    {isEditable && (
+                      <div className="mb-3 p-2 bg-[#0B0B0C] border border-[#D4AF37]/30 flex flex-wrap items-center justify-between gap-2 rounded-sm z-30">
+                        {/* Card Size Selector */}
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[9px] font-sans-bro font-bold text-[#D4AF37] uppercase tracking-wider">SIZE:</span>
+                          <select
+                            value={currentSizeClass.split(' ')[0]}
+                            onChange={(e) => handleSetBroCardSize(idx, e.target.value)}
+                            className="bg-[#161618] border border-[#D4AF37]/40 text-[11px] font-sans-bro text-[#D4AF37] font-semibold px-2 py-1 focus:outline-none cursor-pointer"
+                          >
+                            <option value="md:col-span-12">Full (12 Cols)</option>
+                            <option value="md:col-span-7">Large (7 Cols)</option>
+                            <option value="md:col-span-6">Half (6 Cols)</option>
+                            <option value="md:col-span-5">Medium (5 Cols)</option>
+                            <option value="md:col-span-4">Small (4 Cols)</option>
+                          </select>
+                        </div>
+
+                        {/* Move Position & Delete */}
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            disabled={idx === 0}
+                            onClick={() => handleMoveBroCard(idx, 'left')}
+                            title="Move Card Left / Up"
+                            className="p-1 bg-[#161618] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-black border border-[#D4AF37]/40 disabled:opacity-30 disabled:hover:bg-[#161618] disabled:hover:text-[#D4AF37] transition-all cursor-pointer"
+                          >
+                            <ChevronLeft className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            disabled={idx === localPhotos.length - 1}
+                            onClick={() => handleMoveBroCard(idx, 'right')}
+                            title="Move Card Right / Down"
+                            className="p-1 bg-[#161618] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-black border border-[#D4AF37]/40 disabled:opacity-30 disabled:hover:bg-[#161618] disabled:hover:text-[#D4AF37] transition-all cursor-pointer"
+                          >
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteBroCard(idx)}
+                            title="Delete Card"
+                            className="p-1 bg-[#161618] hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 transition-all cursor-pointer ml-1"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="relative overflow-hidden aspect-[4/3] bg-[#0E0E0F]">
                       {photoUrl ? (
                         <img 
