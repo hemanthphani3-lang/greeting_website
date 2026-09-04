@@ -208,7 +208,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           gift: parsed.gift || null,
           broStats: parsed.broStats || null,
           broVoucher: parsed.broVoucher || null,
-          broFlashbacks: parsed.broFlashbacks || null
+          broFlashbacks: parsed.broFlashbacks || null,
+          broHeaders: parsed.broHeaders || null
         };
       }
     } catch (e) {}
@@ -227,7 +228,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       gift: null,
       broStats: null,
       broVoucher: null,
-      broFlashbacks: null
+      broFlashbacks: null,
+      broHeaders: null
     };
   };
 
@@ -345,6 +347,60 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       }
     ]
   );
+
+  const [broHeaders, setBroHeaders] = useState<{
+    heroTag: string;
+    heroBadge1: string;
+    heroBadge2: string;
+    passageTag: string;
+    passageSubtitle: string;
+    passageHeading1: string;
+    passageHeading2: string;
+    passageWish: string;
+    archiveTag: string;
+    archiveTitle: string;
+    archiveDesc: string;
+    evolutionTag: string;
+    evolutionTitle: string;
+    codeTag: string;
+    codeTitle: string;
+    codeSubtitle: string;
+    letterStamp: string;
+    letterTag: string;
+    letterSignoffTag: string;
+    voucherTag: string;
+    voucherSectionTitle: string;
+    epilogueTag: string;
+  }>(
+    initialMsgData.broHeaders || {
+      heroTag: "ARCHIVE ENTRY // KINSHIP MONOGRAPH",
+      heroBadge1: "CHAPTER 01",
+      heroBadge2: "ARCHIVE NO. 088",
+      passageTag: "CH. II // THE PASSAGE",
+      passageSubtitle: "A definitive solar mark. Another 365 revolutions marked not by years alone, but by character, quiet courage, and brotherly allegiance.",
+      passageHeading1: "ANOTHER",
+      passageHeading2: "YEAR.",
+      passageWish: "Happy Birthday, Bro.",
+      archiveTag: "03 // CURATED CHRONOLOGY",
+      archiveTitle: "THE ARCHIVE",
+      archiveDesc: "Fragments of an unbroken bond captured across years, cities, and shared silence.",
+      evolutionTag: "04 // EVOLUTION & ALLEGIANCE",
+      evolutionTitle: "WE’VE COME A LONG WAY.",
+      codeTag: "05 // FRATERNAL DOGMA",
+      codeTitle: "THE BROTHERHOOD CODE",
+      codeSubtitle: "Unwritten laws engraved in blood & persistent mockery",
+      letterStamp: "KJ",
+      letterTag: "A PRIVATE COMMUNIQUÉ // ARCHIVE NO. 088",
+      letterSignoffTag: "WITH REVERENCE & ALLEGIANCE,",
+      voucherTag: "09 // CLASSIFIED ENTRY",
+      voucherSectionTitle: "ONE LAST THING…",
+      epilogueTag: "10 // EPILOGUE & COMMENCEMENT"
+    }
+  );
+
+  const updateBroHeader = (field: keyof typeof broHeaders, val: string) => {
+    setBroHeaders(prev => ({ ...prev, [field]: val }));
+  };
 
   useEffect(() => {
     const colors = ['#d4af37', '#e5c06d', '#f1d292', '#ffffff', '#ba1a1a'];
@@ -472,6 +528,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     if (msgData.broStats) setBroStats(msgData.broStats);
     if (msgData.broVoucher) setBroVoucher(msgData.broVoucher);
     if (msgData.broFlashbacks) setBroFlashbacks(msgData.broFlashbacks);
+    if (msgData.broHeaders) setBroHeaders(msgData.broHeaders);
   }, [memory, photos]);
 
   // Sync chapters length with localPhotos length
@@ -683,7 +740,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       gift: selectedTemplate === 'bday_sis' ? gift : undefined,
       broStats: selectedTemplate === 'bro' ? broStats : undefined,
       broVoucher: selectedTemplate === 'bro' ? broVoucher : undefined,
-      broFlashbacks: selectedTemplate === 'bro' ? broFlashbacks : undefined
+      broFlashbacks: selectedTemplate === 'bro' ? broFlashbacks : undefined,
+      broHeaders: selectedTemplate === 'bro' ? broHeaders : undefined
     });
 
     onPublish(
@@ -2861,12 +2919,24 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
           <div className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
             {/* Overline Tag */}
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping" />
-              <span className="font-sans-bro text-xs font-semibold tracking-[0.3em] text-[#D4AF37] uppercase">
-                ARCHIVE ENTRY // KINSHIP MONOGRAPH
-              </span>
-            </div>
+            {isEditable ? (
+              <div className="mb-6 w-full max-w-md">
+                <input
+                  type="text"
+                  value={broHeaders.heroTag}
+                  onChange={(e) => updateBroHeader('heroTag', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/50 text-xs font-sans-bro font-semibold tracking-[0.3em] text-[#D4AF37] uppercase p-2 text-center focus:outline-none w-full"
+                  placeholder="Overline Tag"
+                />
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-ping" />
+                <span className="font-sans-bro text-xs font-semibold tracking-[0.3em] text-[#D4AF37] uppercase">
+                  {broHeaders.heroTag}
+                </span>
+              </div>
+            )}
 
             {/* Title */}
             {isEditable ? (
@@ -2913,9 +2983,27 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
             {/* Chapter Badge */}
             <div className="mt-8 flex items-center gap-3 bg-[#201F20]/80 backdrop-blur-md px-5 py-2 border border-[#D4AF37]/30 text-xs font-sans-bro font-semibold tracking-widest text-[#D4AF37]">
-              <span>CHAPTER 01</span>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.heroBadge1}
+                  onChange={(e) => updateBroHeader('heroBadge1', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 text-xs text-[#D4AF37] p-1 text-center w-28 uppercase focus:outline-none"
+                />
+              ) : (
+                <span>{broHeaders.heroBadge1}</span>
+              )}
               <span className="w-1 h-1 bg-[#8E8D8A] rounded-full" />
-              <span className="text-[#F8F6F0]">ARCHIVE NO. 088</span>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.heroBadge2}
+                  onChange={(e) => updateBroHeader('heroBadge2', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 text-xs text-[#F8F6F0] p-1 text-center w-36 uppercase focus:outline-none"
+                />
+              ) : (
+                <span className="text-[#F8F6F0]">{broHeaders.heroBadge2}</span>
+              )}
             </div>
           </div>
         </section>
@@ -2924,9 +3012,18 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
         <section className="w-full py-24 relative bg-[#0B0B0C] border-t border-white/[0.04]">
           <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
             <div className="lg:col-span-4 flex flex-col items-start gap-4 border-l border-[#D4AF37]/40 pl-6">
-              <span className="font-sans-bro text-xs font-semibold text-[#D4AF37] tracking-[0.2em]">
-                CH. II // THE PASSAGE
-              </span>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.passageTag}
+                  onChange={(e) => updateBroHeader('passageTag', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 text-xs font-sans-bro font-semibold text-[#D4AF37] tracking-[0.2em] p-1 uppercase focus:outline-none w-full"
+                />
+              ) : (
+                <span className="font-sans-bro text-xs font-semibold text-[#D4AF37] tracking-[0.2em]">
+                  {broHeaders.passageTag}
+                </span>
+              )}
               
               {isEditable ? (
                 <input
@@ -2942,16 +3039,42 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                 </div>
               )}
 
-              <p className="font-sans-bro text-xs text-[#8E8D8A] leading-relaxed">
-                A definitive solar mark. Another 365 revolutions marked not by years alone, but by character, quiet courage, and brotherly allegiance.
-              </p>
+              {isEditable ? (
+                <textarea
+                  value={broHeaders.passageSubtitle}
+                  onChange={(e) => updateBroHeader('passageSubtitle', e.target.value)}
+                  className="bg-black/60 border border-white/20 text-xs font-sans-bro text-[#8E8D8A] p-2 leading-relaxed w-full focus:outline-none focus:border-[#D4AF37]"
+                  rows={3}
+                />
+              ) : (
+                <p className="font-sans-bro text-xs text-[#8E8D8A] leading-relaxed">
+                  {broHeaders.passageSubtitle}
+                </p>
+              )}
             </div>
 
             <div className="lg:col-span-8 flex flex-col gap-4">
-              <h2 className="font-serif-bro text-4xl md:text-6xl text-[#F8F6F0] leading-none uppercase">
-                <span className="italic font-normal text-[#8E8D8A] block">ANOTHER</span>
-                <span className="text-[#D4AF37] font-semibold tracking-tight">YEAR.</span>
-              </h2>
+              {isEditable ? (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={broHeaders.passageHeading1}
+                    onChange={(e) => updateBroHeader('passageHeading1', e.target.value)}
+                    className="bg-black/60 border border-[#D4AF37]/40 text-2xl font-serif-bro text-[#8E8D8A] p-1.5 italic uppercase focus:outline-none w-1/2"
+                  />
+                  <input
+                    type="text"
+                    value={broHeaders.passageHeading2}
+                    onChange={(e) => updateBroHeader('passageHeading2', e.target.value)}
+                    className="bg-black/60 border border-[#D4AF37]/40 text-2xl font-serif-bro text-[#D4AF37] p-1.5 font-semibold uppercase focus:outline-none w-1/2"
+                  />
+                </div>
+              ) : (
+                <h2 className="font-serif-bro text-4xl md:text-6xl text-[#F8F6F0] leading-none uppercase">
+                  <span className="italic font-normal text-[#8E8D8A] block">{broHeaders.passageHeading1}</span>
+                  <span className="text-[#D4AF37] font-semibold tracking-tight">{broHeaders.passageHeading2}</span>
+                </h2>
+              )}
 
               {isEditable ? (
                 <textarea
@@ -2969,7 +3092,16 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
               <div className="flex items-center gap-3 pt-2">
                 <span className="w-8 h-[1px] bg-[#D4AF37]" />
-                <span className="font-serif-bro text-lg text-[#D4AF37] italic">Happy Birthday, Bro.</span>
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={broHeaders.passageWish}
+                    onChange={(e) => updateBroHeader('passageWish', e.target.value)}
+                    className="bg-black/60 border border-[#D4AF37]/40 text-base font-serif-bro text-[#D4AF37] italic p-1 focus:outline-none"
+                  />
+                ) : (
+                  <span className="font-serif-bro text-lg text-[#D4AF37] italic">{broHeaders.passageWish}</span>
+                )}
               </div>
             </div>
           </div>
@@ -2980,16 +3112,45 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-b border-white/10 pb-6 text-left">
               <div>
-                <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] block mb-2">
-                  03 // CURATED CHRONOLOGY
-                </span>
-                <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] uppercase">
-                  THE ARCHIVE
-                </h2>
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={broHeaders.archiveTag}
+                    onChange={(e) => updateBroHeader('archiveTag', e.target.value)}
+                    className="bg-black/60 border border-[#D4AF37]/40 text-xs font-sans-bro font-bold text-[#D4AF37] tracking-[0.25em] p-1 uppercase focus:outline-none mb-2 block"
+                  />
+                ) : (
+                  <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] block mb-2">
+                    {broHeaders.archiveTag}
+                  </span>
+                )}
+
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={broHeaders.archiveTitle}
+                    onChange={(e) => updateBroHeader('archiveTitle', e.target.value)}
+                    className="bg-black/60 border border-[#D4AF37]/40 text-2xl font-serif-bro text-[#F8F6F0] p-1.5 uppercase focus:outline-none block w-full"
+                  />
+                ) : (
+                  <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] uppercase">
+                    {broHeaders.archiveTitle}
+                  </h2>
+                )}
               </div>
-              <p className="font-sans-bro text-xs text-[#8E8D8A] max-w-md">
-                Fragments of an unbroken bond captured across years, cities, and shared silence.
-              </p>
+
+              {isEditable ? (
+                <textarea
+                  value={broHeaders.archiveDesc}
+                  onChange={(e) => updateBroHeader('archiveDesc', e.target.value)}
+                  className="bg-black/60 border border-white/20 text-xs font-sans-bro text-[#8E8D8A] p-2 max-w-md focus:outline-none focus:border-[#D4AF37]"
+                  rows={2}
+                />
+              ) : (
+                <p className="font-sans-bro text-xs text-[#8E8D8A] max-w-md">
+                  {broHeaders.archiveDesc}
+                </p>
+              )}
             </div>
 
             {/* Asymmetric Editorial Bento Gallery Grid */}
@@ -3085,13 +3246,32 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           <div className="max-w-6xl mx-auto px-6 text-left">
             <div className="flex items-center gap-3 mb-4">
               <span className="w-6 h-[1px] bg-[#D4AF37]" />
-              <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.2em] uppercase">
-                04 // EVOLUTION & ALLEGIANCE
-              </span>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.evolutionTag}
+                  onChange={(e) => updateBroHeader('evolutionTag', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 text-xs font-sans-bro font-bold text-[#D4AF37] tracking-[0.2em] p-1 uppercase focus:outline-none"
+                />
+              ) : (
+                <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.2em] uppercase">
+                  {broHeaders.evolutionTag}
+                </span>
+              )}
             </div>
-            <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] tracking-tight mb-12 uppercase">
-              WE’VE COME A <span className="italic text-[#D4AF37] font-normal">LONG WAY.</span>
-            </h2>
+
+            {isEditable ? (
+              <input
+                type="text"
+                value={broHeaders.evolutionTitle}
+                onChange={(e) => updateBroHeader('evolutionTitle', e.target.value)}
+                className="bg-black/60 border border-[#D4AF37]/40 font-serif-bro text-2xl md:text-4xl text-[#F8F6F0] p-2 mb-8 uppercase focus:outline-none w-full"
+              />
+            ) : (
+              <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] tracking-tight mb-12 uppercase">
+                {broHeaders.evolutionTitle}
+              </h2>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {broFlashbacks.map((fb, fIdx) => (
@@ -3193,15 +3373,44 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
         <section className="w-full py-24 bg-[#0B0B0C] relative">
           <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
             <div className="space-y-2">
-              <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] uppercase">
-                05 // FRATERNAL DOGMA
-              </span>
-              <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] uppercase">
-                THE BROTHERHOOD CODE
-              </h2>
-              <p className="font-sans-bro text-xs text-[#8E8D8A] tracking-widest uppercase">
-                Unwritten laws engraved in blood & persistent mockery
-              </p>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.codeTag}
+                  onChange={(e) => updateBroHeader('codeTag', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 text-xs font-sans-bro font-bold text-[#D4AF37] tracking-[0.25em] p-1 uppercase focus:outline-none max-w-xs mx-auto block text-center"
+                />
+              ) : (
+                <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] uppercase">
+                  {broHeaders.codeTag}
+                </span>
+              )}
+
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.codeTitle}
+                  onChange={(e) => updateBroHeader('codeTitle', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 font-serif-bro text-2xl md:text-4xl text-[#F8F6F0] p-2 uppercase focus:outline-none max-w-md mx-auto block text-center"
+                />
+              ) : (
+                <h2 className="font-serif-bro text-3xl md:text-5xl text-[#F8F6F0] uppercase">
+                  {broHeaders.codeTitle}
+                </h2>
+              )}
+
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.codeSubtitle}
+                  onChange={(e) => updateBroHeader('codeSubtitle', e.target.value)}
+                  className="bg-black/60 border border-white/20 text-xs font-sans-bro text-[#8E8D8A] tracking-widest p-1 uppercase focus:outline-none max-w-md mx-auto block text-center"
+                />
+              ) : (
+                <p className="font-sans-bro text-xs text-[#8E8D8A] tracking-widest uppercase">
+                  {broHeaders.codeSubtitle}
+                </p>
+              )}
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 text-left">
@@ -3260,12 +3469,31 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
         <section className="w-full py-24 bg-[#F8F6F0] text-stone-900 relative shadow-2xl overflow-hidden">
           <div className="max-w-[860px] mx-auto px-6 relative z-10 text-left">
             <div className="flex flex-col items-center text-center mb-12">
-              <div className="w-16 h-16 rounded-full bg-[#3c2f00] text-[#f2ca50] flex items-center justify-center shadow-lg border-2 border-[#f2ca50]/40 mb-3 font-serif-bro font-bold text-xl">
-                KJ
-              </div>
-              <span className="text-[11px] tracking-[0.3em] font-semibold text-stone-500 uppercase font-sans-bro">
-                A PRIVATE COMMUNIQUÉ // ARCHIVE NO. 088
-              </span>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.letterStamp}
+                  onChange={(e) => updateBroHeader('letterStamp', e.target.value)}
+                  className="w-16 h-16 rounded-full bg-[#3c2f00] text-[#f2ca50] border-2 border-[#f2ca50]/40 text-center font-serif-bro font-bold text-xl uppercase focus:outline-none mb-3"
+                />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-[#3c2f00] text-[#f2ca50] flex items-center justify-center shadow-lg border-2 border-[#f2ca50]/40 mb-3 font-serif-bro font-bold text-xl">
+                  {broHeaders.letterStamp}
+                </div>
+              )}
+
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.letterTag}
+                  onChange={(e) => updateBroHeader('letterTag', e.target.value)}
+                  className="bg-stone-100 border border-stone-300 text-[11px] font-sans-bro text-stone-500 font-semibold uppercase tracking-[0.3em] p-1 text-center focus:outline-none w-full max-w-sm"
+                />
+              ) : (
+                <span className="text-[11px] tracking-[0.3em] font-semibold text-stone-500 uppercase font-sans-bro">
+                  {broHeaders.letterTag}
+                </span>
+              )}
               <div className="w-12 h-[1px] bg-stone-400 my-2" />
             </div>
 
@@ -3302,9 +3530,19 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
               <div className="pt-8 border-t border-stone-200 flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
                 <div>
-                  <span className="text-xs font-sans-bro tracking-widest text-stone-500 uppercase block">
-                    WITH REVERENCE & ALLEGIANCE,
-                  </span>
+                  {isEditable ? (
+                    <input
+                      type="text"
+                      value={broHeaders.letterSignoffTag}
+                      onChange={(e) => updateBroHeader('letterSignoffTag', e.target.value)}
+                      className="bg-stone-100 border border-stone-300 text-xs font-sans-bro text-stone-500 tracking-widest uppercase p-1 focus:outline-none block w-full"
+                    />
+                  ) : (
+                    <span className="text-xs font-sans-bro tracking-widest text-stone-500 uppercase block">
+                      {broHeaders.letterSignoffTag}
+                    </span>
+                  )}
+
                   {isEditable ? (
                     <input
                       type="text"
@@ -3328,12 +3566,31 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
         <section className="w-full py-24 bg-[#0E0E0F] relative border-t border-white/[0.04]">
           <div className="max-w-xl mx-auto px-6 text-center space-y-8">
             <div className="space-y-2">
-              <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] uppercase">
-                09 // CLASSIFIED ENTRY
-              </span>
-              <h2 className="font-serif-bro text-3xl md:text-4xl text-[#F8F6F0] uppercase">
-                ONE LAST THING…
-              </h2>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.voucherTag}
+                  onChange={(e) => updateBroHeader('voucherTag', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 text-xs font-sans-bro font-bold text-[#D4AF37] tracking-[0.25em] p-1 uppercase focus:outline-none max-w-xs mx-auto block text-center"
+                />
+              ) : (
+                <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.25em] uppercase">
+                  {broHeaders.voucherTag}
+                </span>
+              )}
+
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={broHeaders.voucherSectionTitle}
+                  onChange={(e) => updateBroHeader('voucherSectionTitle', e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 font-serif-bro text-2xl text-[#F8F6F0] p-1.5 uppercase focus:outline-none max-w-md mx-auto block text-center"
+                />
+              ) : (
+                <h2 className="font-serif-bro text-3xl md:text-4xl text-[#F8F6F0] uppercase">
+                  {broHeaders.voucherSectionTitle}
+                </h2>
+              )}
             </div>
 
             <div 
@@ -3418,9 +3675,18 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
         {/* SECTION 8: EPILOGUE & FINAL SIGN OFF */}
         <section className="w-full py-24 bg-[#0B0B0C] relative text-center">
           <div className="max-w-2xl mx-auto px-6 space-y-6">
-            <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.3em] uppercase block">
-              10 // EPILOGUE & COMMENCEMENT
-            </span>
+            {isEditable ? (
+              <input
+                type="text"
+                value={broHeaders.epilogueTag}
+                onChange={(e) => updateBroHeader('epilogueTag', e.target.value)}
+                className="bg-black/60 border border-[#D4AF37]/40 text-xs font-sans-bro font-bold text-[#D4AF37] tracking-[0.3em] p-1 uppercase focus:outline-none max-w-xs mx-auto block text-center"
+              />
+            ) : (
+              <span className="font-sans-bro text-xs font-bold text-[#D4AF37] tracking-[0.3em] uppercase block">
+                {broHeaders.epilogueTag}
+              </span>
+            )}
 
             {isEditable ? (
               <input
