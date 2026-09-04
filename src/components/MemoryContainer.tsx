@@ -207,7 +207,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           wishes: parsed.wishes || null,
           gift: parsed.gift || null,
           broStats: parsed.broStats || null,
-          broVoucher: parsed.broVoucher || null
+          broVoucher: parsed.broVoucher || null,
+          broFlashbacks: parsed.broFlashbacks || null
         };
       }
     } catch (e) {}
@@ -225,7 +226,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       wishes: null,
       gift: null,
       broStats: null,
-      broVoucher: null
+      broVoucher: null,
+      broFlashbacks: null
     };
   };
 
@@ -324,6 +326,25 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
   );
 
   const [broVoucherOpened, setBroVoucherOpened] = useState(false);
+
+  const [broFlashbacks, setBroFlashbacks] = useState<{ phase: string; title: string; initial: string; mature: string; note: string }[]>(
+    initialMsgData.broFlashbacks || [
+      {
+        phase: "PHASE I",
+        title: "FLASHBACK // PHASE I",
+        initial: "From stupid arguments over stolen gear…",
+        mature: "→ To stupid, unforgettable midnight adventures across borders.",
+        note: "Shared scars, identical comedic timing, and zero regrets."
+      },
+      {
+        phase: "PHASE II",
+        title: "FLASHBACK // PHASE II",
+        initial: "From competing over who drove faster…",
+        mature: "→ To quietly having each other’s back when the world gets loud.",
+        note: "No grand gestures required. An understanding carved into stone."
+      }
+    ]
+  );
 
   useEffect(() => {
     const colors = ['#d4af37', '#e5c06d', '#f1d292', '#ffffff', '#ba1a1a'];
@@ -450,6 +471,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     if (msgData.gift) setGift(msgData.gift);
     if (msgData.broStats) setBroStats(msgData.broStats);
     if (msgData.broVoucher) setBroVoucher(msgData.broVoucher);
+    if (msgData.broFlashbacks) setBroFlashbacks(msgData.broFlashbacks);
   }, [memory, photos]);
 
   // Sync chapters length with localPhotos length
@@ -660,7 +682,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       wishes: selectedTemplate === 'bday_sis' ? familyWishes : undefined,
       gift: selectedTemplate === 'bday_sis' ? gift : undefined,
       broStats: selectedTemplate === 'bro' ? broStats : undefined,
-      broVoucher: selectedTemplate === 'bro' ? broVoucher : undefined
+      broVoucher: selectedTemplate === 'bro' ? broVoucher : undefined,
+      broFlashbacks: selectedTemplate === 'bro' ? broFlashbacks : undefined
     });
 
     onPublish(
@@ -2770,19 +2793,6 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       return localPhotos[idx % localPhotos.length]?.url || '';
     };
 
-    const getChapterTitle = (idx: number) => {
-      return chapters[idx]?.title || '';
-    };
-
-    const handleChapterTitleChange = (idx: number, val: string) => {
-      setChapters(prev => {
-        const updated = [...prev];
-        if (!updated[idx]) updated[idx] = { title: '', desc: '' };
-        updated[idx].title = val;
-        return updated;
-      });
-    };
-
     const defaultPlateTitles = [
       "Where the horizon taught us to dream.",
       "Midnight conversations & endless theories.",
@@ -2827,9 +2837,26 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
         {/* SECTION 1: HERO / ARRIVAL */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 bg-[#0E0E0F]">
-          <div className="absolute inset-0 z-0 opacity-20 bg-cover bg-center" style={{ backgroundImage: `url(${getPhotoUrl(0)})` }}>
+          <div 
+            className="absolute inset-0 z-0 opacity-20 bg-cover bg-center transition-all duration-500" 
+            style={{ backgroundImage: getPhotoUrl(0) ? `url(${getPhotoUrl(0)})` : 'none' }}
+          >
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C] via-[#0B0B0C]/80 to-[#0B0B0C]" />
           </div>
+
+          {/* Hero Image Replace Button */}
+          {isEditable && (
+            <div className="absolute top-6 right-6 z-30 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => triggerPhotoReplace(0)}
+                className="flex items-center gap-2 bg-[#161618]/90 hover:bg-[#D4AF37] hover:text-black text-[#D4AF37] border border-[#D4AF37] px-4 py-2.5 text-xs font-bold font-sans-bro transition-all duration-300 shadow-xl backdrop-blur-md cursor-pointer"
+              >
+                <Upload className="w-4 h-4" />
+                <span>CHANGE HERO PHOTO</span>
+              </button>
+            </div>
+          )}
 
           <div className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
             {/* Overline Tag */}
@@ -2842,16 +2869,21 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
             {/* Title */}
             {isEditable ? (
-              <textarea
-                value={customTitle || `FOR ${recipientName.toUpperCase()}`}
-                onChange={(e) => setCustomTitle(e.target.value)}
-                className="font-serif-bro text-4xl md:text-7xl font-normal tracking-tight text-[#F8F6F0] bg-transparent border-b border-dashed border-[#D4AF37]/30 focus:outline-none w-full text-center uppercase resize-none"
-                rows={2}
-                placeholder="Hero Title"
-              />
+              <div className="w-full max-w-4xl space-y-2">
+                <label className="text-[10px] font-sans-bro text-[#D4AF37] font-bold tracking-widest uppercase block">
+                  HERO TITLE / RECIPIENT
+                </label>
+                <textarea
+                  value={customTitle || `FOR ${recipientName.toUpperCase()}`}
+                  onChange={(e) => setCustomTitle(e.target.value)}
+                  className="font-serif-bro text-4xl md:text-7xl font-normal tracking-tight text-[#F8F6F0] bg-black/60 border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:outline-none w-full text-center uppercase p-3 resize-none"
+                  rows={2}
+                  placeholder="Hero Title"
+                />
+              </div>
             ) : (
               <h1 className="font-serif-bro text-4xl md:text-7xl font-normal tracking-tight text-[#F8F6F0] uppercase max-w-4xl leading-tight">
-                FOR <span className="text-[#D4AF37] italic font-serif-bro">{recipientName.toUpperCase()}</span>
+                {customTitle ? customTitle : <>FOR <span className="text-[#D4AF37] italic font-serif-bro">{recipientName.toUpperCase()}</span></>}
               </h1>
             )}
 
@@ -2860,13 +2892,18 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
             {/* Hero Quote */}
             {isEditable ? (
-              <textarea
-                value={heroQuote || "A bespoke monograph commemorating shared battles, unwritten tomorrows, and an unbreakable fraternal testament."}
-                onChange={(e) => setHeroQuote(e.target.value)}
-                className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl text-center italic bg-black/40 border border-[#D4AF37]/30 focus:outline-none w-full p-4"
-                rows={3}
-                placeholder="Hero Quote"
-              />
+              <div className="w-full max-w-2xl space-y-1">
+                <label className="text-[10px] font-sans-bro text-[#D4AF37] font-bold tracking-widest uppercase block">
+                  HERO SUBTITLE / QUOTE
+                </label>
+                <textarea
+                  value={heroQuote || "A bespoke monograph commemorating shared battles, unwritten tomorrows, and an unbreakable fraternal testament."}
+                  onChange={(e) => setHeroQuote(e.target.value)}
+                  className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl text-center italic bg-black/60 border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:outline-none w-full p-4 resize-none"
+                  rows={3}
+                  placeholder="Hero Quote"
+                />
+              </div>
             ) : (
               <p className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl italic leading-relaxed">
                 {heroQuote || "A bespoke monograph commemorating shared battles, unwritten tomorrows, and an unbreakable fraternal testament."}
@@ -2889,9 +2926,21 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
               <span className="font-sans-bro text-xs font-semibold text-[#D4AF37] tracking-[0.2em]">
                 CH. II // THE PASSAGE
               </span>
-              <div className="font-serif-bro text-2xl text-[#F8F6F0] tracking-wider">
-                FRATERNAL SOLSTICE
-              </div>
+              
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={sectionTitle || "FRATERNAL SOLSTICE"}
+                  onChange={(e) => setSectionTitle(e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 font-serif-bro text-2xl text-[#F8F6F0] p-2 w-full uppercase focus:outline-none focus:border-[#D4AF37]"
+                  placeholder="Passage Header"
+                />
+              ) : (
+                <div className="font-serif-bro text-2xl text-[#F8F6F0] tracking-wider uppercase">
+                  {sectionTitle || "FRATERNAL SOLSTICE"}
+                </div>
+              )}
+
               <p className="font-sans-bro text-xs text-[#8E8D8A] leading-relaxed">
                 A definitive solar mark. Another 365 revolutions marked not by years alone, but by character, quiet courage, and brotherly allegiance.
               </p>
@@ -2902,9 +2951,21 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                 <span className="italic font-normal text-[#8E8D8A] block">ANOTHER</span>
                 <span className="text-[#D4AF37] font-semibold tracking-tight">YEAR.</span>
               </h2>
-              <p className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl italic">
-                “Another year of memories, late-night arguments, quiet growth, and everything in between.”
-              </p>
+
+              {isEditable ? (
+                <textarea
+                  value={middleQuote || "Another year of memories, late-night arguments, quiet growth, and everything in between."}
+                  onChange={(e) => setMiddleQuote(e.target.value)}
+                  className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl italic bg-black/60 border border-[#D4AF37]/40 focus:outline-none focus:border-[#D4AF37] p-3 w-full"
+                  rows={3}
+                  placeholder="Passage Quote..."
+                />
+              ) : (
+                <p className="font-serif-bro text-xl text-[#C8C6C1] max-w-2xl italic">
+                  “{middleQuote || "Another year of memories, late-night arguments, quiet growth, and everything in between."}”
+                </p>
+              )}
+
               <div className="flex items-center gap-3 pt-2">
                 <span className="w-8 h-[1px] bg-[#D4AF37]" />
                 <span className="font-serif-bro text-lg text-[#D4AF37] italic">Happy Birthday, Bro.</span>
@@ -2934,8 +2995,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
               {Array.from({ length: Math.max(localPhotos.length, 6) }).slice(0, 8).map((_, idx) => {
                 const photoUrl = getPhotoUrl(idx);
-                const title = getChapterTitle(idx) || defaultPlateTitles[idx % defaultPlateTitles.length];
-                const subtitle = defaultPlateSubtitles[idx % defaultPlateSubtitles.length];
+                const title = chapters[idx]?.title || defaultPlateTitles[idx % defaultPlateTitles.length];
+                const subtitle = chapters[idx]?.desc || defaultPlateSubtitles[idx % defaultPlateSubtitles.length];
 
                 return (
                   <div 
@@ -2949,17 +3010,24 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                     }`}
                   >
                     <div className="relative overflow-hidden aspect-[4/3] bg-[#0E0E0F]">
-                      <img 
-                        src={photoUrl} 
-                        alt={`Plate ${idx + 1}`} 
-                        className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
-                      />
+                      {photoUrl ? (
+                        <img 
+                          src={photoUrl} 
+                          alt={`Plate ${idx + 1}`} 
+                          className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-white/30 font-sans-bro text-xs">
+                          Photo {idx + 1}
+                        </div>
+                      )}
                       
                       {/* Inline Image Uploader */}
                       {isEditable && (
                         <button
+                          type="button"
                           onClick={() => triggerPhotoReplace(idx)}
-                          className="absolute inset-0 bg-black/80 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-[#D4AF37] font-sans-bro text-xs font-bold backdrop-blur-sm z-20"
+                          className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-[#D4AF37] font-sans-bro text-xs font-bold backdrop-blur-sm z-20 cursor-pointer"
                         >
                           <Upload className="w-6 h-6 text-[#D4AF37]" />
                           <span>REPLACE PLATE PHOTO</span>
@@ -2980,8 +3048,9 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                         <input
                           type="text"
                           value={title}
-                          onChange={(e) => handleChapterTitleChange(idx, e.target.value)}
-                          className="bg-black/60 border border-[#D4AF37]/30 text-xs font-serif-bro font-bold text-[#F8F6F0] p-1.5 w-full mt-1"
+                          onChange={(e) => handleChapterChange(idx, 'title', e.target.value)}
+                          className="bg-black/60 border border-[#D4AF37]/40 focus:border-[#D4AF37] focus:outline-none text-xs font-serif-bro font-bold text-[#F8F6F0] p-1.5 w-full mt-1"
+                          placeholder="Plate Title"
                         />
                       ) : (
                         <h3 className="font-serif-bro text-lg text-[#F8F6F0]">
@@ -2989,9 +3058,19 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                         </h3>
                       )}
                       
-                      <p className="font-sans-bro text-xs text-[#8E8D8A] mt-1">
-                        {subtitle}
-                      </p>
+                      {isEditable ? (
+                        <textarea
+                          value={subtitle}
+                          onChange={(e) => handleChapterChange(idx, 'desc', e.target.value)}
+                          className="bg-black/60 border border-white/20 focus:border-[#D4AF37] focus:outline-none text-xs font-sans-bro text-[#8E8D8A] p-1.5 w-full mt-1"
+                          rows={2}
+                          placeholder="Plate Caption / Subtitle"
+                        />
+                      ) : (
+                        <p className="font-sans-bro text-xs text-[#8E8D8A] mt-1">
+                          {subtitle}
+                        </p>
+                      )}
                     </div>
                   </div>
                 );
@@ -3014,41 +3093,97 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 bg-[#201F20] border border-white/[0.06] hover:border-[#D4AF37]/30 transition-all duration-300">
-                <div className="flex items-center justify-between pb-4 border-b border-white/10 text-xs font-sans-bro text-[#8E8D8A] uppercase tracking-widest">
-                  <span>FLASHBACK // PHASE I</span>
-                  <History className="w-4 h-4 text-[#D4AF37]" />
-                </div>
-                <div className="py-6 space-y-2">
-                  <p className="font-serif-bro text-lg text-[#8E8D8A] line-through opacity-70">
-                    From stupid arguments over stolen gear…
-                  </p>
-                  <p className="font-serif-bro text-xl text-[#D4AF37] italic">
-                    → To stupid, unforgettable midnight adventures across borders.
-                  </p>
-                </div>
-                <div className="pt-2 text-xs font-sans-bro text-[#C8C6C1]">
-                  Shared scars, identical comedic timing, and zero regrets.
-                </div>
-              </div>
+              {broFlashbacks.map((fb, fIdx) => (
+                <div key={fIdx} className="p-6 bg-[#201F20] border border-white/[0.06] hover:border-[#D4AF37]/30 transition-all duration-300 text-left space-y-3">
+                  <div className="flex items-center justify-between pb-4 border-b border-white/10 text-xs font-sans-bro text-[#8E8D8A] uppercase tracking-widest">
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={fb.title}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setBroFlashbacks(prev => {
+                            const updated = [...prev];
+                            updated[fIdx] = { ...updated[fIdx], title: val };
+                            return updated;
+                          });
+                        }}
+                        className="bg-black/50 border border-[#D4AF37]/40 text-xs font-sans-bro text-[#D4AF37] font-bold p-1 w-2/3 focus:outline-none"
+                      />
+                    ) : (
+                      <span>{fb.title}</span>
+                    )}
+                    {fIdx === 0 ? <History className="w-4 h-4 text-[#D4AF37]" /> : <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />}
+                  </div>
 
-              <div className="p-6 bg-[#201F20] border border-white/[0.06] hover:border-[#D4AF37]/30 transition-all duration-300">
-                <div className="flex items-center justify-between pb-4 border-b border-white/10 text-xs font-sans-bro text-[#8E8D8A] uppercase tracking-widest">
-                  <span>FLASHBACK // PHASE II</span>
-                  <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+                  <div className="py-2 space-y-3">
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={fb.initial}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setBroFlashbacks(prev => {
+                            const updated = [...prev];
+                            updated[fIdx] = { ...updated[fIdx], initial: val };
+                            return updated;
+                          });
+                        }}
+                        className="bg-black/50 border border-white/20 text-sm font-serif-bro text-[#8E8D8A] p-1.5 w-full focus:outline-none focus:border-[#D4AF37]"
+                        placeholder="Past phase memory..."
+                      />
+                    ) : (
+                      <p className="font-serif-bro text-lg text-[#8E8D8A] line-through opacity-70">
+                        {fb.initial}
+                      </p>
+                    )}
+
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={fb.mature}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setBroFlashbacks(prev => {
+                            const updated = [...prev];
+                            updated[fIdx] = { ...updated[fIdx], mature: val };
+                            return updated;
+                          });
+                        }}
+                        className="bg-black/50 border border-[#D4AF37]/40 text-base font-serif-bro text-[#D4AF37] italic p-1.5 w-full focus:outline-none"
+                        placeholder="Present phase memory..."
+                      />
+                    ) : (
+                      <p className="font-serif-bro text-xl text-[#D4AF37] italic">
+                        {fb.mature}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="pt-2 border-t border-white/5">
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={fb.note}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setBroFlashbacks(prev => {
+                            const updated = [...prev];
+                            updated[fIdx] = { ...updated[fIdx], note: val };
+                            return updated;
+                          });
+                        }}
+                        className="bg-black/50 border border-white/20 text-xs font-sans-bro text-[#C8C6C1] p-1.5 w-full focus:outline-none focus:border-[#D4AF37]"
+                        placeholder="Card conclusion note..."
+                      />
+                    ) : (
+                      <div className="text-xs font-sans-bro text-[#C8C6C1]">
+                        {fb.note}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="py-6 space-y-2">
-                  <p className="font-serif-bro text-lg text-[#8E8D8A] line-through opacity-70">
-                    From competing over who drove faster…
-                  </p>
-                  <p className="font-serif-bro text-xl text-[#D4AF37] italic">
-                    → To quietly having each other’s back when the world gets loud.
-                  </p>
-                </div>
-                <div className="pt-2 text-xs font-sans-bro text-[#C8C6C1]">
-                  No grand gestures required. An understanding carved into stone.
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -3087,7 +3222,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                           return updated;
                         });
                       }}
-                      className="bg-black/50 border border-[#D4AF37]/30 text-xs font-sans-bro text-[#D4AF37] font-bold p-1 w-full"
+                      className="bg-black/50 border border-[#D4AF37]/30 text-xs font-sans-bro text-[#D4AF37] font-bold p-1 w-full focus:outline-none"
                     />
                   ) : (
                     <p className="font-sans-bro text-xs font-bold text-[#D4AF37] uppercase tracking-wider">
@@ -3107,7 +3242,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                           return updated;
                         });
                       }}
-                      className="bg-black/50 border border-white/20 text-base font-serif-bro text-[#F8F6F0] p-1 w-full"
+                      className="bg-black/50 border border-white/20 text-base font-serif-bro text-[#F8F6F0] p-1 w-full focus:outline-none focus:border-[#D4AF37]"
                     />
                   ) : (
                     <h3 className="font-serif-bro text-lg text-[#F8F6F0] italic">
@@ -3134,15 +3269,27 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
             </div>
 
             <div className="bg-white/95 p-8 md:p-14 rounded-none shadow-sm border border-stone-200 space-y-8">
-              <h3 className="font-serif-bro text-3xl md:text-4xl text-stone-950 tracking-normal">
-                Dear <span className="underline decoration-[#d4af37] decoration-1 underline-offset-8">{recipientName}</span>,
+              <h3 className="font-serif-bro text-3xl md:text-4xl text-stone-950 tracking-normal flex items-center gap-2 flex-wrap">
+                Dear{" "}
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    className="font-serif-bro text-3xl md:text-4xl text-stone-950 underline decoration-[#d4af37] decoration-2 underline-offset-8 bg-amber-50/50 border-b border-[#d4af37] focus:outline-none px-1"
+                    placeholder="Brother's Name"
+                  />
+                ) : (
+                  <span className="underline decoration-[#d4af37] decoration-1 underline-offset-8">{recipientName}</span>
+                )}
+                ,
               </h3>
 
               {isEditable ? (
                 <textarea
                   value={personalLetter}
                   onChange={(e) => setPersonalLetter(e.target.value)}
-                  className="font-serif-bro text-lg md:text-xl text-stone-800 leading-relaxed bg-stone-50 border border-stone-300 focus:outline-none w-full p-4 rounded-none"
+                  className="font-serif-bro text-lg md:text-xl text-stone-800 leading-relaxed bg-stone-50 border border-stone-300 focus:outline-none focus:border-[#d4af37] w-full p-4 rounded-none"
                   rows={6}
                   placeholder="Write your personal letter/tribute to your brother here..."
                 />
@@ -3157,9 +3304,19 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                   <span className="text-xs font-sans-bro tracking-widest text-stone-500 uppercase block">
                     WITH REVERENCE & ALLEGIANCE,
                   </span>
-                  <span className="font-serif-bro italic text-3xl text-stone-950 block mt-1">
-                    — {senderName || "Marcus"}
-                  </span>
+                  {isEditable ? (
+                    <input
+                      type="text"
+                      value={senderName}
+                      onChange={(e) => setSenderName(e.target.value)}
+                      className="font-serif-bro italic text-2xl text-stone-950 bg-amber-50/50 border-b border-stone-400 focus:outline-none mt-1 p-1"
+                      placeholder="Your Name"
+                    />
+                  ) : (
+                    <span className="font-serif-bro italic text-3xl text-stone-950 block mt-1">
+                      — {senderName || "Marcus"}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -3180,7 +3337,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
             <div 
               onClick={() => {
-                if (!broVoucherOpened) {
+                if (!broVoucherOpened && !isEditable) {
                   setBroVoucherOpened(true);
                   confetti({
                     particleCount: 120,
@@ -3191,15 +3348,15 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                 }
               }}
               className={`bg-[#161618] p-8 border transition-all duration-500 cursor-pointer text-center ${
-                broVoucherOpened ? 'border-[#D4AF37]' : 'border-white/10 animate-pulse-gold hover:border-[#D4AF37]'
+                broVoucherOpened || isEditable ? 'border-[#D4AF37]' : 'border-white/10 animate-pulse-gold hover:border-[#D4AF37]'
               }`}
             >
               <div className="space-y-6">
                 <div className="w-16 h-16 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center text-[#D4AF37] mx-auto">
-                  {broVoucherOpened ? <Ticket className="w-8 h-8 text-[#D4AF37]" /> : <Gift className="w-8 h-8 text-[#D4AF37] animate-bounce" />}
+                  {broVoucherOpened || isEditable ? <Ticket className="w-8 h-8 text-[#D4AF37]" /> : <Gift className="w-8 h-8 text-[#D4AF37] animate-bounce" />}
                 </div>
 
-                {!broVoucherOpened ? (
+                {!broVoucherOpened && !isEditable ? (
                   <div className="space-y-2">
                     <p className="font-serif-bro text-xl font-bold text-[#F8F6F0]">OPEN YOUR SURPRISE VOUCHER</p>
                     <p className="font-sans-bro text-xs text-[#D4AF37] tracking-widest uppercase">Sealed under fraternal protocol</p>
@@ -3211,7 +3368,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                         type="text"
                         value={broVoucher.title}
                         onChange={(e) => setBroVoucher({ ...broVoucher, title: e.target.value })}
-                        className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-2xl font-bold text-[#D4AF37] p-2 w-full uppercase"
+                        className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-2xl font-bold text-[#D4AF37] p-2 w-full uppercase focus:outline-none"
+                        placeholder="Voucher Title"
                       />
                     ) : (
                       <h3 className="font-serif-bro text-2xl font-bold text-[#D4AF37] tracking-wider uppercase">
@@ -3223,8 +3381,9 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                       <textarea
                         value={broVoucher.msg}
                         onChange={(e) => setBroVoucher({ ...broVoucher, msg: e.target.value })}
-                        className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-sm text-[#E5E2E3] p-2 w-full"
+                        className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-sm text-[#E5E2E3] p-2 w-full focus:outline-none"
                         rows={2}
+                        placeholder="Voucher Message"
                       />
                     ) : (
                       <p className="font-serif-bro text-sm text-[#E5E2E3] leading-relaxed italic">
@@ -3239,7 +3398,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                           type="text"
                           value={broVoucher.code}
                           onChange={(e) => setBroVoucher({ ...broVoucher, code: e.target.value })}
-                          className="bg-[#0B0B0C] border border-[#D4AF37]/60 text-center font-sans-bro text-sm font-bold text-[#F8F6F0] tracking-widest p-2 w-full"
+                          className="bg-[#0B0B0C] border border-[#D4AF37]/60 text-center font-sans-bro text-sm font-bold text-[#F8F6F0] tracking-widest p-2 w-full focus:outline-none"
+                          placeholder="Voucher Claim Code"
                         />
                       ) : (
                         <span className="px-4 py-2 bg-[#0B0B0C] border border-[#D4AF37]/50 text-[#F8F6F0] font-sans-bro text-xs font-bold tracking-widest inline-block">
@@ -3266,7 +3426,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                 type="text"
                 value={finalHeading || "CHAPTER BEGINS NOW."}
                 onChange={(e) => setFinalHeading(e.target.value)}
-                className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-3xl md:text-5xl font-normal italic text-[#D4AF37] p-2 w-full uppercase"
+                className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-3xl md:text-5xl font-normal italic text-[#D4AF37] p-2 w-full uppercase focus:outline-none"
+                placeholder="Final Heading"
               />
             ) : (
               <h2 className="font-serif-bro text-3xl md:text-5xl font-normal italic text-[#D4AF37] tracking-tight uppercase">
@@ -3276,10 +3437,11 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
             {isEditable ? (
               <textarea
-                value={finalSubtitle || "Happy Birthday, Bro. With unwavering respect."}
+                value={finalSubtitle || `Happy Birthday, ${recipientName}. With unwavering respect.`}
                 onChange={(e) => setFinalSubtitle(e.target.value)}
-                className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-gray-300 text-lg p-2 w-full"
+                className="bg-black/60 border border-[#D4AF37]/40 text-center font-serif-bro text-gray-300 text-lg p-2 w-full focus:outline-none"
                 rows={2}
+                placeholder="Final Subtitle / Wish"
               />
             ) : (
               <p className="font-serif-bro text-[#E5E2E3] text-lg italic">
@@ -3288,9 +3450,19 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
             )}
 
             <div className="pt-6">
-              <span className="font-sans-bro text-[#D4AF37] text-xs font-bold tracking-widest uppercase block">
-                — {senderName ? `From ${senderName}` : "Your Brother For Life"} 🤜🤛
-              </span>
+              {isEditable ? (
+                <input
+                  type="text"
+                  value={senderName}
+                  onChange={(e) => setSenderName(e.target.value)}
+                  className="bg-black/60 border border-[#D4AF37]/40 text-center font-sans-bro text-[#D4AF37] text-xs font-bold tracking-widest uppercase p-2 w-full max-w-xs mx-auto block focus:outline-none"
+                  placeholder="Your Name"
+                />
+              ) : (
+                <span className="font-sans-bro text-[#D4AF37] text-xs font-bold tracking-widest uppercase block">
+                  — {senderName ? `From ${senderName}` : "Your Brother For Life"} 🤜🤛
+                </span>
+              )}
             </div>
           </div>
         </section>
