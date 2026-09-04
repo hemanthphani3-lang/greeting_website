@@ -2916,7 +2916,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                     {/* Inline Uploader */}
                     {isEditable && (
                       <button
-                        onClick={() => triggerPhotoUpload(0)}
+                        onClick={() => triggerPhotoReplace(0)}
                         className="absolute inset-0 bg-cyan-950/70 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-cyan-300 font-bro-mono text-sm font-bold backdrop-blur-sm"
                       >
                         <Upload className="w-8 h-8 text-cyan-400 animate-bounce" />
@@ -3058,7 +3058,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                       {/* Inline Image Uploader */}
                       {isEditable && (
                         <button
-                          onClick={() => triggerPhotoUpload(idx)}
+                          onClick={() => triggerPhotoReplace(idx)}
                           className="absolute inset-0 bg-cyan-950/80 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-cyan-300 font-bro-mono text-xs font-bold backdrop-blur-sm z-20"
                         >
                           <Upload className="w-6 h-6 text-cyan-400" />
