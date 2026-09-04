@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.film-grain{background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"background":"#131314","inverse-on-surface":"#313031","on-tertiary":"#412d00","surface-container-lowest":"#0e0e0f","on-secondary-fixed":"#1b1c18","tertiary-fixed-dim":"#e9c176","secondary-container":"#494945","tertiary-fixed":"#ffdea5","surface-bright":"#3a393a","outline-variant":"#4d4635","on-primary-fixed-variant":"#574500","outline":"#99907c","tertiary":"#f1c97d","primary-fixed-dim":"#e9c349","on-primary-fixed":"#241a00","surface-container-highest":"#353436","surface":"#131314","on-surface":"#e5e2e3","tertiary-container":"#d3ad65","surface-tint":"#e9c349","on-surface-variant":"#d0c5af","secondary-fixed":"#e4e2dd","on-tertiary-fixed":"#261900","on-secondary-container":"#bab8b3","primary-container":"#d4af37","secondary-fixed-dim":"#c8c6c1","surface-container":"#201f20","on-background":"#e5e2e3","on-error-container":"#ffdad6","primary-fixed":"#ffe088","primary":"#f2ca50","on-secondary":"#30312d","inverse-primary":"#735c00","on-primary-container":"#554300","on-tertiary-fixed-variant":"#5d4201","on-error":"#690005","error":"#ffb4ab","error-container":"#93000a","surface-dim":"#131314","surface-container-low":"#1c1b1c","on-primary":"#3c2f00","inverse-surface":"#e5e2e3","secondary":"#c8c6c1","surface-container-high":"#2a2a2b","surface-variant":"#353436","on-secondary-fixed-variant":"#474743","on-tertiary-container":"#5b4000"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"max-content-width":"1360px","gutter-tablet":"1.5rem","space-xxs":"0.25rem","margin-mobile":"1.25rem","gutter-desktop":"2.5rem","space-2xl":"6rem","space-3xl":"10rem","space-xl":"4rem","margin-desktop":"5rem","space-md":"1.5rem","space-sm":"1rem","space-lg":"2.5rem","gutter-mobile":"1rem","space-xs":"0.5rem","margin-tablet":"2rem"},"fontFamily":{"headline-lg-mobile":["Playfair Display"],"display-hero-mobile":["Playfair Display"],"body-md":["Plus Jakarta Sans"],"headline-md":["Playfair Display"],"headline-lg":["Playfair Display"],"quote-lead":["Playfair Display"],"caption-meta":["Plus Jakarta Sans"],"label-caps":["Plus Jakarta Sans"],"headline-sm":["Playfair Display"],"display-hero":["Playfair Display"],"body-sm":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"]},"fontSize":{"headline-lg-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"400"}],"display-hero-mobile":["44px",{"lineHeight":"52px","letterSpacing":"-0.01em","fontWeight":"400"}],"body-md":["15px",{"lineHeight":"24px","letterSpacing":"0.01em","fontWeight":"300"}],"headline-md":["32px",{"lineHeight":"40px","letterSpacing":"0em","fontWeight":"500"}],"headline-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.015em","fontWeight":"400"}],"quote-lead":["22px",{"lineHeight":"36px","fontWeight":"400"}],"caption-meta":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"400"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.22em","fontWeight":"600"}],"headline-sm":["24px",{"lineHeight":"32px","letterSpacing":"0em","fontWeight":"500"}],"display-hero":["80px",{"lineHeight":"88px","letterSpacing":"-0.02em","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"400"}],"body-lg":["17px",{"lineHeight":"28px","letterSpacing":"0.01em","fontWeight":"300"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface relative selection:bg-primary-container selection:text-on-primary-container"><div class="fixed inset-0 z-[60] film-grain"></div><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-headline-sm text-headline-sm tracking-widest text-primary">KINSHIP</span><span class="hidden sm:inline-block font-label-caps text-label-caps text-on-surface-variant">ARCHIVE EDITION // VOL. I</span></div><div class="flex items-center gap-space-lg"><nav class="hidden md:flex items-center gap-space-md" data-active-classes="text-primary font-semibold"><a aria-current="page" class="transition-colors uppercase text-primary font-semibold" data-path="monograph" href="#">Monograph</a><a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors uppercase" data-path="chapters" href="#">Chapters</a><a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors uppercase" data-path="archive-gallery" href="#">Gallery</a><a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors uppercase" data-path="brotherhood-ledger" href="#">Ledger</a></nav><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs px-space-xs py-space-xxs bg-surface-container-low rounded"><span class="font-label-caps text-label-caps text-tertiary">CH. 01 / 10</span></div><button class="hidden lg:flex items-center gap-space-xs px-space-xs py-space-xxs bg-surface-container hover:bg-surface-container-high transition-colors rounded text-on-surface-variant hover:text-primary" type="button"><span class="material-symbols-outlined text-[14px]">graphic_eq</span><span class="font-caption-meta text-caption-meta">AUDIO: NOCTURNE / ON</span></button><button class="flex items-center gap-space-xs px-space-xs py-space-xxs bg-surface-container hover:bg-surface-container-high transition-colors rounded text-on-surface-variant hover:text-primary" type="button"><span class="material-symbols-outlined text-[14px]">tune</span><span class="font-label-caps text-label-caps">CUSTOMIZE</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><aside class="fixed right-4 lg:right-8 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-3"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div><div class="w-1 h-1 rounded-full bg-outline-variant"></div></aside><main class="w-full pt-16 bg-background"><div class="flex flex-col w-full text-on-surface select-none relative overflow-x-hidden">
+<!-- =========================================================================================
+       STRIP 01 — HERO / ARRIVAL
+       ========================================================================================= -->
+<section class="-mt-16 pt-16 min-h-screen relative flex items-center justify-center overflow-hidden bg-surface-container-lowest" id="strip-hero">
+<!-- Dynamic Cinematic Background -->
+<div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-1000 scale-105" id="hero-bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQKUjA-aAmb6xa9xa0-rl-LYuLONpj2eZp2znnZ9KWNvP6oSTE_XpfY47VcgFMF08oqDRKJVnWQy9eSteWt9JNLRvBvkDxdMcbH75ustf46vALnNIJ0PyDmGkaELaRjXdfDsOHKOOzbPAb9yjRQClLug181vWZEi4q6RAN68KsiCIckhm1KL5LOuOxcNzxflX3OTCHl71KH1LT_R8mNdY61FXkBFNJADnQlRWm6ZhYafzF-KKZDpMyoQ');">
+<!-- Editorial Multi-Tier Scrim Gradients -->
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/50"></div>
+<div class="absolute inset-0 bg-radial from-transparent via-background/40 to-background/90"></div>
+</div>
+<!-- Centered Editorial Content -->
+<div class="relative z-10 max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop text-center flex flex-col items-center">
+<!-- Overline Tag -->
+<div class="flex items-center gap-space-xs mb-space-md">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+<span class="font-label-caps text-label-caps tracking-[0.3em] text-primary uppercase">ARCHIVE ENTRY // A PERSONAL NOTE</span>
+</div>
+<!-- Main Focal Display Headline -->
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface tracking-tight uppercase max-w-4xl">
+        FOR <span class="text-primary font-serif italic" data-template-bind="brother_name">JULIAN</span>
+</h1>
+<!-- Elegant Divider Bar -->
+<div class="w-24 h-[1px] bg-primary/40 my-space-md"></div>
+<!-- Subtitle -->
+<p class="font-quote-lead text-quote-lead text-on-surface-variant max-w-xl italic font-serif">
+        A bespoke monograph commemorating shared battles, unwritten tomorrows, and an unbreakable fraternal testament.
+      </p>
+<!-- Meta Pill Chapter -->
+<div class="mt-space-lg flex items-center gap-space-sm bg-surface-container/60 backdrop-blur-md px-space-md py-space-xs rounded-full border border-primary/20">
+<span class="font-caption-meta text-caption-meta text-tertiary">CHAPTER 01</span>
+<span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+<span class="font-caption-meta text-caption-meta text-secondary" data-template-bind="birthday_date">04 / 09 / 2026</span>
+</div>
+<!-- Bottom Anchored Scroll Cue -->
+<div class="pt-space-2xl flex flex-col items-center gap-space-xs opacity-75 hover:opacity-100 transition-opacity cursor-pointer" onclick="document.getElementById('strip-occasion').scrollIntoView({behavior: 'smooth'})">
+<span class="font-label-caps text-label-caps text-primary tracking-[0.25em]">SCROLL TO ENTER</span>
+<span class="material-symbols-outlined text-primary text-xl animate-bounce">expand_more</span>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 02 — THE OCCASION
+       ========================================================================================= -->
+<section class="w-full py-space-3xl relative bg-background flex flex-col items-center justify-center border-t border-white/[0.04]" id="strip-occasion">
+<div class="max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop w-full grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+<!-- Left Editorial Meta Col -->
+<div class="lg:col-span-4 flex flex-col items-start gap-space-md border-l border-primary/30 pl-space-md">
+<span class="font-label-caps text-label-caps text-primary tracking-[0.2em]">CH. II // THE PASSAGE</span>
+<div class="font-headline-sm text-headline-sm text-on-surface tracking-wider" data-template-bind="birthday_date">
+          04 / 09 / 2026
+        </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">
+          A definitive solar mark. Another 365 revolutions marked not by years alone, but by character, quiet courage, and brotherly allegiance.
+        </p>
+</div>
+<!-- Right Grand Statement Col -->
+<div class="lg:col-span-8 flex flex-col gap-space-md">
+<h2 class="font-display-hero text-headline-lg-mobile md:text-display-hero text-on-surface leading-none">
+<span class="font-serif italic font-normal text-on-surface-variant block">ANOTHER</span>
+<span class="text-primary font-semibold tracking-tight">YEAR.</span>
+</h2>
+<p class="font-quote-lead text-quote-lead text-secondary max-w-2xl font-serif">
+          “Another year of memories, late-night arguments, quiet growth, and everything in between.”
+        </p>
+<div class="flex items-center gap-space-sm pt-space-sm">
+<span class="w-8 h-[1px] bg-primary"></span>
+<span class="font-headline-sm text-headline-sm text-primary italic font-serif">Happy Birthday, Bro.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 03 — THE ARCHIVE
+       ========================================================================================= -->
+<section class="w-full py-space-3xl bg-surface-container-lowest relative" id="strip-archive">
+<div class="max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl border-b border-outline-variant/30 pb-space-lg">
+<div>
+<span class="font-label-caps text-label-caps text-primary tracking-[0.25em]">03 // CURATED CHRONOLOGY</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mt-space-xxs">THE ARCHIVE</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
+          Fragments of an unbroken bond captured across years, cities, and shared silence. Click any plate to inspect the archival monograph.
+        </p>
+</div>
+<!-- Asymmetric Editorial Gallery Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-start">
+<!-- Photo 1: Large Coastline Card -->
+<div class="md:col-span-7 group cursor-pointer bg-surface-container-low p-space-sm rounded border border-white/[0.06] hover:border-primary/40 transition-all duration-500" onclick="openArchiveLightbox(0)">
+<div class="relative overflow-hidden aspect-[16/10] bg-surface-container">
+<img alt="Coastline brotherhood at sunset" class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMFJ9umkxoX9j77BrrO_hsWRt1gr_2r1P9ZO2GQW9r9RMbxP6eaHxS3F4cFTsDd-qhOeZF45sukuoy1EZHc5aP1RZ99k_g_I3DXyMSK6PrKFEeQZ0CMcmvLhNootEogPUCvctbaOPZ10EI_Ec0esRh6lzgjTG4ynsraGwRA7nbyCSgPj0kIQTYIoivQRJ_MmO7agaqEmTnC0V8M1h2Ls829Ci68OvY6dS59o-_Fe1_NYTWqXd-i3J-5Q"/>
+<div class="absolute top-4 left-4 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded text-[10px] font-label-caps text-primary tracking-widest border border-primary/20">
+              PLATE 01
+            </div>
+</div>
+<div class="pt-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-tertiary">01 — THE BEGINNING</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-serif">Where the horizon taught us to dream without fear.</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pacific cliffs, cold dawn mist, two brothers charting unwritten maps.</p>
+</div>
+</div>
+<!-- Photo 2: Staggered Night Street Card -->
+<div class="md:col-span-5 md:mt-12 group cursor-pointer bg-surface-container-low p-space-sm rounded border border-white/[0.06] hover:border-primary/40 transition-all duration-500" onclick="openArchiveLightbox(1)">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container">
+<img alt="Night street laughter in European alley" class="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSO7kVmUBzokhlx-9T2h_YyeIstJqWs-_nEH7fjIMvlYm8Jz94AWdJTAtIY2v-AkOHmAIQE1ffkvV6pgogMNdy8dKhDrloVb-7s-Lhedw_RIPfp0dlOdaiD3fcIzEjzbRLCuXo8E7tOEBZlFVJEuNXYhYdEO6xPR1aTj4MOhc_NKYFzpSxc2S50-211GeCxIT9u5Hacz_aBfK3zxAYDiIKTUuzNduMv_VxlzcZEW6PKLZxDvI0IqdOzg"/>
+<div class="absolute top-4 left-4 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded text-[10px] font-label-caps text-primary tracking-widest border border-primary/20">
+              PLATE 02
+            </div>
+</div>
+<div class="pt-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-tertiary">02 — PARTNERS IN CRIME</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-serif">Midnight cobblestones &amp; endless theories.</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">When two coffees turned into five hours of untangling life.</p>
+</div>
+</div>
+<!-- Photo 3: Candid Moody Bar B&W -->
+<div class="md:col-span-4 group cursor-pointer bg-surface-container-low p-space-sm rounded border border-white/[0.06] hover:border-primary/40 transition-all duration-500" onclick="openArchiveLightbox(2)">
+<div class="relative overflow-hidden aspect-[3/4] bg-surface-container">
+<img alt="Candid monochrome conversation in wood-paneled tavern" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaR4VzFSVG7WdhOJhEdGtPXZreTS0zglJcfBC12qTGvo4to3r_rm9DPekTnGvxMKYhsg0XoPCQjL-DWLjiNFIqq_XHmN9CG8LeGDpdGhI9yupZBQdO4CpDZbyq9bbmQNoUxc2Sj7beH00Na4nLpr2X-bXXOJPp1dTut7eovhPdu2102a15H9XRXPpYKOuYsQdp7o4Ft2mBMZPnoUs6VSeKt_sNH6__CjtQM8hoX2nrmX7ZsKISIUmGlQ"/>
+<div class="absolute top-4 left-4 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded text-[10px] font-label-caps text-primary tracking-widest border border-primary/20">
+              PLATE 03
+            </div>
+</div>
+<div class="pt-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-tertiary">03 — THE GOOD YEARS</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-serif">Cold pints and honest confessions.</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The corner booth that heard the truth before anyone else did.</p>
+</div>
+</div>
+<!-- Photo 4: Warm smiling close-up -->
+<div class="md:col-span-4 md:-mt-8 group cursor-pointer bg-surface-container-low p-space-sm rounded border border-white/[0.06] hover:border-primary/40 transition-all duration-500" onclick="openArchiveLightbox(3)">
+<div class="relative overflow-hidden aspect-[4/5] bg-surface-container">
+<img alt="Warm genuine close up portrait smiling" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLWZ9qKLZ-j3pj5SnnRTaENOL98HgLATU2ike4FgVf-FQKDpsa1ctf_DMXmu5WWdEQJ0OA0OFSFveGnioSjcMwQyWSqLMWjEGclP5BZMHYhTeX1EOWyUVPQUXaYV2G5buLmnMVO-jDvW_AiPD4hm7ICpTeFggzU6LIxfhTFkrczHMEsfUbUUj9Y94WpfHQ810qTqkNAYRk_fmX8iic-2ufCoixyoZVts7sbuTvEoVRt0IS4YVPPfNHhg"/>
+<div class="absolute top-4 left-4 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded text-[10px] font-label-caps text-primary tracking-widest border border-primary/20">
+              PLATE 04
+            </div>
+</div>
+<div class="pt-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-tertiary">04 — STILL US</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-serif">Years pass, banter stays timeless.</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The identical grin that has outlived every phase and hairstyle.</p>
+</div>
+</div>
+<!-- Photo 5: Monograph Portrait in Library -->
+<div class="md:col-span-4 group cursor-pointer bg-surface-container-low p-space-sm rounded border border-white/[0.06] hover:border-primary/40 transition-all duration-500" onclick="openArchiveLightbox(4)">
+<div class="relative overflow-hidden aspect-[16/11] bg-surface-container">
+<img alt="Editorial portrait in library setting" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQKUjA-aAmb6xa9xa0-rl-LYuLONpj2eZp2znnZ9KWNvP6oSTE_XpfY47VcgFMF08oqDRKJVnWQy9eSteWt9JNLRvBvkDxdMcbH75ustf46vALnNIJ0PyDmGkaELaRjXdfDsOHKOOzbPAb9yjRQClLug181vWZEi4q6RAN68KsiCIckhm1KL5LOuOxcNzxflX3OTCHl71KH1LT_R8mNdY61FXkBFNJADnQlRWm6ZhYafzF-KKZDpMyoQ"/>
+<div class="absolute top-4 left-4 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded text-[10px] font-label-caps text-primary tracking-widest border border-primary/20">
+              PLATE 05
+            </div>
+</div>
+<div class="pt-space-md flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-tertiary">05 — UNWRITTEN TOMORROWS</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-serif">The architect of his own destiny.</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Stepping into the prime of life with composure and dignity.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 04 — BROTHERHOOD (CONTRAST STATEMENTS)
+       ========================================================================================= -->
+<section class="w-full py-space-3xl bg-surface-container-low relative border-y border-white/[0.05]" id="strip-brotherhood">
+<div class="max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop">
+<!-- Section Tag -->
+<div class="flex items-center gap-space-xs mb-space-md">
+<span class="w-6 h-[1px] bg-primary"></span>
+<span class="font-label-caps text-label-caps text-primary tracking-[0.2em]">04 // EVOLUTION</span>
+</div>
+<!-- Monumental Serif Heading -->
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-serif text-on-surface tracking-tight mb-space-2xl">
+        WE’VE COME A <span class="italic text-primary">LONG WAY.</span>
+</h2>
+<!-- Emotional Contrast Mosaic Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Pair 1 -->
+<div class="p-space-lg bg-surface-container rounded border border-white/[0.06] flex flex-col justify-between hover:border-primary/30 transition-all duration-300">
+<div class="flex items-center justify-between pb-space-md border-b border-outline-variant/20">
+<span class="font-caption-meta text-caption-meta text-on-surface-variant uppercase">FLASHBACK // PHASE I</span>
+<span class="material-symbols-outlined text-outline text-lg">history_edu</span>
+</div>
+<div class="py-space-lg">
+<p class="font-headline-sm text-headline-sm text-on-surface-variant line-through opacity-70">From stupid arguments over stolen jackets…</p>
+<p class="font-headline-sm text-headline-sm text-primary font-serif italic mt-2">→ To stupid, unforgettable midnight adventures across borders.</p>
+</div>
+<div class="pt-space-xs text-xs font-body-sm text-secondary">
+            Shared scars, identical comedic timing, and zero regrets.
+          </div>
+</div>
+<!-- Pair 2 -->
+<div class="p-space-lg bg-surface-container rounded border border-white/[0.06] flex flex-col justify-between hover:border-primary/30 transition-all duration-300">
+<div class="flex items-center justify-between pb-space-md border-b border-outline-variant/20">
+<span class="font-caption-meta text-caption-meta text-on-surface-variant uppercase">FLASHBACK // PHASE II</span>
+<span class="material-symbols-outlined text-outline text-lg">shield</span>
+</div>
+<div class="py-space-lg">
+<p class="font-headline-sm text-headline-sm text-on-surface-variant line-through opacity-70">From competing over who drove faster…</p>
+<p class="font-headline-sm text-headline-sm text-primary font-serif italic mt-2">→ To quietly having each other’s back when the world gets loud.</p>
+</div>
+<div class="pt-space-xs text-xs font-body-sm text-secondary">
+            No grand gestures required. An understanding carved into stone.
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 05 — THE BROTHERHOOD CODE
+       ========================================================================================= -->
+<section class="w-full py-space-3xl bg-background relative" id="strip-code">
+<div class="max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop">
+<!-- Headline & Sub -->
+<div class="text-center max-w-2xl mx-auto mb-space-2xl">
+<span class="font-label-caps text-label-caps text-primary tracking-[0.25em]">05 // FRATERNAL DOGMA</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-serif text-on-surface mt-space-xxs">THE BROTHERHOOD CODE</h2>
+<p class="font-caption-meta text-caption-meta text-on-surface-variant mt-space-xs tracking-widest uppercase">Unwritten laws engraved in blood &amp; persistent mockery</p>
+</div>
+<!-- Tab Switcher Navigation -->
+<div class="flex flex-wrap items-center justify-center gap-2 mb-space-xl border-b border-white/[0.08] pb-space-md">
+<button class="code-tab px-4 py-2 rounded font-label-caps text-label-caps text-primary bg-surface-container border border-primary/40 transition-all" id="code-tab-0" onclick="selectCodeTab(0)" type="button">
+          01 // CONCESSION
+        </button>
+<button class="code-tab px-4 py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all" id="code-tab-1" onclick="selectCodeTab(1)" type="button">
+          02 // SOVEREIGN PIZZA
+        </button>
+<button class="code-tab px-4 py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all" id="code-tab-2" onclick="selectCodeTab(2)" type="button">
+          03 // HUMILITY
+        </button>
+<button class="code-tab px-4 py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all" id="code-tab-3" onclick="selectCodeTab(3)" type="button">
+          04 // THE SHIELD
+        </button>
+<button class="code-tab px-4 py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all" id="code-tab-4" onclick="selectCodeTab(4)" type="button">
+          05 // BEDROCK
+        </button>
+</div>
+<!-- Tab Content Cards -->
+<div class="max-w-3xl mx-auto bg-surface-container-low p-space-xl rounded-lg border border-primary/20 shadow-2xl relative overflow-hidden">
+<div class="absolute -right-12 -bottom-12 text-surface-container-high/40 font-display-hero text-[180px] font-serif pointer-events-none select-none" id="code-bg-num">
+          01
+        </div>
+<div class="relative z-10 flex flex-col gap-space-md min-h-[220px] justify-center" id="code-content">
+<div class="flex items-center gap-space-xs text-primary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-lg">gavel</span>
+<span id="code-category">SECTION 1.01 — NEVER ADMIT DEFEAT</span>
+</div>
+<h3 class="font-headline-md text-headline-sm md:text-headline-md font-serif text-on-surface leading-snug" id="code-title">
+            Never admit you're wrong under any legal cross-examination.
+          </h3>
+<p class="font-quote-lead text-quote-lead text-on-surface-variant font-serif italic" id="code-subtext">
+            “Even when high-definition photographic evidence is documented in 4K resolution, hold the line.”
+          </p>
+<div class="flex items-center justify-between pt-space-md border-t border-outline-variant/20 mt-space-sm">
+<span class="font-caption-meta text-caption-meta text-tertiary" id="code-rule-id">CANON LAW #01</span>
+<span class="font-caption-meta text-caption-meta text-secondary">UNANIMOUSLY RATIFIED</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 06 — THE LETTER (WARM BESPOKE STATIONERY / CREAM BACKGROUND)
+       ========================================================================================= -->
+<section class="w-full py-space-3xl bg-[#F8F6F0] text-stone-900 relative shadow-2xl overflow-hidden" id="strip-letter">
+<!-- Subtle Parchment Texture Simulation -->
+<div class="absolute inset-0 bg-[radial-gradient(#d3cbbe_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none"></div>
+<div class="max-w-[860px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop relative z-10">
+<!-- Stationery Header & Embossed Wax Seal -->
+<div class="flex flex-col items-center text-center mb-space-xl">
+<!-- Embossed Seal Emblem -->
+<div class="w-16 h-16 rounded-full bg-[#3c2f00] text-[#f2ca50] flex items-center justify-center shadow-lg border-2 border-[#f2ca50]/40 mb-space-sm">
+<span class="font-serif font-bold text-xl tracking-tighter">KJ</span>
+</div>
+<span class="text-[11px] tracking-[0.3em] font-semibold text-stone-500 uppercase font-sans">A PRIVATE COMMUNIQUÉ // ARCHIVE NO. 088</span>
+<div class="w-12 h-[1px] bg-stone-400 my-2"></div>
+</div>
+<!-- Letter Body Paper Card -->
+<div class="bg-white/90 backdrop-blur-sm p-space-md md:p-space-2xl rounded shadow-[0_4px_30px_rgba(0,0,0,0.06)] border border-stone-200">
+<!-- Salutation -->
+<h3 class="font-serif text-3xl md:text-4xl text-stone-950 mb-space-lg tracking-normal">
+          Dear <span class="underline decoration-[#d4af37] decoration-1 underline-offset-8" data-template-bind="brother_name">Julian</span>,
+        </h3>
+<!-- Editorial Message Paragraphs -->
+<div class="flex flex-col gap-space-md font-serif text-lg md:text-xl text-stone-800 leading-relaxed">
+<p>
+            We’ve shared more moments than I could ever condense into a digital monograph. We have laughed until our ribs ached, fought fiercely over nothing, annoyed the hell out of each other, and supported each other through chapters nobody else will ever fully comprehend.
+          </p>
+<p>
+            I am profoundly grateful that life gave me you as a brother — but I am endlessly more grateful that across these years, you chose to be my genuine friend.
+          </p>
+<p>
+            Wherever the horizon pulls you next, tackle it with the calm fire you’ve always held. Never shrink for anyone else’s comfort.
+          </p>
+<p class="font-medium text-stone-900">
+            You’ve got this. Always.
+          </p>
+</div>
+<!-- Signature Block -->
+<div class="mt-space-2xl pt-space-lg border-t border-stone-200 flex flex-col md:flex-row items-start md:items-end justify-between gap-space-md">
+<div>
+<span class="text-xs font-sans tracking-widest text-stone-500 uppercase block">WITH REVERENCE &amp; ALLEGIANCE,</span>
+<span class="font-serif italic text-3xl text-stone-950 block mt-1" data-template-bind="your_name">— Marcus</span>
+</div>
+<!-- Quick Action to Personalize Note -->
+<button class="px-space-sm py-space-xxs text-xs font-sans font-semibold tracking-wider text-stone-700 bg-stone-100 hover:bg-stone-200 rounded transition-colors flex items-center gap-1 border border-stone-300" onclick="openCustomizeModal()" type="button">
+<span class="material-symbols-outlined text-sm">edit_note</span>
+            EDIT PERSONAL DETAILS
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 07 — THE PORTRAIT
+       ========================================================================================= -->
+<section class="w-full min-h-[85vh] relative flex items-center justify-center overflow-hidden bg-surface-container-lowest" id="strip-portrait">
+<!-- Cinematic Full-Bleed Image Background -->
+<div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQKUjA-aAmb6xa9xa0-rl-LYuLONpj2eZp2znnZ9KWNvP6oSTE_XpfY47VcgFMF08oqDRKJVnWQy9eSteWt9JNLRvBvkDxdMcbH75ustf46vALnNIJ0PyDmGkaELaRjXdfDsOHKOOzbPAb9yjRQClLug181vWZEi4q6RAN68KsiCIckhm1KL5LOuOxcNzxflX3OTCHl71KH1LT_R8mNdY61FXkBFNJADnQlRWm6ZhYafzF-KKZDpMyoQ');">
+<!-- Rich Vignette Overlay -->
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-background"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background"></div>
+</div>
+<!-- Magazine Editorial Title Stacking -->
+<div class="relative z-10 max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop w-full flex flex-col items-center text-center">
+<span class="font-label-caps text-label-caps text-primary tracking-[0.35em] mb-space-md uppercase">PLATE VII // THE FUTURE HORIZON</span>
+<h2 class="font-display-hero text-headline-lg-mobile md:text-display-hero text-on-surface tracking-tight font-serif uppercase">
+        KEEP <span class="text-primary italic font-normal">BECOMING.</span>
+</h2>
+<h3 class="font-headline-md text-headline-sm md:text-headline-md font-body-md text-on-surface-variant font-light tracking-widest uppercase mt-space-xs">
+        THE BEST VERSION OF YOU.
+      </h3>
+<div class="mt-space-xl max-w-lg bg-surface-container-low/70 backdrop-blur-md p-space-md rounded border border-white/[0.08]">
+<p class="font-quote-lead text-quote-lead text-secondary italic font-serif">
+          “Stand tall in the storm. The foundations are set.”
+        </p>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 08 — THE CELEBRATION
+       ========================================================================================= -->
+<section class="w-full py-space-3xl bg-background relative flex flex-col items-center justify-center text-center overflow-hidden border-t border-white/[0.05]" id="strip-celebration">
+<!-- Ambient Particle Canvas Hook -->
+<div class="absolute inset-0 pointer-events-none z-10" id="toast-canvas-container"></div>
+<div class="relative z-20 max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col items-center">
+<!-- Minimalist Golden Candle Flame SVG Icon -->
+<div class="relative mb-space-lg">
+<div class="w-12 h-12 rounded-full bg-primary/20 blur-xl absolute inset-0 animate-pulse"></div>
+<svg class="w-10 h-10 text-primary relative" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 2c0 3-2 5-2 8a5 5 0 0010 0c0-3-2-5-2-8-1 2-2 3-3 3s-2-1-3-3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+<path d="M12 18v4m-3 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<span class="font-label-caps text-label-caps text-primary tracking-[0.3em] uppercase mb-space-xs">08 // THE MILESTONE SOLSTICE</span>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant font-serif">Today, we celebrate you.</p>
+<h2 class="font-display-hero text-headline-lg-mobile md:text-display-hero font-serif text-on-surface mt-space-xxs tracking-tight uppercase">
+        HAPPY BIRTHDAY
+      </h2>
+<div class="font-display-hero text-display-hero-mobile md:text-display-hero font-serif italic text-primary mt-space-xxs">
+<span data-template-bind="brother_name">JULIAN</span>
+</div>
+<!-- Luxury Interactive Toast Button -->
+<div class="mt-space-xl">
+<button class="group relative inline-flex items-center gap-space-sm px-space-lg py-space-sm bg-surface-container hover:bg-surface-container-high rounded text-on-surface transition-all duration-300 border border-primary/40 hover:border-primary shadow-[0_0_25px_rgba(212,175,55,0.15)]" id="btn-raise-toast" onclick="triggerGoldenToast()" type="button">
+<span class="material-symbols-outlined text-primary text-xl group-hover:scale-110 transition-transform">wine_bar</span>
+<span class="font-label-caps text-label-caps text-primary tracking-[0.2em]">RAISE A GLASS TO HIM</span>
+<span class="inline-block w-2 h-2 rounded-full bg-primary animate-ping"></span>
+</button>
+</div>
+<p class="font-caption-meta text-caption-meta text-on-surface-variant mt-space-md">
+        Click to unleash brotherly embers across the archive.
+      </p>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 09 — THE SURPRISE
+       ========================================================================================= -->
+<section class="w-full py-space-3xl bg-surface-container-lowest relative border-t border-white/[0.04]" id="strip-surprise">
+<div class="max-w-[1000px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop text-center flex flex-col items-center">
+<span class="font-label-caps text-label-caps text-tertiary tracking-[0.25em] uppercase">09 // CLASSIFIED ENTRY</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface font-serif mt-space-xs">
+        ONE LAST THING…
+      </h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-space-xs">
+        Some milestones require tangible collateral. Sealed under fraternal protocols.
+      </p>
+<!-- Luxury Gold Shimmer Trigger Button -->
+<div class="mt-space-xl">
+<button class="px-space-xl py-space-md bg-surface-container-high hover:bg-primary text-primary hover:text-surface-container-lowest transition-all duration-500 rounded border border-primary font-label-caps text-label-caps tracking-[0.25em] shadow-[0_0_30px_rgba(212,175,55,0.2)] flex items-center gap-space-sm" onclick="openSurpriseModal()" type="button">
+<span>OPEN YOUR SURPRISE</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       STRIP 10 — FINAL CHAPTER
+       ========================================================================================= -->
+<section class="w-full py-space-3xl bg-background relative flex flex-col items-center justify-center text-center" id="strip-final">
+<div class="max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col items-center">
+<!-- Overline Indicator -->
+<span class="font-label-caps text-label-caps text-primary tracking-[0.3em] uppercase mb-space-xs">10 // EPILOGUE &amp; COMMENCEMENT</span>
+<!-- Dynamic Age Indicator -->
+<div class="font-display-hero text-headline-lg-mobile md:text-display-hero font-serif text-on-surface-variant">
+        CHAPTER <span class="text-on-surface font-sans font-bold" data-template-bind="age">30</span>
+</div>
+<!-- Massive Headline -->
+<h2 class="font-display-hero text-headline-lg-mobile md:text-display-hero font-serif italic text-primary tracking-tight mt-space-xxs">
+        BEGINS NOW.
+      </h2>
+<div class="w-16 h-[1px] bg-primary/40 my-space-lg"></div>
+<!-- Warm Closing Sign-off -->
+<p class="font-quote-lead text-quote-lead text-on-surface font-serif">
+        Happy Birthday, <span class="text-primary italic" data-template-bind="brother_name">Julian</span>.
+      </p>
+<p class="font-body-md text-body-md text-secondary mt-1">
+        With unwavering respect, <span class="text-on-surface font-medium" data-template-bind="your_name">— Marcus</span>
+</p>
+<!-- Delicate Footer Monograph Credit -->
+<div class="mt-space-2xl flex flex-col items-center gap-space-sm">
+<span class="font-caption-meta text-caption-meta text-on-surface-variant tracking-[0.2em] uppercase">
+          Crafted with reverence &amp; love // 2026 Kinship Monograph
+        </span>
+<!-- Return to Top Button -->
+<button class="mt-space-sm px-space-md py-space-xs rounded bg-surface-container text-on-surface-variant hover:text-primary font-label-caps text-label-caps tracking-widest transition-colors flex items-center gap-1 border border-white/[0.05]" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" type="button">
+<span>BACK TO TOP</span>
+<span class="material-symbols-outlined text-sm">arrow_upward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- =========================================================================================
+       MODAL 1: ARCHIVE LIGHTBOX
+       ========================================================================================= -->
+<div class="fixed inset-0 z-[100] bg-surface-container-lowest/95 backdrop-blur-xl hidden flex items-center justify-center p-4" id="archive-lightbox-modal">
+<button class="absolute top-6 right-6 text-on-surface hover:text-primary p-2 z-50" onclick="closeArchiveLightbox()" type="button">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+<div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center bg-surface-container-low p-space-md md:p-space-lg rounded-lg border border-primary/30">
+<!-- Modal Media -->
+<div class="lg:col-span-8 overflow-hidden rounded bg-black aspect-[4/3] flex items-center justify-center">
+<img alt="Archival Photograph" class="w-full h-full object-cover" id="lightbox-img" src=""/>
+</div>
+<!-- Modal Narrative -->
+<div class="lg:col-span-4 flex flex-col gap-space-sm">
+<span class="font-label-caps text-label-caps text-primary tracking-widest" id="lightbox-plate">PLATE NO. 01</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-serif" id="lightbox-title">Memory Title</h4>
+<p class="font-body-md text-body-md text-on-surface-variant font-serif italic" id="lightbox-caption">Memory descriptive poetic note goes here.</p>
+<div class="pt-space-md border-t border-outline-variant/30 flex items-center justify-between text-caption-meta font-caption-meta text-secondary">
+<span id="lightbox-meta">LOCATION &amp; YEAR</span>
+<span>ARCHIVE AUTHENTICATED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- =========================================================================================
+       MODAL 2: THE SURPRISE REVEAL MODAL
+       ========================================================================================= -->
+<div class="fixed inset-0 z-[100] bg-surface-container-lowest/95 backdrop-blur-2xl hidden flex items-center justify-center p-4" id="surprise-modal">
+<div class="max-w-xl w-full bg-surface-container-low p-space-lg md:p-space-xl rounded-lg border border-primary shadow-[0_0_50px_rgba(212,175,55,0.25)] relative text-center flex flex-col items-center">
+<button class="absolute top-4 right-4 text-on-surface-variant hover:text-primary" onclick="closeSurpriseModal()" type="button">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+<span class="material-symbols-outlined text-primary text-4xl mb-space-xs">lock_open_right</span>
+<span class="font-label-caps text-label-caps text-tertiary tracking-[0.25em]">FRATERNAL REVELATION</span>
+<div class="w-full aspect-[16/9] overflow-hidden rounded my-space-md border border-white/[0.08]">
+<img alt="Surprise celebratory photograph" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSO7kVmUBzokhlx-9T2h_YyeIstJqWs-_nEH7fjIMvlYm8Jz94AWdJTAtIY2v-AkOHmAIQE1ffkvV6pgogMNdy8dKhDrloVb-7s-Lhedw_RIPfp0dlOdaiD3fcIzEjzbRLCuXo8E7tOEBZlFVJEuNXYhYdEO6xPR1aTj4MOhc_NKYFzpSxc2S50-211GeCxIT9u5Hacz_aBfK3zxAYDiIKTUuzNduMv_VxlzcZEW6PKLZxDvI0IqdOzg"/>
+</div>
+<h3 class="font-headline-md text-headline-md font-serif text-on-surface">The Expedition is Booked.</h3>
+<div class="font-body-lg text-body-lg text-secondary my-space-sm font-serif italic">
+        “Pack a weekender bag. A table is secured, tickets are in hand, and the finest bottle of single malt is already waiting on your porch.”
+      </div>
+<div class="w-12 h-[1px] bg-primary/40 my-space-xs"></div>
+<p class="font-quote-lead text-quote-lead text-primary font-serif">
+        No matter how old we get… you’ll always be my brother. ❤️
+      </p>
+<button class="mt-space-md px-space-md py-space-xs bg-primary text-surface-container-lowest font-label-caps text-label-caps font-semibold rounded" onclick="closeSurpriseModal()" type="button">
+        SEAL THE PACT
+      </button>
+</div>
+</div>
+<!-- =========================================================================================
+       DRAWER / MODAL: TEMPLATE CUSTOMIZER (REAL-TIME REACTIVE EDITS)
+       ========================================================================================= -->
+<div class="fixed inset-0 z-[110] bg-surface-container-lowest/80 backdrop-blur-md hidden flex items-center justify-center p-4" id="customizer-modal">
+<div class="max-w-md w-full bg-surface-container p-space-lg rounded-lg border border-primary/30 shadow-2xl relative">
+<div class="flex items-center justify-between pb-space-sm border-b border-outline-variant/20 mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">tune</span>
+<span class="font-label-caps text-label-caps text-on-surface tracking-widest">MONOGRAPH CUSTOMIZER</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="closeCustomizeModal()" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="flex flex-col gap-space-md" id="customizer-form" onsubmit="event.preventDefault(); applyTemplateData();">
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-1">BROTHER'S NAME</label>
+<input class="w-full bg-surface-container-low border-b border-outline px-3 py-2 text-on-surface font-body-md focus:border-primary focus:outline-none" id="input-brother-name" type="text" value="JULIAN"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-1">YOUR NAME (SIGNATURE)</label>
+<input class="w-full bg-surface-container-low border-b border-outline px-3 py-2 text-on-surface font-body-md focus:border-primary focus:outline-none" id="input-your-name" type="text" value="Marcus"/>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-1">AGE / CHAPTER</label>
+<input class="w-full bg-surface-container-low border-b border-outline px-3 py-2 text-on-surface font-body-md focus:border-primary focus:outline-none" id="input-age" type="text" value="30"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-on-surface-variant block mb-1">BIRTHDAY DATE</label>
+<input class="w-full bg-surface-container-low border-b border-outline px-3 py-2 text-on-surface font-body-md focus:border-primary focus:outline-none" id="input-date" type="text" value="04 / 09 / 2026"/>
+</div>
+</div>
+<div class="pt-space-sm flex justify-end gap-space-sm">
+<button class="px-space-md py-space-xs text-xs font-label-caps text-on-surface-variant hover:text-on-surface" onclick="closeCustomizeModal()" type="button">CANCEL</button>
+<button class="px-space-md py-space-xs bg-primary text-on-primary font-label-caps text-label-caps font-semibold rounded" type="submit">SAVE &amp; UPDATE MONOGRAPH</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- =========================================================================================
+     VANILLA JAVASCRIPT CONTROLLERS
+     ========================================================================================= -->
+<script>
+  // 1. ARCHIVE DATA & LIGHTBOX
+  const archiveData = [
+    {
+      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMFJ9umkxoX9j77BrrO_hsWRt1gr_2r1P9ZO2GQW9r9RMbxP6eaHxS3F4cFTsDd-qhOeZF45sukuoy1EZHc5aP1RZ99k_g_I3DXyMSK6PrKFEeQZ0CMcmvLhNootEogPUCvctbaOPZ10EI_Ec0esRh6lzgjTG4ynsraGwRA7nbyCSgPj0kIQTYIoivQRJ_MmO7agaqEmTnC0V8M1h2Ls829Ci68OvY6dS59o-_Fe1_NYTWqXd-i3J-5Q",
+      plate: "PLATE NO. 01",
+      title: "01 — THE BEGINNING",
+      caption: "Where the horizon taught us to dream without fear. Pacific cliffs, cold dawn mist, two brothers charting unwritten maps.",
+      meta: "NORTHERN COAST // 2018"
+    },
+    {
+      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBSO7kVmUBzokhlx-9T2h_YyeIstJqWs-_nEH7fjIMvlYm8Jz94AWdJTAtIY2v-AkOHmAIQE1ffkvV6pgogMNdy8dKhDrloVb-7s-Lhedw_RIPfp0dlOdaiD3fcIzEjzbRLCuXo8E7tOEBZlFVJEuNXYhYdEO6xPR1aTj4MOhc_NKYFzpSxc2S50-211GeCxIT9u5Hacz_aBfK3zxAYDiIKTUuzNduMv_VxlzcZEW6PKLZxDvI0IqdOzg",
+      plate: "PLATE NO. 02",
+      title: "02 — PARTNERS IN CRIME",
+      caption: "European cobblestones, midnight espresso, and endless philosophical arguments about life and cinema.",
+      meta: "OLD TOWN // 2021"
+    },
+    {
+      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaR4VzFSVG7WdhOJhEdGtPXZreTS0zglJcfBC12qTGvo4to3r_rm9DPekTnGvxMKYhsg0XoPCQjL-DWLjiNFIqq_XHmN9CG8LeGDpdGhI9yupZBQdO4CpDZbyq9bbmQNoUxc2Sj7beH00Na4nLpr2X-bXXOJPp1dTut7eovhPdu2102a15H9XRXPpYKOuYsQdp7o4Ft2mBMZPnoUs6VSeKt_sNH6__CjtQM8hoX2nrmX7ZsKISIUmGlQ",
+      plate: "PLATE NO. 03",
+      title: "03 — THE GOOD YEARS",
+      caption: "Cold pints and honest confessions. The corner booth that heard the truth before anyone else did.",
+      meta: "THE CORNER TAVERN // 2023"
+    },
+    {
+      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDLWZ9qKLZ-j3pj5SnnRTaENOL98HgLATU2ike4FgVf-FQKDpsa1ctf_DMXmu5WWdEQJ0OA0OFSFveGnioSjcMwQyWSqLMWjEGclP5BZMHYhTeX1EOWyUVPQUXaYV2G5buLmnMVO-jDvW_AiPD4hm7ICpTeFggzU6LIxfhTFkrczHMEsfUbUUj9Y94WpfHQ810qTqkNAYRk_fmX8iic-2ufCoixyoZVts7sbuTvEoVRt0IS4YVPPfNHhg",
+      plate: "PLATE NO. 04",
+      title: "04 — STILL US",
+      caption: "Years pass, banter stays timeless. The identical grin that has outlived every phase and wild plan.",
+      meta: "PRIVATE RESIDENCE // 2024"
+    },
+    {
+      src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQKUjA-aAmb6xa9xa0-rl-LYuLONpj2eZp2znnZ9KWNvP6oSTE_XpfY47VcgFMF08oqDRKJVnWQy9eSteWt9JNLRvBvkDxdMcbH75ustf46vALnNIJ0PyDmGkaELaRjXdfDsOHKOOzbPAb9yjRQClLug181vWZEi4q6RAN68KsiCIckhm1KL5LOuOxcNzxflX3OTCHl71KH1LT_R8mNdY61FXkBFNJADnQlRWm6ZhYafzF-KKZDpMyoQ",
+      plate: "PLATE NO. 05",
+      title: "05 — UNWRITTEN TOMORROWS",
+      caption: "Stepping into the prime of life with composure, poise, and dignified ambition. The best is waiting.",
+      meta: "MONOGRAPH STUDY // 2026"
+    }
+  ];
+
+  function openArchiveLightbox(index) {
+    const item = archiveData[index];
+    if (!item) return;
+    document.getElementById('lightbox-img').src = item.src;
+    document.getElementById('lightbox-plate').textContent = item.plate;
+    document.getElementById('lightbox-title').textContent = item.title;
+    document.getElementById('lightbox-caption').textContent = item.caption;
+    document.getElementById('lightbox-meta').textContent = item.meta;
+    document.getElementById('archive-lightbox-modal').classList.remove('hidden');
+  }
+
+  function closeArchiveLightbox() {
+    document.getElementById('archive-lightbox-modal').classList.add('hidden');
+  }
+
+  // 2. THE BROTHERHOOD CODE TABS
+  const codeCanons = [
+    {
+      num: "01",
+      section: "SECTION 1.01 — NEVER ADMIT DEFEAT",
+      title: "Never admit you're wrong under any legal cross-examination.",
+      subtext: "Even when high-definition photographic evidence is documented in 4K resolution, hold the fraternal line.",
+      rule: "CANON LAW #01"
+    },
+    {
+      num: "02",
+      section: "SECTION 1.02 — DIETARY COMMONS",
+      title: "Steal food without asking, especially french fries.",
+      subtext: "The final slice in any cardboard delivery box is recognized as sovereign communal property under fraternal law.",
+      rule: "CANON LAW #02"
+    },
+    {
+      num: "03",
+      section: "SECTION 1.03 — HUMILITY PROTOCOL",
+      title: "Make fun of each other relentlessly before the world can.",
+      subtext: "True character and stoic resilience are forged in childhood sibling roasting. You cannot be humbled if your brother got there first.",
+      rule: "CANON LAW #03"
+    },
+    {
+      num: "04",
+      section: "SECTION 1.04 — THE SHIELD",
+      title: "Have each other’s back when the storms break.",
+      subtext: "No questions asked. No clock running. When the call comes at 3:00 AM, the car engine is already running.",
+      rule: "CANON LAW #04"
+    },
+    {
+      num: "05",
+      section: "SECTION 1.05 — THE BEDROCK",
+      title: "No matter what happens, brotherhood is unconditional.",
+      subtext: "Seasons change, careers surge, continents divide — the bloodline allegiance remains eternal and non-negotiable.",
+      rule: "CANON LAW #05"
+    }
+  ];
+
+  function selectCodeTab(index) {
+    const item = codeCanons[index];
+    if (!item) return;
+
+    document.querySelectorAll('.code-tab').forEach((tab, i) => {
+      if (i === index) {
+        tab.className = "code-tab px-4 py-2 rounded font-label-caps text-label-caps text-primary bg-surface-container border border-primary/40 transition-all";
+      } else {
+        tab.className = "code-tab px-4 py-2 rounded font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-all";
+      }
+    });
+
+    document.getElementById('code-bg-num').textContent = item.num;
+    document.getElementById('code-category').textContent = item.section;
+    document.getElementById('code-title').textContent = item.title;
+    document.getElementById('code-subtext').innerHTML = `&ldquo;${item.subtext}&rdquo;`;
+    document.getElementById('code-rule-id').textContent = item.rule;
+  }
+
+  // 3. THE SURPRISE MODAL
+  function openSurpriseModal() {
+    document.getElementById('surprise-modal').classList.remove('hidden');
+  }
+  function closeSurpriseModal() {
+    document.getElementById('surprise-modal').classList.add('hidden');
+  }
+
+  // 4. RAISE A TOAST (GOLDEN AMBIENT EMBERS)
+  function triggerGoldenToast() {
+    const container = document.getElementById('toast-canvas-container');
+    const toastBtn = document.getElementById('btn-raise-toast');
+    
+    // Sparkle button feedback
+    toastBtn.classList.add('scale-105', 'bg-primary', 'text-background');
+    setTimeout(() => {
+      toastBtn.classList.remove('scale-105', 'bg-primary', 'text-background');
+    }, 400);
+
+    for (let i = 0; i < 45; i++) {
+      const ember = document.createElement('div');
+      const size = Math.random() * 6 + 2;
+      const startX = window.innerWidth / 2 + (Math.random() - 0.5) * 300;
+      const startY = container.clientHeight * 0.6 + (Math.random() - 0.5) * 80;
+      const destX = startX + (Math.random() - 0.5) * 600;
+      const destY = startY - (Math.random() * 400 + 150);
+
+      ember.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: #f2ca50;
+        border-radius: 9999px;
+        box-shadow: 0 0 10px #f2ca50;
+        left: ${startX}px;
+        top: ${startY}px;
+        opacity: 0.9;
+        pointer-events: none;
+        transition: all ${Math.random() * 1.5 + 1}s cubic-bezier(0.1, 0.8, 0.3, 1);
+      `;
+      container.appendChild(ember);
+
+      requestAnimationFrame(() => {
+        ember.style.transform = `translate(${destX - startX}px, ${destY - startY}px)`;
+        ember.style.opacity = '0';
+      });
+
+      setTimeout(() => {
+        ember.remove();
+      }, 2500);
+    }
+  }
+
+  // 5. TEMPLATE CUSTOMIZER (DYNAMIC BINDING)
+  function openCustomizeModal() {
+    document.getElementById('customizer-modal').classList.remove('hidden');
+  }
+  function closeCustomizeModal() {
+    document.getElementById('customizer-modal').classList.add('hidden');
+  }
+
+  function applyTemplateData() {
+    const bName = document.getElementById('input-brother-name').value || "Julian";
+    const yName = document.getElementById('input-your-name').value || "Marcus";
+    const age = document.getElementById('input-age').value || "30";
+    const date = document.getElementById('input-date').value || "04 / 09 / 2026";
+
+    // Bind Brother's Name
+    document.querySelectorAll('[data-template-bind="brother_name"]').forEach(el => {
+      el.textContent = bName;
+    });
+    // Bind Your Name
+    document.querySelectorAll('[data-template-bind="your_name"]').forEach(el => {
+      el.textContent = yName.startsWith('—') ? yName : `— ${yName}`;
+    });
+    // Bind Age
+    document.querySelectorAll('[data-template-bind="age"]').forEach(el => {
+      el.textContent = age;
+    });
+    // Bind Date
+    document.querySelectorAll('[data-template-bind="birthday_date"]').forEach(el => {
+      el.textContent = date;
+    });
+
+    closeCustomizeModal();
+  }
+
+  // Header quick customization hook integration if shell triggers it
+  document.addEventListener('DOMContentLoaded', () => {
+    const customizeBtns = document.querySelectorAll('button:has(.material-symbols-outlined:contains("tune"))');
+    customizeBtns.forEach(btn => {
+      btn.addEventListener('click', openCustomizeModal);
+    });
+  });
+</script></main><footer class="w-full bg-surface-container-lowest py-space-xl"><div class="max-w-[1360px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col items-center md:items-start gap-space-xxs"><span class="font-headline-sm text-headline-sm text-primary tracking-widest">KINSHIP</span><span class="font-caption-meta text-caption-meta text-on-surface-variant">A Digital Monograph &amp; Brotherly Testament</span></div><div class="flex items-center gap-space-lg"><span class="font-caption-meta text-caption-meta text-on-surface-variant">EST. 2024</span><span class="font-caption-meta text-caption-meta text-on-surface-variant">PRIVATE MONOGRAPH NO. 088</span></div></div></footer></body></html>

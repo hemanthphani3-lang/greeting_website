@@ -23,11 +23,20 @@ import {
   Link,
   ChevronDown,
   Wand2,
-  Smile,
-  Gift,
-  Users,
-  Award,
-  HeartHandshake
+  Smile, 
+  Gift, 
+  Users, 
+  Award, 
+  HeartHandshake,
+  Gamepad2,
+  Zap,
+  ShieldCheck,
+  Flame,
+  Trophy,
+  Star,
+  Crown,
+  Terminal,
+  Ticket
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { supabase } from '@/lib/supabase';
@@ -195,7 +204,9 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           traits: parsed.traits || null,
           facts: parsed.facts || null,
           wishes: parsed.wishes || null,
-          gift: parsed.gift || null
+          gift: parsed.gift || null,
+          broStats: parsed.broStats || null,
+          broVoucher: parsed.broVoucher || null
         };
       }
     } catch (e) {}
@@ -211,7 +222,9 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       traits: null,
       facts: null,
       wishes: null,
-      gift: null
+      gift: null,
+      broStats: null,
+      broVoucher: null
     };
   };
 
@@ -288,6 +301,28 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
   );
 
   const [giftOpened, setGiftOpened] = useState(false);
+
+  // Bro Template States
+  const [broStats, setBroStats] = useState<{ label: string; value: string }[]>(
+    initialMsgData.broStats || [
+      { label: "Co-Op & Gaming Status", value: "LEVEL MAX 👑" },
+      { label: "Late Night Food Runs", value: "3:00 AM Masters 🏆" },
+      { label: "Chaos & Hype Factor", value: "OVER 9000 🚀" },
+      { label: "Emergency Rescue Rate", value: "100% Reliable 🔒" },
+      { label: "Meme Telepathy Sync", value: "100% Matched 🧠" },
+      { label: "Bro Loyalty Index", value: "UNBREAKABLE 💯" }
+    ]
+  );
+
+  const [broVoucher, setBroVoucher] = useState<{ title: string; msg: string; code: string }>(
+    initialMsgData.broVoucher || {
+      title: "VIP BRO PASS 🎫",
+      msg: "Entitles bearer to 1x Unlimited Pizza & Game Night, No Questions Asked.",
+      code: "BRO-VIP-2026"
+    }
+  );
+
+  const [broVoucherOpened, setBroVoucherOpened] = useState(false);
 
   useEffect(() => {
     const colors = ['#d4af37', '#e5c06d', '#f1d292', '#ffffff', '#ba1a1a'];
@@ -370,8 +405,17 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     setSelectedOccasion(memory.occasion);
 
     let loadedPhotos = photos.map(p => ({ id: p.id, url: p.url }));
-    if (memory.template === 'bday_sis' && loadedPhotos.length < 8) {
-      const placeholders = [
+    if ((memory.template === 'bday_sis' || memory.template === 'bro') && loadedPhotos.length < 8) {
+      const placeholders = memory.template === 'bro' ? [
+        'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80'
+      ] : [
         'https://lh3.googleusercontent.com/aida-public/AB6AXuBK9YFKYH9RnHf2mJoJHIIFIu-r8MDsbTtPkg6UgzAutruZRJ6L_Rzl1c0cav31HdK0GOTNoI9kSPmcdklfmvaeuOCcMSQla1clXl-_wEaH3Ie2Jub53eAm52IGxW-X0BugAo9fmSFhiAikg_8B7JusfRAJ62cmCeg7tfrO2yjBpuwDbm_z9xDRrzmY3bu2VTBAQZ5ZXcERI5GrTXt3Ztwk9B6eQrszLyEuCzNrYCCz-jZZF12w3a9ZJnw04rduDP4EaWNOuVBTdfc',
         'https://lh3.googleusercontent.com/aida-public/AB6AXuCt7_gWY70pGCF5LKsHiyCGOPerXnhw5BcFtkRq34TlO44IuxbmEaaOg04NDMWHq0MM6vVJRQX1Gwx9ONmMFO4L5j5c3pFPMo3aWRrCBLTRgV3CIsJz3jncZMaQlUSG0tyAPSHfzZ6VYJlPiz9zaloMj9miQF6Ei4JTf1vbbzKDwYHxW64aTpRBBfEYNRST-JfdOpIU7UZsCQdXM58GVB2R-8W12DfQMcSL64Ng6PJmyt4CqidGJErxITwn2L46hjHgl0xZeJRJOy0',
         'https://lh3.googleusercontent.com/aida-public/AB6AXuDfpDCgYx-DHgRn3AjZHkpoILuN8hLqit3w-_hw7D1NBD5Jizra2bRsHhO81Ulezq31Rh9dr4kDGWCYZJuunf-S5F7bHKeIq5PVPWAKUpGZ2Wlk1YbpahWZYhP0sAXym5QBybpvoyzOY33ve4ZixnNUdZ_EkpKe6kK5ZtM1AZuEgF1FVQn4zKxHYfDXdOmsBzSuhU-wUwdRdPewN7jZOrRDQPV3Qjj1tI2T9zZSWhrE38dSnDhloUau5-laZF4vNyo2y4EAngdJYUg',
@@ -403,6 +447,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     if (msgData.facts) setFacts(msgData.facts);
     if (msgData.wishes) setFamilyWishes(msgData.wishes);
     if (msgData.gift) setGift(msgData.gift);
+    if (msgData.broStats) setBroStats(msgData.broStats);
+    if (msgData.broVoucher) setBroVoucher(msgData.broVoucher);
   }, [memory, photos]);
 
   // Sync chapters length with localPhotos length
@@ -611,7 +657,9 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       traits: selectedTemplate === 'bday_sis' ? traits : undefined,
       facts: selectedTemplate === 'bday_sis' ? facts : undefined,
       wishes: selectedTemplate === 'bday_sis' ? familyWishes : undefined,
-      gift: selectedTemplate === 'bday_sis' ? gift : undefined
+      gift: selectedTemplate === 'bday_sis' ? gift : undefined,
+      broStats: selectedTemplate === 'bro' ? broStats : undefined,
+      broVoucher: selectedTemplate === 'bro' ? broVoucher : undefined
     });
 
     onPublish(
@@ -2715,14 +2763,527 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
     );
   };
 
+  const renderBroTemplate = () => {
+    const getPhotoUrl = (idx: number) => {
+      if (localPhotos.length === 0) return '';
+      return localPhotos[idx % localPhotos.length]?.url || '';
+    };
+
+    const getChapterTitle = (idx: number) => {
+      return chapters[idx]?.title || '';
+    };
+
+    const handleChapterTitleChange = (idx: number, val: string) => {
+      setChapters(prev => {
+        const updated = [...prev];
+        if (!updated[idx]) updated[idx] = { title: '', desc: '' };
+        updated[idx].title = val;
+        return updated;
+      });
+    };
+
+    const defaultPhotoTitles = [
+      "The Road Trip Incident 🚗",
+      "Late Night Gaming Marathon 🎮",
+      "Legendary Night Out 🥂",
+      "Partner In Crime 🚀",
+      "Unstoppable Duo ⚡",
+      "Classic Bro Moment 👑",
+      "The Ultimate Flex 🏆",
+      "Unfiltered Chaos 🔥"
+    ];
+
+    return (
+      <div className="bg-[#0A0E17] text-white font-sans min-h-screen w-full relative overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+        <style dangerouslySetInnerHTML={{__html: `
+          @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+          
+          .font-bro-display {
+            font-family: 'Outfit', sans-serif;
+          }
+          .font-bro-mono {
+            font-family: 'Space Grotesk', sans-serif;
+          }
+          .glass-card-bro {
+            background: rgba(13, 19, 35, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            box-shadow: 0 10px 40px -10px rgba(6, 182, 212, 0.15);
+          }
+          .glass-card-bro-amber {
+            background: rgba(20, 16, 10, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            box-shadow: 0 10px 40px -10px rgba(245, 158, 11, 0.15);
+          }
+          @keyframes pulse-cyan {
+            0%, 100% { border-color: rgba(6, 182, 212, 0.4); box-shadow: 0 0 15px rgba(6, 182, 212, 0.2); }
+            50% { border-color: rgba(6, 182, 212, 0.8); box-shadow: 0 0 30px rgba(6, 182, 212, 0.4); }
+          }
+          .animate-pulse-cyan {
+            animation: pulse-cyan 3s infinite ease-in-out;
+          }
+        `}} />
+
+        {/* Ambient Grid overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#06b6d40d_1px,transparent_1px),linear-gradient(to_bottom,#06b6d40d_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+
+        {/* Section 1: Hero Section */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-24">
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+          <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-12 gap-12 items-center max-w-6xl">
+            {/* Hero Left Content */}
+            <div className="lg:col-span-7 space-y-8 text-left">
+              {/* Badges */}
+              <div className="flex flex-wrap gap-3">
+                <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bro-mono font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+                  <Gamepad2 className="w-3.5 h-3.5 text-cyan-400" /> LEVEL MAX BROTHER
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bro-mono font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+                  <Crown className="w-3.5 h-3.5 text-amber-400" /> WINGMAN FOR LIFE
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bro-mono font-bold tracking-wider uppercase flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-purple-400" /> BUILT DIFFERENT
+                </span>
+              </div>
+
+              {/* Editable Hero Title */}
+              <div>
+                {isEditable ? (
+                  <textarea
+                    value={customTitle || `HAPPY BIRTHDAY TO THE LEGEND, ${recipientName.toUpperCase()}! 👑`}
+                    onChange={(e) => setCustomTitle(e.target.value)}
+                    className="font-bro-display text-4xl md:text-6xl font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 tracking-tight bg-transparent border-b border-dashed border-cyan-500/30 focus:outline-none w-full resize-none uppercase"
+                    rows={2}
+                    placeholder="Hero Title"
+                  />
+                ) : (
+                  <h1 className="font-bro-display text-4xl md:text-6xl font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 tracking-tight uppercase">
+                    {customTitle || `HAPPY BIRTHDAY TO THE LEGEND, ${recipientName.toUpperCase()}! 👑`}
+                  </h1>
+                )}
+              </div>
+
+              {/* Editable Subtitle / Hero Quote */}
+              {isEditable ? (
+                <textarea
+                  value={heroQuote || "To the guy who has been my partner in crime, my late-night sounding board, and the definition of a real brother."}
+                  onChange={(e) => setHeroQuote(e.target.value)}
+                  className="font-bro-mono text-gray-300 text-lg bg-black/40 border border-cyan-500/30 focus:outline-none w-full p-4 rounded-2xl"
+                  rows={3}
+                  placeholder="Hero Quote"
+                />
+              ) : (
+                <p className="font-bro-mono text-gray-300 text-lg md:text-xl leading-relaxed">
+                  {heroQuote || "To the guy who has been my partner in crime, my late-night sounding board, and the definition of a real brother."}
+                </p>
+              )}
+
+              {/* Quick Counter Bar */}
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-cyan-500/20">
+                <div className="bg-[#0D1322]/80 border border-cyan-500/20 p-3.5 rounded-2xl">
+                  <p className="text-[10px] font-bro-mono font-bold text-cyan-400 uppercase tracking-widest">Co-Op Level</p>
+                  <p className="text-xl md:text-2xl font-bold font-bro-display text-white mt-1">999 MAX 👑</p>
+                </div>
+                <div className="bg-[#0D1322]/80 border border-amber-500/20 p-3.5 rounded-2xl">
+                  <p className="text-[10px] font-bro-mono font-bold text-amber-400 uppercase tracking-widest">Loyalty</p>
+                  <p className="text-xl md:text-2xl font-bold font-bro-display text-white mt-1">100% REAL 🛡️</p>
+                </div>
+                <div className="bg-[#0D1322]/80 border border-purple-500/20 p-3.5 rounded-2xl">
+                  <p className="text-[10px] font-bro-mono font-bold text-purple-400 uppercase tracking-widest">Chaos Rating</p>
+                  <p className="text-xl md:text-2xl font-bold font-bro-display text-white mt-1">∞ HYPE 🚀</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Hero Right Featured Photo Card */}
+            <div className="lg:col-span-5 relative flex justify-center">
+              <div className="relative group w-full max-w-md">
+                <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 to-amber-500 rounded-[2.5rem] blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse-cyan" />
+                <div className="relative glass-card-bro p-4 rounded-[2.2rem] space-y-4">
+                  <div className="relative aspect-[4/5] rounded-[1.8rem] overflow-hidden bg-slate-900 border border-cyan-500/20">
+                    <img 
+                      src={getPhotoUrl(0)} 
+                      alt="Bro Hero" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-transparent opacity-80" />
+                    
+                    {/* Inline Uploader */}
+                    {isEditable && (
+                      <button
+                        onClick={() => triggerPhotoUpload(0)}
+                        className="absolute inset-0 bg-cyan-950/70 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-cyan-300 font-bro-mono text-sm font-bold backdrop-blur-sm"
+                      >
+                        <Upload className="w-8 h-8 text-cyan-400 animate-bounce" />
+                        <span>Change Hero Photo</span>
+                      </button>
+                    )}
+
+                    <div className="absolute bottom-4 left-4 right-4 text-left">
+                      <span className="bg-cyan-500/20 border border-cyan-400/40 backdrop-blur-md px-3 py-1 rounded-full text-cyan-300 text-xs font-mono font-bold uppercase tracking-wider inline-block mb-1">
+                        FEATURED MEMORY
+                      </span>
+                      <p className="font-bro-display text-lg font-bold text-white">The Legendary Duo</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-bro-mono text-gray-400 px-2">
+                    <span>STATUS: UNSTOPPABLE</span>
+                    <span>TAG: #BESTBRO</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: Bro Stats & Achievements Bento Grid */}
+        <section className="py-24 relative border-t border-cyan-500/10 bg-[#0A0E17]/60">
+          <div className="container mx-auto px-6 max-w-6xl">
+            <div className="text-center space-y-3 mb-16">
+              <span className="text-cyan-400 text-xs font-bro-mono font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                PLAYER STATS & ACHIEVEMENTS
+              </span>
+              <h2 className="font-bro-display text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                THE BRO MATRIX 📊
+              </h2>
+              <p className="font-bro-mono text-gray-400 text-sm max-w-xl mx-auto">
+                Quantifying the legendary moments, late night chaos, and unbreakable brotherhood.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {broStats.map((stat, idx) => (
+                <div 
+                  key={idx} 
+                  className="glass-card-bro p-6 rounded-3xl space-y-4 hover:border-cyan-500/50 transition-all duration-300 group hover:-translate-y-1 relative"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+                    {idx === 0 && <Gamepad2 className="w-6 h-6" />}
+                    {idx === 1 && <Zap className="w-6 h-6" />}
+                    {idx === 2 && <Flame className="w-6 h-6" />}
+                    {idx === 3 && <ShieldCheck className="w-6 h-6" />}
+                    {idx === 4 && <Smile className="w-6 h-6" />}
+                    {idx === 5 && <Award className="w-6 h-6" />}
+                  </div>
+
+                  <div className="space-y-2 text-left">
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={stat.label}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setBroStats(prev => {
+                            const updated = [...prev];
+                            updated[idx] = { ...updated[idx], label: val };
+                            return updated;
+                          });
+                        }}
+                        className="bg-black/50 border border-cyan-500/30 rounded-xl px-2 py-1 text-xs font-bro-mono font-bold text-cyan-400 uppercase tracking-wider w-full"
+                      />
+                    ) : (
+                      <span className="text-xs font-bro-mono font-bold text-cyan-400 uppercase tracking-wider block">
+                        {stat.label}
+                      </span>
+                    )}
+
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={stat.value}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setBroStats(prev => {
+                            const updated = [...prev];
+                            updated[idx] = { ...updated[idx], value: val };
+                            return updated;
+                          });
+                        }}
+                        className="bg-black/50 border border-amber-500/30 rounded-xl px-2 py-1 text-lg font-bro-display font-extrabold text-white w-full"
+                      />
+                    ) : (
+                      <h3 className="font-bro-display text-xl font-extrabold text-white">
+                        {stat.value}
+                      </h3>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: The Epic Photo Vault (Bento Grid) */}
+        <section className="py-24 relative border-t border-cyan-500/10">
+          <div className="container mx-auto px-6 max-w-6xl">
+            <div className="text-center space-y-3 mb-16">
+              <span className="text-amber-400 text-xs font-bro-mono font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20">
+                CLASSIFIED ARCHIVES
+              </span>
+              <h2 className="font-bro-display text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                THE MEMORY VAULT 📸
+              </h2>
+              <p className="font-bro-mono text-gray-400 text-sm max-w-xl mx-auto">
+                Moments etched in time. Click any photo in edit mode to replace it.
+              </p>
+            </div>
+
+            {/* Bento Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {Array.from({ length: Math.max(localPhotos.length, 6) }).slice(0, 8).map((_, idx) => {
+                const photoUrl = getPhotoUrl(idx);
+                const title = getChapterTitle(idx) || defaultPhotoTitles[idx % defaultPhotoTitles.length];
+
+                return (
+                  <div 
+                    key={idx}
+                    className={`group relative rounded-3xl overflow-hidden glass-card-bro p-3 transition-all duration-500 hover:-translate-y-1.5 hover:border-cyan-400/50 ${
+                      idx % 5 === 0 ? 'md:col-span-2 md:row-span-2' : ''
+                    }`}
+                  >
+                    <div className="relative w-full h-full min-h-[220px] rounded-2xl overflow-hidden bg-slate-900">
+                      <img 
+                        src={photoUrl} 
+                        alt={`Memory ${idx + 1}`} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-transparent opacity-90" />
+
+                      {/* Inline Image Uploader */}
+                      {isEditable && (
+                        <button
+                          onClick={() => triggerPhotoUpload(idx)}
+                          className="absolute inset-0 bg-cyan-950/80 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-cyan-300 font-bro-mono text-xs font-bold backdrop-blur-sm z-20"
+                        >
+                          <Upload className="w-6 h-6 text-cyan-400" />
+                          <span>Change Photo</span>
+                        </button>
+                      )}
+
+                      <div className="absolute bottom-3 left-3 right-3 text-left z-10 space-y-1">
+                        {isEditable ? (
+                          <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => handleChapterTitleChange(idx, e.target.value)}
+                            className="bg-black/60 border border-cyan-400/40 text-xs font-bro-mono font-bold text-cyan-300 rounded px-2 py-1 w-full"
+                          />
+                        ) : (
+                          <p className="font-bro-display text-base font-bold text-white drop-shadow">
+                            {title}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 4: The Bro Code & Personal Letter */}
+        <section className="py-24 relative border-t border-cyan-500/10 bg-[#0A0E17]/80">
+          <div className="container mx-auto px-6 max-w-4xl">
+            <div className="glass-card-bro-amber p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden text-left space-y-8">
+              <div className="flex items-center justify-between border-b border-amber-500/20 pb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                    <Terminal className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bro-mono font-bold text-amber-400 uppercase tracking-widest block">
+                      PERSONAL TRANSMISSION
+                    </span>
+                    <h3 className="font-bro-display text-xl font-bold text-white">
+                      THE BRO CODE ARCHIVE 📜
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-xs font-bro-mono text-amber-400/60 uppercase tracking-wider hidden sm:inline-block">
+                  ENCRYPTED // SECURE
+                </span>
+              </div>
+
+              {/* Personal Letter Textarea or Display */}
+              {isEditable ? (
+                <textarea
+                  value={personalLetter}
+                  onChange={(e) => setPersonalLetter(e.target.value)}
+                  className="font-bro-mono text-gray-200 text-base md:text-lg leading-relaxed bg-black/40 border border-amber-500/30 focus:outline-none w-full p-4 rounded-2xl"
+                  rows={6}
+                  placeholder="Write your personal letter/tribute to your brother here..."
+                />
+              ) : (
+                <p className="font-bro-mono text-gray-200 text-base md:text-lg leading-relaxed whitespace-pre-wrap">
+                  {personalLetter || "Bro, through every high speed win and every late-night bump in the road, you've been the realest guy in my corner. Thanks for always having my back, keeping it 100, and turning normal days into legendary stories. Here's to the next chapter of epic adventures!"}
+                </p>
+              )}
+
+              {/* Bro Oath Pills */}
+              <div className="flex flex-wrap gap-3 pt-4 border-t border-amber-500/20">
+                <span className="px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bro-mono font-semibold">
+                  🛡️ Always Has Your Back
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bro-mono font-semibold">
+                  💯 Keeps It 100
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-bro-mono font-semibold">
+                  🚀 Legendary Energy
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bro-mono font-semibold">
+                  👑 Built Different
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5: The Interactive "VIP BRO PASS" Voucher */}
+        <section className="py-24 relative border-t border-cyan-500/10">
+          <div className="container mx-auto px-6 max-w-xl text-center space-y-8">
+            <div className="space-y-3">
+              <span className="text-cyan-400 text-xs font-bro-mono font-bold uppercase tracking-widest px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
+                EXCLUSIVE GIFT REVEAL
+              </span>
+              <h2 className="font-bro-display text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                THE VIP BRO PASS 🎫
+              </h2>
+            </div>
+
+            <div 
+              onClick={() => {
+                if (!broVoucherOpened) {
+                  setBroVoucherOpened(true);
+                  confetti({
+                    particleCount: 120,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#06b6d4', '#f59e0b', '#8b5cf6', '#ffffff']
+                  });
+                }
+              }}
+              className={`glass-card-bro p-8 rounded-[2.5rem] relative overflow-hidden transition-all duration-500 cursor-pointer hover:border-cyan-400 ${
+                broVoucherOpened ? 'border-cyan-400 ring-2 ring-cyan-400/30' : 'animate-pulse-cyan'
+              }`}
+            >
+              <div className="space-y-6">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-500 to-amber-500 p-0.5 mx-auto">
+                  <div className="w-full h-full rounded-full bg-[#0A0E17] flex items-center justify-center text-cyan-400">
+                    {broVoucherOpened ? <Ticket className="w-8 h-8 text-cyan-400" /> : <Gift className="w-8 h-8 text-amber-400 animate-bounce" />}
+                  </div>
+                </div>
+
+                {!broVoucherOpened ? (
+                  <div className="space-y-2">
+                    <p className="font-bro-display text-xl font-bold text-white">TAP TO UNLOCK VIP PASS</p>
+                    <p className="font-bro-mono text-xs text-cyan-400">A special reward for the legend</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4 animate-in fade-in zoom-in duration-300">
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={broVoucher.title}
+                        onChange={(e) => setBroVoucher({ ...broVoucher, title: e.target.value })}
+                        className="bg-black/60 border border-cyan-400/40 text-center font-bro-display text-2xl font-black text-cyan-400 rounded-xl p-2 w-full"
+                      />
+                    ) : (
+                      <h3 className="font-bro-display text-2xl font-black text-cyan-400 tracking-wider uppercase">
+                        {broVoucher.title}
+                      </h3>
+                    )}
+
+                    {isEditable ? (
+                      <textarea
+                        value={broVoucher.msg}
+                        onChange={(e) => setBroVoucher({ ...broVoucher, msg: e.target.value })}
+                        className="bg-black/60 border border-cyan-400/40 text-center font-bro-mono text-sm text-gray-200 rounded-xl p-2 w-full"
+                        rows={2}
+                      />
+                    ) : (
+                      <p className="font-bro-mono text-sm text-gray-200 leading-relaxed">
+                        {broVoucher.msg}
+                      </p>
+                    )}
+
+                    <div className="pt-4 border-t border-cyan-500/20">
+                      <span className="text-[10px] font-bro-mono text-cyan-400/70 uppercase block mb-1">CLAIM CODE</span>
+                      {isEditable ? (
+                        <input
+                          type="text"
+                          value={broVoucher.code}
+                          onChange={(e) => setBroVoucher({ ...broVoucher, code: e.target.value })}
+                          className="bg-cyan-950/80 border border-cyan-400/60 text-center font-bro-mono text-sm font-bold text-amber-400 tracking-widest rounded-xl p-2 w-full"
+                        />
+                      ) : (
+                        <span className="px-4 py-2 rounded-xl bg-cyan-950/80 border border-cyan-400/50 text-amber-400 font-bro-mono text-sm font-bold tracking-widest inline-block">
+                          {broVoucher.code}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 6: Final Epic Toast & Outro */}
+        <section className="py-24 relative border-t border-cyan-500/10 text-center">
+          <div className="container mx-auto px-6 max-w-2xl space-y-6">
+            {isEditable ? (
+              <input
+                type="text"
+                value={finalHeading || "CHEERS TO THE LEGEND! 🥂"}
+                onChange={(e) => setFinalHeading(e.target.value)}
+                className="bg-black/60 border border-cyan-400/40 text-center font-bro-display text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 rounded-xl p-2 w-full uppercase"
+              />
+            ) : (
+              <h2 className="font-bro-display text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-white to-amber-400 tracking-tight uppercase">
+                {finalHeading || "CHEERS TO THE LEGEND! 🥂"}
+              </h2>
+            )}
+
+            {isEditable ? (
+              <textarea
+                value={finalSubtitle || "Always proud to call you my brother."}
+                onChange={(e) => setFinalSubtitle(e.target.value)}
+                className="bg-black/60 border border-cyan-400/40 text-center font-bro-mono text-gray-300 text-lg rounded-xl p-2 w-full"
+                rows={2}
+              />
+            ) : (
+              <p className="font-bro-mono text-gray-300 text-lg">
+                {finalSubtitle || "Always proud to call you my brother."}
+              </p>
+            )}
+
+            <div className="pt-6">
+              <span className="font-bro-mono text-cyan-400 text-sm font-bold tracking-widest uppercase block">
+                — {senderName ? `From ${senderName}` : "Your Bro For Life"} 🤜🤛
+              </span>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  };
+
   return (
     <div className={`relative min-h-screen w-full flex flex-col justify-between ${
       selectedTemplate === 'glass' ? 'bg-[#031632] text-white' :
       selectedTemplate === 'bday_sis' ? 'bg-[#fff7fb] text-[#241729]' :
+      selectedTemplate === 'bro' ? 'bg-[#0A0E17] text-white' :
       'bg-heritage-white text-primary'
     }`}>
       {/* Background visual shader */}
-      {selectedTemplate !== 'glass' && selectedTemplate !== 'bday_sis' && (
+      {selectedTemplate !== 'glass' && selectedTemplate !== 'bday_sis' && selectedTemplate !== 'bro' && (
         <div className="fixed inset-0 bg-gradient-to-tr from-rose-500/5 via-transparent to-blue-500/5 -z-10" />
       )}
       {selectedTemplate === 'glass' && (
@@ -2730,6 +3291,9 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
       )}
       {selectedTemplate === 'bday_sis' && (
         <div className="fixed inset-0 bg-gradient-to-br from-[#fff7fb] via-[#fce7ff] to-[#fff7fb] -z-10" />
+      )}
+      {selectedTemplate === 'bro' && (
+        <div className="fixed inset-0 bg-gradient-to-br from-[#0A0E17] via-[#0D1527] to-[#0A0E17] -z-10" />
       )}
 
       {/* Hidden file input for inline replacement */}
@@ -2824,6 +3388,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                   <option value="scrapbook">Constellation of Memories</option>
                   <option value="glass">Heritage Letter</option>
                   <option value="bday_sis">Bday Sis Scrapbook</option>
+                  <option value="bro">The Bro Vault (BRO)</option>
                 </select>
                 <ChevronDown className="w-3.5 h-3.5 text-primary/40 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
@@ -3036,13 +3601,14 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
           {selectedTemplate === 'scrapbook' && renderGalaxyTemplate()}
           {selectedTemplate === 'glass' && renderHeritageTemplate()}
           {selectedTemplate === 'bday_sis' && renderSisterScrapbookTemplate()}
+          {selectedTemplate === 'bro' && renderBroTemplate()}
         </main>
       )}
 
       {/* FOOTER */}
       {opened && (
         <footer className={`py-8 text-center text-[10px] font-bold uppercase tracking-widest opacity-40 border-t ${
-          selectedTemplate === 'glass' || selectedTemplate === 'bday_sis' ? 'border-white/10' : 'border-gray-100'
+          selectedTemplate === 'glass' || selectedTemplate === 'bday_sis' || selectedTemplate === 'bro' ? 'border-white/10' : 'border-gray-100'
         }`}>
           Create your own at memoryverse.app
         </footer>

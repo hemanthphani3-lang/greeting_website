@@ -274,6 +274,13 @@ export default function Home() {
                   theme: 'Soft Peach, Lavender, and Rose Pink, Glassmorphism, interactive gift box, typing letter.',
                   image: '/stitch_sister_s_digital_birthday_scrapbook/screen.png',
                 },
+                {
+                  id: 'bro',
+                  title: 'The Bro Vault (BRO)',
+                  desc: 'A high-energy cyber-arcade and adventure tribute layout for your partner-in-crime. Features player stats, iconic memory bento grid, bro code archive, and an interactive surprise VIP Bro Pass.',
+                  theme: 'Cyber Midnight Charcoal, Electric Cyan & Amber Glow, Bento Grid, VIP Bro Pass.',
+                  image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80',
+                },
               ].map((template) => (
                 <div 
                   key={template.id}
