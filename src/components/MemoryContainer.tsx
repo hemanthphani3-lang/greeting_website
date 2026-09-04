@@ -602,8 +602,8 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
   // BRO Template Card Management Handlers
   const handleAddBroCard = () => {
-    const newIdx = localPhotos.length;
-    const defaultImgUrl = 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80';
+    const newIdx = Math.max(0, localPhotos.length - 1);
+    const defaultImgUrl = 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80';
     setLocalPhotos(prev => [
       ...prev,
       { id: `plate-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`, url: defaultImgUrl }
@@ -622,21 +622,25 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
   };
 
   const handleDeleteBroCard = (idx: number) => {
-    if (localPhotos.length <= 1) return;
-    setLocalPhotos(prev => prev.filter((_, i) => i !== idx));
+    if (localPhotos.length <= 2) return; // Keep hero + at least 1 card
+    const photoIdx = idx + 1;
+    setLocalPhotos(prev => prev.filter((_, i) => i !== photoIdx));
     setChapters(prev => prev.filter((_, i) => i !== idx));
     setBroCardSizes(prev => prev.filter((_, i) => i !== idx));
   };
 
   const handleMoveBroCard = (idx: number, direction: 'left' | 'right') => {
     const targetIdx = direction === 'left' ? idx - 1 : idx + 1;
-    if (targetIdx < 0 || targetIdx >= localPhotos.length) return;
+    if (targetIdx < 0 || targetIdx >= localPhotos.length - 1) return;
+
+    const photoIdx = idx + 1;
+    const targetPhotoIdx = targetIdx + 1;
 
     setLocalPhotos(prev => {
       const arr = [...prev];
-      const temp = arr[idx];
-      arr[idx] = arr[targetIdx];
-      arr[targetIdx] = temp;
+      const temp = arr[photoIdx];
+      arr[photoIdx] = arr[targetPhotoIdx];
+      arr[targetPhotoIdx] = temp;
       return arr;
     });
 
@@ -3255,8 +3259,9 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
 
             {/* Asymmetric Editorial Bento Gallery Grid */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-              {localPhotos.map((_, idx) => {
-                const photoUrl = getPhotoUrl(idx);
+              {localPhotos.slice(1).map((_, idx) => {
+                const photoIdx = idx + 1;
+                const photoUrl = getPhotoUrl(photoIdx);
                 const title = chapters[idx]?.title || defaultPlateTitles[idx % defaultPlateTitles.length];
                 const subtitle = chapters[idx]?.desc || defaultPlateSubtitles[idx % defaultPlateSubtitles.length];
 
@@ -3309,7 +3314,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                           </button>
                           <button
                             type="button"
-                            disabled={idx === localPhotos.length - 1}
+                            disabled={idx === localPhotos.slice(1).length - 1}
                             onClick={() => handleMoveBroCard(idx, 'right')}
                             title="Move Card Right / Down"
                             className="p-1 bg-[#161618] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-black border border-[#D4AF37]/40 disabled:opacity-30 disabled:hover:bg-[#161618] disabled:hover:text-[#D4AF37] transition-all cursor-pointer"
@@ -3337,7 +3342,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-white/30 font-sans-bro text-xs">
-                          Photo {idx + 1}
+                          Photo {photoIdx + 1}
                         </div>
                       )}
                       
@@ -3345,7 +3350,7 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                       {isEditable && (
                         <button
                           type="button"
-                          onClick={() => triggerPhotoReplace(idx)}
+                          onClick={() => triggerPhotoReplace(photoIdx)}
                           className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 text-[#D4AF37] font-sans-bro text-xs font-bold backdrop-blur-sm z-20 cursor-pointer"
                         >
                           <Upload className="w-6 h-6 text-[#D4AF37]" />
