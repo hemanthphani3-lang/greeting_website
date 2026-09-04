@@ -2838,10 +2838,11 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
         {/* SECTION 1: HERO / ARRIVAL */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-24 bg-[#0E0E0F]">
           <div 
-            className="absolute inset-0 z-0 opacity-20 bg-cover bg-center transition-all duration-500" 
+            className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-500" 
             style={{ backgroundImage: getPhotoUrl(0) ? `url(${getPhotoUrl(0)})` : 'none' }}
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C] via-[#0B0B0C]/80 to-[#0B0B0C]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C] via-[#0B0B0C]/70 to-[#0B0B0C]/40" />
+            <div className="absolute inset-0 bg-black/40" />
           </div>
 
           {/* Hero Image Replace Button */}
