@@ -3835,12 +3835,26 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                             <div className="relative max-w-full overflow-hidden rounded-lg border border-[#D4AF37]/40 shadow-xl bg-black/60">
                               {broVoucher.mediaType === 'video' || (broVoucher.mediaUrl && (broVoucher.mediaUrl.startsWith('data:video') || broVoucher.mediaUrl.match(/\.(mp4|webm|mov|ogg)($|\?)/i))) ? (
                                 <video
+                                  ref={(el) => {
+                                    if (el) {
+                                      el.muted = true;
+                                      el.volume = 0;
+                                    }
+                                  }}
                                   src={broVoucher.mediaUrl}
                                   controls
                                   autoPlay
                                   loop
                                   muted
                                   playsInline
+                                  onPlay={(e) => {
+                                    e.currentTarget.muted = true;
+                                    e.currentTarget.volume = 0;
+                                  }}
+                                  onVolumeChange={(e) => {
+                                    e.currentTarget.muted = true;
+                                    e.currentTarget.volume = 0;
+                                  }}
                                   className="w-full max-h-[300px] object-contain rounded-lg"
                                 />
                               ) : (
@@ -3925,12 +3939,26 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                       <div className="rounded-xl overflow-hidden border border-[#D4AF37]/40 shadow-2xl bg-black/50 my-4">
                         {broVoucher.mediaType === 'video' || (broVoucher.mediaUrl && (broVoucher.mediaUrl.startsWith('data:video') || broVoucher.mediaUrl.match(/\.(mp4|webm|mov|ogg)($|\?)/i))) ? (
                           <video
+                            ref={(el) => {
+                              if (el) {
+                                el.muted = true;
+                                el.volume = 0;
+                              }
+                            }}
                             src={broVoucher.mediaUrl}
                             controls
                             autoPlay
                             loop
                             muted
                             playsInline
+                            onPlay={(e) => {
+                              e.currentTarget.muted = true;
+                              e.currentTarget.volume = 0;
+                            }}
+                            onVolumeChange={(e) => {
+                              e.currentTarget.muted = true;
+                              e.currentTarget.volume = 0;
+                            }}
                             className="w-full max-h-[360px] object-contain rounded-xl"
                           />
                         ) : (
