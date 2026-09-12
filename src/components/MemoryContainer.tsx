@@ -3824,9 +3824,105 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                       </h3>
                     )}
 
-                    {/* Voucher Media Preview / Display */}
-                    {broVoucher.mediaUrl && (
-                      <div className="relative group rounded-xl overflow-hidden border border-[#D4AF37]/40 shadow-2xl bg-black/50 my-4">
+                    {/* HIGH-VISIBILITY MEDIA ATTACHMENT DROPZONE / CONTROLS (EDITABLE MODE) */}
+                    {isEditable && (
+                      <div 
+                        onClick={(e) => e.stopPropagation()}
+                        className="my-4 p-5 bg-[#0B0B0C] border-2 border-dashed border-[#D4AF37]/50 hover:border-[#D4AF37] rounded-xl text-center space-y-4 transition-all shadow-inner"
+                      >
+                        {broVoucher.mediaUrl ? (
+                          <div className="space-y-3">
+                            <div className="relative max-w-full overflow-hidden rounded-lg border border-[#D4AF37]/40 shadow-xl bg-black/60">
+                              {broVoucher.mediaType === 'video' || (broVoucher.mediaUrl && (broVoucher.mediaUrl.startsWith('data:video') || broVoucher.mediaUrl.match(/\.(mp4|webm|mov|ogg)($|\?)/i))) ? (
+                                <video
+                                  src={broVoucher.mediaUrl}
+                                  controls
+                                  autoPlay
+                                  loop
+                                  muted
+                                  playsInline
+                                  className="w-full max-h-[300px] object-contain rounded-lg"
+                                />
+                              ) : (
+                                <img
+                                  src={broVoucher.mediaUrl}
+                                  alt="Voucher Media"
+                                  className="w-full max-h-[300px] object-cover rounded-lg"
+                                />
+                              )}
+                            </div>
+                            
+                            <div className="flex flex-wrap justify-center gap-3">
+                              <button
+                                type="button"
+                                onClick={() => voucherMediaInputRef.current?.click()}
+                                className="flex items-center gap-2 bg-[#D4AF37] hover:bg-[#c4a030] text-black px-4 py-2 text-xs font-bold font-sans-bro rounded transition-all cursor-pointer uppercase tracking-wider"
+                              >
+                                <Upload className="w-4 h-4" />
+                                <span>CHANGE IMAGE / VIDEO FILE</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setBroVoucher(prev => ({ ...prev, mediaUrl: '', mediaType: undefined }))}
+                                className="flex items-center gap-1.5 bg-red-950/80 hover:bg-red-700 border border-red-500/40 text-red-200 px-3 py-2 text-xs font-bold font-sans-bro rounded transition-all cursor-pointer uppercase"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span>REMOVE MEDIA</span>
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div 
+                            onClick={() => voucherMediaInputRef.current?.click()}
+                            className="py-6 px-4 cursor-pointer flex flex-col items-center justify-center gap-3 group"
+                          >
+                            <div className="w-14 h-14 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                              <Upload className="w-7 h-7" />
+                            </div>
+                            <div>
+                              <p className="font-serif-bro text-base font-bold text-[#D4AF37] tracking-wider uppercase">
+                                + ADD ATTACHED IMAGE OR VIDEO FILE
+                              </p>
+                              <p className="font-sans-bro text-xs text-[#8E8D8A] mt-1">
+                                Click to upload an image (.jpg, .png, .gif) or video (.mp4, .webm, .mov)
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        <input
+                          type="file"
+                          ref={voucherMediaInputRef}
+                          accept="image/*,video/*"
+                          onChange={handleVoucherMediaUpload}
+                          className="hidden"
+                        />
+
+                        {/* URL fallback option */}
+                        <div className="pt-3 border-t border-white/10 text-left">
+                          <label className="text-[9px] font-sans-bro text-[#8E8D8A] uppercase block mb-1">OR PASTE DIRECT MEDIA URL (IMAGE OR VIDEO MP4):</label>
+                          <input
+                            type="text"
+                            value={broVoucher.mediaUrl || ''}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              const isVid = val.match(/\.(mp4|webm|mov|ogg)($|\?)/i) || val.includes('video');
+                              setBroVoucher(prev => ({
+                                ...prev,
+                                mediaUrl: val,
+                                mediaType: isVid ? 'video' : 'image'
+                              }));
+                            }}
+                            placeholder="https://example.com/video.mp4 or image.jpg"
+                            className="w-full bg-[#161618] border border-[#D4AF37]/30 text-xs font-mono text-[#D4AF37] p-2 focus:outline-none focus:border-[#D4AF37]"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* VISITOR MODE MEDIA DISPLAY */}
+                    {!isEditable && broVoucher.mediaUrl && (
+                      <div className="rounded-xl overflow-hidden border border-[#D4AF37]/40 shadow-2xl bg-black/50 my-4">
                         {broVoucher.mediaType === 'video' || (broVoucher.mediaUrl && (broVoucher.mediaUrl.startsWith('data:video') || broVoucher.mediaUrl.match(/\.(mp4|webm|mov|ogg)($|\?)/i))) ? (
                           <video
                             src={broVoucher.mediaUrl}
@@ -3844,89 +3940,6 @@ export const MemoryContainer: React.FC<MemoryContainerProps> = ({
                             className="w-full max-h-[360px] object-cover rounded-xl"
                           />
                         )}
-                        {isEditable && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setBroVoucher(prev => ({ ...prev, mediaUrl: '', mediaType: undefined }));
-                            }}
-                            className="absolute top-3 right-3 bg-black/80 hover:bg-red-600 text-white p-2 rounded-full transition-all border border-white/20 cursor-pointer shadow-lg z-20"
-                            title="Remove Media"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Voucher Media Controls in Editable Mode */}
-                    {isEditable && (
-                      <div 
-                        onClick={(e) => e.stopPropagation()}
-                        className="p-4 bg-[#0B0B0C] border border-[#D4AF37]/30 rounded-lg space-y-3 text-left my-4"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-sans-bro font-bold text-[#D4AF37] tracking-widest uppercase flex items-center gap-1.5">
-                            <Video className="w-3.5 h-3.5" />
-                            <span>VOUCHER ATTACHMENT (IMAGE / VIDEO)</span>
-                          </span>
-                          {broVoucher.mediaUrl && (
-                            <span className="text-[9px] font-mono text-green-400 uppercase tracking-wider">
-                              {broVoucher.mediaType === 'video' || broVoucher.mediaUrl.startsWith('data:video') ? '🎥 VIDEO ATTACHED' : '🖼️ IMAGE ATTACHED'}
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="flex flex-wrap gap-2 items-center">
-                          <button
-                            type="button"
-                            onClick={() => voucherMediaInputRef.current?.click()}
-                            className="flex items-center gap-2 bg-[#D4AF37] hover:bg-[#c4a030] text-black px-4 py-2 text-xs font-bold font-sans-bro transition-all shadow-md cursor-pointer uppercase tracking-wider"
-                          >
-                            <Upload className="w-4 h-4" />
-                            <span>{broVoucher.mediaUrl ? 'CHANGE IMAGE / VIDEO' : 'ADD IMAGE / VIDEO FILE'}</span>
-                          </button>
-
-                          <input
-                            type="file"
-                            ref={voucherMediaInputRef}
-                            accept="image/*,video/*"
-                            onChange={handleVoucherMediaUpload}
-                            className="hidden"
-                          />
-
-                          {broVoucher.mediaUrl && (
-                            <button
-                              type="button"
-                              onClick={() => setBroVoucher(prev => ({ ...prev, mediaUrl: '', mediaType: undefined }))}
-                              className="flex items-center gap-1.5 bg-red-950/80 hover:bg-red-700 border border-red-500/40 text-red-200 px-3 py-2 text-xs font-bold font-sans-bro transition-all cursor-pointer uppercase"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                              <span>REMOVE</span>
-                            </button>
-                          )}
-                        </div>
-
-                        {/* Direct URL input option */}
-                        <div className="pt-2 border-t border-white/10">
-                          <label className="text-[9px] font-sans-bro text-[#8E8D8A] block mb-1 uppercase tracking-wider">OR PASTE MEDIA URL (IMAGE OR VIDEO MP4):</label>
-                          <input
-                            type="text"
-                            value={broVoucher.mediaUrl || ''}
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              const isVid = val.match(/\.(mp4|webm|mov|ogg)($|\?)/i) || val.includes('video');
-                              setBroVoucher(prev => ({
-                                ...prev,
-                                mediaUrl: val,
-                                mediaType: isVid ? 'video' : 'image'
-                              }));
-                            }}
-                            placeholder="https://example.com/video.mp4 or image.jpg"
-                            className="w-full bg-[#161618] border border-[#D4AF37]/30 text-xs font-mono text-[#D4AF37] p-2 focus:outline-none focus:border-[#D4AF37]"
-                          />
-                        </div>
                       </div>
                     )}
 
